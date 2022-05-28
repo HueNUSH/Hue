@@ -64,6 +64,8 @@ export default Vue.extend({
   components: {},
   data: () => ({
     drawerShown: false,
+    user: {
+    }
   }),
   computed: {
     routes(): Array<{

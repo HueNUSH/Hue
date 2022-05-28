@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-card>
-      Gaming.com
+      Gaming.com.sg
     </v-card>
   </v-container>
 </template>

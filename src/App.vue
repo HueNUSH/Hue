@@ -9,7 +9,7 @@
         <v-list-item-content>
           <v-icon size="100">mdi-account</v-icon>
           <v-list-item-title>
-            Welcome, {{ user.name }}!
+            Welcome User!
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -64,9 +64,6 @@ export default Vue.extend({
   components: {},
   data: () => ({
     drawerShown: false,
-    user: {
-      name: "YourName",
-    }
   }),
   computed: {
     routes(): Array<{

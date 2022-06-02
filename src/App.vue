@@ -1,31 +1,38 @@
 <template>
-  <v-app>
+  <v-app style="background-color: #FBEFE7">
+    <v-app-bar
+      app
+      color="#55342A"
+      clipped-left
+      dark
+    >
+      <v-app-bar-nav-icon @click="mini = !mini"></v-app-bar-nav-icon>
+      <v-toolbar-title>
+        Welcome to Hue
+      </v-toolbar-title>
+
+      <v-spacer></v-spacer>
+    </v-app-bar>
+
+
     <v-navigation-drawer
-      v-if="user != null"
-      v-model="drawerShown"
-      temporary app>
+      :mini-variant="mini"
+      permanent
+      app
+      clipped
+      color="#EFDDCF">
 
-      <v-list-item>
-        <v-list-item-content>
-          <v-icon size="100">mdi-account</v-icon>
-          <v-list-item-title>
-            Welcome User!
-          </v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-
-      <v-divider></v-divider>
       <v-list
+        class="mt-12"
         dense
         nav>
         <router-link v-for="item in routes"
                      :to="item.route"
-                     @click="drawerShown = false"
                      style="text-decoration: none; color: inherit;"
                      :key="item.name">
-          <v-list-item link>
+          <v-list-item link class="mt-3">
             <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
+              <v-icon style="color: #55342A">{{ item.icon }}</v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
@@ -34,21 +41,9 @@
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-divider/>
         </router-link>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <v-app-bar-nav-icon v-if="user != null"
-                          @click="drawerShown = !drawerShown"/>
-      <v-toolbar-title>
-        YourName's Vue App
-      </v-toolbar-title>
-    </v-app-bar>
 
     <v-content>
       <router-view/>
@@ -61,9 +56,8 @@ import Vue from "vue";
 
 export default Vue.extend({
   name: "App",
-  components: {},
   data: () => ({
-    drawerShown: false,
+    mini: true,
     user: {
     }
   }),
@@ -74,11 +68,50 @@ export default Vue.extend({
       icon: string;
     }> {
       // Add routes here to correspond to router.ts
+      if(this.$route.path.startsWith("/modules") && this.$route.params.module_id != null) {
+        return [
+          {
+            name: "Home",
+            route: "/",
+            icon: "mdi-home",
+          },
+          {
+            name: "Info",
+            route: "/modules/info/" + this.$route.params.module_id,
+            icon: "mdi-information-outline",
+          },
+          {
+            name: "Units",
+            route: "/modules/" + this.$route.params.module_id,
+            icon: "mdi-format-list-numbered",
+          },
+          {
+            name: "Announcements",
+            route: "/modules/announcements/" + this.$route.params.module_id,
+            icon: "mdi-bullhorn",
+          },
+          {
+            name: "Schedule",
+            route: "/modules/schedule/" + this.$route.params.module_id,
+            icon: "mdi-calendar-blank",
+          },
+        ];
+      }
       return [
         {
-          name: "Main page",
+          name: "Home",
           route: "/",
-          icon: "mdi-file-table-box",
+          icon: "mdi-home",
+        },
+        {
+          name: "Announcements",
+          route: "/announcements",
+          icon: "mdi-bullhorn",
+        },
+        {
+          name: "Schedule",
+          route: "/schedule",
+          icon: "mdi-calendar-blank",
         },
       ];
     },

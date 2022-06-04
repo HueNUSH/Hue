@@ -1,4 +1,4 @@
-# Vue Web Workshop
+# Hue 😎
 
 ## Project setup
 ```

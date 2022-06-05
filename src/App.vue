@@ -53,7 +53,7 @@ export default Vue.extend({
       //   return [
       //     {
       //       name: "Home",
-      //       route: "/",
+      //       route: "/modules",
       //       icon: "mdi-home",
       //     },
       //     {
@@ -81,7 +81,7 @@ export default Vue.extend({
       return [
         {
           name: "My modules",
-          route: "/",
+          route: "/modules",
           icon: "mdi-grid-large",
         },
         {

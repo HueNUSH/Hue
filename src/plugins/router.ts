@@ -12,7 +12,7 @@ Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
-    path: "/",
+    path: "/modules",
     component: MyModules,
   },
   {

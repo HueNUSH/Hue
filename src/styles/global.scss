@@ -4,6 +4,5 @@
 h1 {
   color: $c-text-title;
   font-size: 1.875rem; // 30px
-  font-weight: 100; // Somehow this fixes bug where Chrome and Edge renders font too thick. (???)
   font-variation-settings: "wght" 600, "wdth" 100, "CTGR" 100; // Display SemiBold
 }

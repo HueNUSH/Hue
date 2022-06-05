@@ -18,7 +18,7 @@
             :to="'/modules/' + module.module_id "
           >
             <v-card
-              class="pa-4"
+              class="pa-4 fill-height d-flex flex-column"
               elevation="0"
             >
               <v-row>
@@ -38,10 +38,13 @@
               <h2>
                 {{ module.module_title }}
               </h2>
+              
               <p class="card-subtitle">
                 <b>{{ module.units_completed }}/{{ module.total_units }}</b> sections completed
               </p>
-              <br/>
+
+              <v-spacer/>
+
               <b class="learn-arrow">View units →</b>
             </v-card>
           </router-link>

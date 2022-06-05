@@ -1,6 +1,7 @@
 @font-face {
   font-family: "Noto Sans";
   src: url(./font/NotoSans-VF.ttf);
+  font-weight: 400 600;
 }
 
 #app {

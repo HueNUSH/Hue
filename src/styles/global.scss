@@ -6,12 +6,22 @@ h1 {
   font-size: 1.875rem; // 30px
   font-variation-settings: "wght" 600, "wdth" 100, "CTGR" 100; // Display SemiBold
 }
+h2, #completed-units {
+  color: $c-text-dark-primary;
+}
 
-// Module card text
-.card-subtitle {
+// Module Units
+.card-subtitle, .links {
   color: gray;
 }
-.back-link {
+.links, .unit-card {
   text-decoration: none;
-  color: gray;
+}
+
+#unit-grid {
+  max-width: 80rem;
+}
+#learn-arrow{
+  color: $c-primary-foreground;
+  margin-bottom: -4px;
 }

@@ -102,6 +102,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 @import 'styles/variables.scss';
+@import "styles/global.scss";
 
 .v-list a {
   text-decoration: none;

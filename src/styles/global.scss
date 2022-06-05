@@ -13,8 +13,16 @@ h2,
 .text-dark-tertiary {
   color: $c-text-dark-tertiary;
 }
-.text-display {
-  font-variation-settings: "CTGR" 100;
+.text-display-semibold {
+  font-variation-settings: "wght" 600, "CTGR" 100;
+}
+.text-font-size {
+  &-14 {
+    font-size: 0.875rem;
+  }
+  &-16 {
+    font-size: 1rem;
+  }
 }
 
 // Module Units

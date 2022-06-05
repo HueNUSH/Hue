@@ -3,9 +3,9 @@
     <h1>Welcome back, {{ user.name }}!</h1>
     <p class="text-dark-tertiary">Academic Week</p>
 
-    <p class="text-dark-primary text-display" style="margin-top: 75px; font-weight: bold">
+    <h2 class="text-dark-primary text-display text-font-size-16" style="margin-top: 75px;">
       My modules
-    </p>
+    </h2>
     <div style="max-width: 80rem">
       <v-row>
         <v-col cols="12" lg="4" md="6" v-for="(module, index) in modules" :key="index">
@@ -25,9 +25,9 @@
                   </v-sheet>
                 </v-col>
               </v-row>
-              <h2 class="text-display">
+              <h3 class="text-display">
                 {{ module.module_title }}
-              </h2>
+              </h3>
 
               <p class="card-subtitle">
                 <b>{{ module.units_completed }}/{{ module.total_units }}</b> sections completed

@@ -1,0 +1,8 @@
+@import "variables";
+
+// Typography
+h1 {
+  color: $c-text-title;
+  font-size: 1.875rem; // 30px
+  font-variation-settings: "wght" 600, "wdth" 100, "CTGR" 100; // Display SemiBold
+}

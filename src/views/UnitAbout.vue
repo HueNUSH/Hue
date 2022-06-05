@@ -1,12 +1,15 @@
 <template>
   <v-container fluid class="px-12 py-6">
-    <h1>Schedule</h1>
+    <router-link :to="'/modules/' + $route.params.module_id + '/' + $route.params.unit_no">
+      < Back to unit
+    </router-link>
+    <h1>About this unit</h1>
   </v-container>
 </template>
 
 <script>
 export default {
-  name: "Schedule"
+  name: "UnitAbout"
 };
 </script>
 

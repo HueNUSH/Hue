@@ -25,7 +25,7 @@
                   </v-sheet>
                 </v-col>
               </v-row>
-              <h3 class="text-display-semibold text-font-size-22">
+              <h3 class="text-dark-primary text-display-semibold text-font-size-22">
                 {{ module.module_title }}
               </h3>
 

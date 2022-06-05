@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter, {RouteConfig} from "vue-router";
-import Home from "@/views/Home.vue";
+import MyModules from "@/views/MyModules.vue";
 import Announcements from "@/views/Announcements.vue";
 import Schedule from "@/views/Schedule.vue";
 import Modules from "@/views/Modules.vue";
@@ -13,7 +13,7 @@ Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    component: Home,
+    component: MyModules,
   },
   {
     path: "/announcements",

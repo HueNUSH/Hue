@@ -1,6 +1,9 @@
 <template>
   <v-container fluid class="px-12 py-6">
-    About this module
+    <router-link :to="'/modules/' + $route.params.module_id">
+      < Back to module
+    </router-link>
+    <p>About this module</p>
   </v-container>
 </template>
 

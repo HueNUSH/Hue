@@ -7,6 +7,9 @@
     <p> Sections of a unit </p>
     <p> Module id: {{ $route.params.module_id }}</p>
     <p> Unit no: {{ $route.params.unit_no}} </p>
+    <v-btn :to="'/modules/' + $route.params.module_id + '/' + $route.params.unit_no + '/about'">
+      About this unit
+    </v-btn>
   </v-container>
 </template>
 

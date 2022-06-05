@@ -9,3 +9,7 @@ export default {
   name: "Schedule"
 };
 </script>
+
+<style lang="scss" scoped>
+@import "../styles/variables.scss";
+</style>

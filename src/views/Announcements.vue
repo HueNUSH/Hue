@@ -9,3 +9,7 @@ export default {
   name: "Announcements"
 };
 </script>
+
+<style lang="scss" scoped>
+@import "../styles/variables.scss";
+</style>

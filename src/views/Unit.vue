@@ -1,8 +1,8 @@
 <template>
   <v-container fluid class="px-12 py-6">
-    <a id="back-link" :href="'/#/modules/' + $route.params.module_id">
+    <router-link :to="'/modules/' + $route.params.module_id">
       < Back to Module
-    </a>
+    </router-link>
 
     <p> Modules page </p>
     <p> Module id: {{ $route.params.module_id }}</p>
@@ -18,10 +18,3 @@ export default {
   name: "Unit"
 }
 </script>
-
-<style>
-#back-link {
-  color: #55342A;
-  font-size: larger;
-}
-</style>

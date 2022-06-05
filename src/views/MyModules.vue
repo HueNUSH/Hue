@@ -43,7 +43,7 @@
 
               <v-spacer />
 
-              <b class="learn-arrow">View units →</b>
+              <p class="learn-arrow text-semibold text-font-size-16">View units →</p>
             </v-card>
           </router-link>
         </v-col>

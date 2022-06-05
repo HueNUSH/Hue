@@ -4,7 +4,7 @@
       < My modules
     </router-link>
     <h1>Units of a module</h1>
-    <p> Module id: {{ $route.params.module_id }}</p>
+    <p>Module id: {{ $route.params.module_id }}</p>
     <p>This page will display all units</p>
     <v-btn to="/modules/1/1">
       Click me to go to unit 1
@@ -18,9 +18,7 @@
 <script>
 export default {
   name: "ModuleUnits"
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

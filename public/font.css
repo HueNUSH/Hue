@@ -1,8 +1,8 @@
 @font-face {
-    font-family: 'Noto Sans';
-    src: url(./font/NotoSans-VF.ttf);
+  font-family: "Noto Sans";
+  src: url(./font/NotoSans-VF.ttf);
 }
 
 #app {
-    font-family: "Noto Sans", "Open Sans", sans-serif;
+  font-family: "Noto Sans", "Open Sans", sans-serif;
 }

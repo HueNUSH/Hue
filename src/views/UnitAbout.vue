@@ -10,9 +10,7 @@
 <script>
 export default {
   name: "UnitAbout"
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

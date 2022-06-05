@@ -13,11 +13,11 @@ import Vue from "vue";
 
 export default Vue.extend({
   name: "MyModules",
-  data: function () {
+  data: function() {
     return {
       name: "",
       mainOut: ""
     };
-  },
+  }
 });
 </script>

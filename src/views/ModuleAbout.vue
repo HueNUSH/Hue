@@ -10,9 +10,7 @@
 <script>
 export default {
   name: "ModuleAbout"
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

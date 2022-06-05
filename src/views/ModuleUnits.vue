@@ -3,7 +3,7 @@
     <router-link to="/modules">
       < My modules
     </router-link>
-    <p> Units of a module </p>
+    <h1>Units of a module</h1>
     <p> Module id: {{ $route.params.module_id }}</p>
     <p>This page will display all units</p>
     <v-btn to="/modules/1/1">

@@ -3,7 +3,7 @@
     <router-link :to="'/modules/' + $route.params.module_id + '/' + $route.params.unit_no">
       < Back to unit
     </router-link>
-    <p>About this unit</p>
+    <h1>About this unit</h1>
   </v-container>
 </template>
 

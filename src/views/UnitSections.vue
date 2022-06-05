@@ -3,8 +3,7 @@
     <router-link :to="'/modules/' + $route.params.module_id">
       < Back to Module
     </router-link>
-
-    <p> Sections of a unit </p>
+    <h1>Sections of a unit</h1>
     <p> Module id: {{ $route.params.module_id }}</p>
     <p> Unit no: {{ $route.params.unit_no}} </p>
     <v-btn :to="'/modules/' + $route.params.module_id + '/' + $route.params.unit_no + '/about'">

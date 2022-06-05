@@ -1,9 +1,6 @@
 <template>
   <v-container fluid class="px-12 py-6">
-    My Modules
-
-    <br/>
-
+    <h1>My Modules</h1>
     <v-btn to="/modules/1">
       This button brings you to a module
       <!--  For now this is hardcoded, when mongo db is set up, it should contain module name and id  -->

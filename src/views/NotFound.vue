@@ -3,7 +3,7 @@
     <router-link to="/modules">
       < My modules
     </router-link>
-    <p>404 Not found lol</p>
+    <h1>404 Not found lol</h1>
   </v-container>
 </template>
 

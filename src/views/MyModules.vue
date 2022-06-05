@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="pb-6 pt-16" style="padding-left: 80px; padding-right: 100px">
     <h1>Welcome back, {{ user.name }}!</h1>
-    <p class="text-dark-tertiary">Academic Week</p>
+    <p class="text-dark-tertiary text-font-size-16">Academic Week</p>
 
     <h2 class="text-dark-primary text-display-semibold text-font-size-16" style="margin-top: 75px;">
       My modules
@@ -37,7 +37,7 @@
                 {{ module.module_title }}
               </h3>
 
-              <p class="card-subtitle">
+              <p class="text-dark-tertiary text-font-size-14">
                 <b>{{ module.units_completed }}/{{ module.total_units }}</b> sections completed
               </p>
 

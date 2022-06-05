@@ -27,9 +27,12 @@ h2,
     font-size: 1.375rem;
   }
 }
+// Uncomment below to check if there are font sizes not explicitly defined.
+#app {
+  font-size: 9rem;
+}
 
 // Module Units
-.card-subtitle,
 .links {
   color: gray;
 }

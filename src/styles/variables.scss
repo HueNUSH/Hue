@@ -1,6 +1,7 @@
 // vuetify-loader automatically bootstraps these variables overriding the framework defaults.
 // https://vuetifyjs.com/en/features/sass-variables/#vue-cli-install.
 
+// Custom color variables.
 $c-primary-foreground: #8C4F00; // Brown for button texts and icons.
 $c-primary-background: #83543C; // Brown for container backgrounds.
 $c-primary-accent: #B06F4C; // Brown for emphasis on $c-primary-background.
@@ -19,6 +20,8 @@ $c-border-regular: #837468;
 $c-border-faint: rgba(173, 119, 76, 0.3);
 $c-error: #BA1B1B;
 
+// For valid prop names, search here: https://vuetifyjs.com/en/api/vuetify/#sass.
 $material-light: (
+        'background': $c-background,
         'navigation-drawer': $c-primary-background,
 );

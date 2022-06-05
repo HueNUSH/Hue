@@ -1,5 +1,5 @@
 <template>
-  <v-app style="background-color: #FBEFE7">
+  <v-app>
     <v-navigation-drawer
       permanent
       app

@@ -4,9 +4,8 @@ import MyModules from "@/views/MyModules.vue";
 import Announcements from "@/views/Announcements.vue";
 import Schedule from "@/views/Schedule.vue";
 import ModuleUnits from "@/views/ModuleUnits.vue";
-import Unit from "@/views/Unit.vue";
+import UnitSections from "@/views/UnitSections.vue";
 import Info from "@/views/Info.vue";
-import Subchapter from "@/views/Subchapter.vue";
 
 Vue.use(VueRouter);
 
@@ -41,11 +40,7 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: "/modules/:module_id/:unit_no",
-    component: Unit,
-  },
-  {
-    path: "/modules/:module_id/:unit_no/:subchapter_no",
-    component: Subchapter,
+    component: UnitSections,
   },
 ];
 

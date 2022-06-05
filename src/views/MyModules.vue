@@ -15,7 +15,15 @@
                 <v-col cols="auto" class="d-flex align-center">
                   <v-sheet
                     class="rounded-circle d-flex align-center justify-center"
-                    :color="module.module_icon_background_color"
+                    :color="
+                      module.module_icon_background_color === 'orange'
+                        ? '#FBDE94'
+                        : module.module_icon_background_color === 'pink'
+                        ? '#FFC8F9'
+                        : module.module_icon_background_color === 'green'
+                        ? '#C5F4B5'
+                        : '#B6EDFE'
+                    "
                     :height="40"
                     :width="40"
                   >
@@ -90,7 +98,7 @@ export default Vue.extend({
         },
         {
           module_icon: "mdi-calculator-variant",
-          module_icon_background_color: "light-blue",
+          module_icon_background_color: "blue",
           module_id: 4,
           module_title: "Math",
           units_completed: 2,

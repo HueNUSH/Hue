@@ -38,7 +38,7 @@
               <h2>
                 {{ module.module_title }}
               </h2>
-              
+
               <p class="card-subtitle">
                 <b>{{ module.units_completed }}/{{ module.total_units }}</b> sections completed
               </p>

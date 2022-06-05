@@ -21,15 +21,7 @@ const routes: Array<RouteConfig> = [
     component: Announcements,
   },
   {
-    path: "/modules/announcements/:module_id",
-    component: Announcements,
-  },
-  {
     path: "/schedule",
-    component: Schedule,
-  },
-  {
-    path: "/modules/schedule/:module_id",
     component: Schedule,
   },
   {
@@ -55,6 +47,6 @@ const routes: Array<RouteConfig> = [
 ];
 
 export default new VueRouter({
-  mode: 'history',
+  mode: "history",
   routes,
 });

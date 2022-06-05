@@ -47,37 +47,6 @@ export default Vue.extend({
       route: string;
       icon: string;
     }> {
-      // Archived for implementing UnitSections.vue later.
-
-      // if(this.$route.path.startsWith("/modules") && this.$route.params.module_id != null) {
-      //   return [
-      //     {
-      //       name: "Home",
-      //       route: "/modules",
-      //       icon: "mdi-home",
-      //     },
-      //     {
-      //       name: "Info",
-      //       route: "/modules/info/" + this.$route.params.module_id,
-      //       icon: "mdi-information-outline",
-      //     },
-      //     {
-      //       name: "Units",
-      //       route: "/modules/" + this.$route.params.module_id,
-      //       icon: "mdi-format-list-numbered",
-      //     },
-      //     {
-      //       name: "Announcements",
-      //       route: "/modules/announcements/" + this.$route.params.module_id,
-      //       icon: "mdi-bullhorn",
-      //     },
-      //     {
-      //       name: "Schedule",
-      //       route: "/modules/schedule/" + this.$route.params.module_id,
-      //       icon: "mdi-calendar-blank",
-      //     },
-      //   ];
-      // }
       return [
         {
           name: "My modules",

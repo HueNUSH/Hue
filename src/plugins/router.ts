@@ -7,6 +7,7 @@ import ModuleAbout from "@/views/ModuleAbout.vue";
 import ModuleUnits from "@/views/ModuleUnits.vue";
 import UnitSections from "@/views/UnitSections.vue";
 import UnitAbout from "@/views/UnitAbout.vue";
+import NotFound from "@/views/NotFound.vue";
 
 Vue.use(VueRouter);
 
@@ -46,6 +47,10 @@ const routes: Array<RouteConfig> = [
   {
     path: "/modules/:module_id/:unit_no/about",
     component: UnitAbout,
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    component: NotFound,
   },
 ];
 

@@ -58,16 +58,32 @@
                 <b>{{ unit.sections_completed }}/{{ unit.total_sections }}</b> sections completed
               </p>
               <br/>
-              <p id="learn-arrow">Learn →</p>
+              <p class="learn-arrow">Learn →</p>
             </v-card>
           </router-link>
         </v-col>
       </v-row>
 
+      <v-card
+        id="module-about"
+        class="mt-16 pb-4"
+        max-width="33rem"
+      >
+        <v-card-title>
+          About this module
+        </v-card-title>
+        <v-card-text>
+          {{ module_about }}
+        </v-card-text>
 
-      <v-btn :to="'/modules/' + $route.params.module_id + '/about'">
-        About this module
-      </v-btn>
+        <br/>
+        <router-link
+          class="learn-arrow ma-4 links"
+          :to="'/modules/' + $route.params.module_id + '/about'"
+        >
+          View full description →
+        </router-link>
+      </v-card>
     </div>
   </v-container>
 </template>
@@ -84,6 +100,10 @@ export default Vue.extend({
     module_subtitle: "Module Subtitle",
     completed_units: 6,
     total_units: 6,
+    module_about: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac nibh non " +
+      "\n felis ultricies sodales a at enim. In quis quam fermentum, congue neque sed, molestie " +
+      "\n velit. Ut ultrices elit odio, tincidunt volutpat tortor pulvinar ut. Vivamus sed metus " +
+      "\n non nulla scelerisque ultrices vitae at tellus.",
   }),
   computed: {
     units(): Array<{

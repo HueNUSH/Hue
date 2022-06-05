@@ -21,7 +21,11 @@ h2, #completed-units {
 #unit-grid {
   max-width: 80rem;
 }
-#learn-arrow{
+.learn-arrow {
   color: $c-primary-foreground;
   margin-bottom: -4px;
+}
+
+#module-about {
+  border: 1px solid $c-text-dark-primary;
 }

@@ -1,6 +1,9 @@
 <template>
   <v-container fluid class="px-12 py-6">
-    <router-link :to="'/modules/' + $route.params.module_id + '/' + $route.params.unit_no">
+    <router-link
+      :to="'/modules/' + $route.params.module_id + '/' + $route.params.unit_no"
+      class="links"
+    >
       < Back to unit
     </router-link>
     <h1>About this unit</h1>

@@ -15,7 +15,7 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  name: "Main",
+  name: "MyModules",
   data: function () {
     return {
       name: "",

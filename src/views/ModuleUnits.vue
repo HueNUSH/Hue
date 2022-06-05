@@ -25,14 +25,14 @@
 
         <v-col class="pl-4 mt-3">
           <h1 class="card-title">{{ module_title }}</h1>
-          <p class="card-subtitle">{{ module_subtitle }}</p>
+          <p class="text-dark-tertiary">Academic Week</p>
         </v-col>
       </v-row>
 
     </v-card>
 
-    <div class="pa-15" id="unit-grid">
-      <b id="completed-units">Units • {{ completed_units }}/{{ total_units }} completed </b>
+    <div class="pa-14" id="unit-grid">
+      <b class="text-dark-primary">Units • {{ completed_units }}/{{ total_units }} completed </b>
       <p/>
 
       <v-row>
@@ -58,7 +58,7 @@
                 <b>{{ unit.sections_completed }}/{{ unit.total_sections }}</b> sections completed
               </p>
               <br/>
-              <p class="learn-arrow">Learn →</p>
+              <b class="learn-arrow">Learn →</b>
             </v-card>
           </router-link>
         </v-col>
@@ -97,7 +97,6 @@ export default Vue.extend({
     // Hard coded for now, get from data base in future
     module_icon: "mdi-flask-empty-outline",
     module_title: "Module Title",
-    module_subtitle: "Module Subtitle",
     completed_units: 6,
     total_units: 6,
     module_about: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac nibh non " +

@@ -1,10 +1,53 @@
 <template>
-  <v-container fluid class="px-12 py-6">
-    <h1>My Modules</h1>
-    <v-btn to="/modules/1">
-      This button brings you to a module
-      <!--  For now this is hardcoded, when mongo db is set up, it should contain module name and id  -->
-    </v-btn>
+  <v-container fluid class="pb-6 pt-16" style="padding-left: 80px; padding-right: 100px">
+    <h1>Welcome back, {{ user.name }}!</h1>
+    <p class="text-dark-tertiary">Academic Week</p>
+
+    <p class="text-dark-primary" style="margin-top: 75px; font-weight: bold">My modules</p>
+    <div style="max-width: 80rem">
+      <v-row>
+        <v-col
+          cols="12"
+          lg="4"
+          md="6"
+          v-for="(module, index) in modules"
+          :key="index"
+        >
+          <router-link
+            class="unit-card"
+            :to="'/modules/' + module.module_id "
+          >
+            <v-card
+              class="pa-4"
+              elevation="0"
+            >
+              <v-row>
+                <v-col cols="auto" class="d-flex align-center">
+                  <v-sheet
+                    class="rounded-circle d-flex align-center justify-center"
+                    :color="module.module_icon_background_color"
+                    :height="40"
+                    :width="40"
+                  >
+                    <v-icon>
+                      {{ module.module_icon }}
+                    </v-icon>
+                  </v-sheet>
+                </v-col>
+              </v-row>
+              <h2>
+                {{ module.module_title }}
+              </h2>
+              <p class="card-subtitle">
+                <b>{{ module.units_completed }}/{{ module.total_units }}</b> sections completed
+              </p>
+              <br/>
+              <b class="learn-arrow">View units →</b>
+            </v-card>
+          </router-link>
+        </v-col>
+      </v-row>
+    </div>
   </v-container>
 </template>
 
@@ -13,12 +56,56 @@ import Vue from "vue";
 
 export default Vue.extend({
   name: "MyModules",
-  data: function() {
-    return {
-      name: "",
-      mainOut: ""
-    };
-  }
+  data: () => ({
+    user: {
+      name: "Lustin Jim",
+    }
+  }),
+  computed: {
+    modules(): Array<{
+      module_icon: string;
+      module_icon_background_color: string;
+      module_id: number;
+      module_title: string;
+      units_completed: number;
+      total_units: number;
+    }> {
+      return [
+        {
+          module_icon: "mdi-flask-empty-outline",
+          module_icon_background_color: "orange",
+          module_id: 1,
+          module_title: "Introduction to Chemistry",
+          units_completed: 3,
+          total_units: 3,
+        },
+        {
+          module_icon: "mdi-flash-outline",
+          module_icon_background_color: "pink",
+          module_id: 2,
+          module_title: "Physics",
+          units_completed: 0,
+          total_units: 10,
+        },
+        {
+          module_icon: "mdi-microscope",
+          module_icon_background_color: "green",
+          module_id: 3,
+          module_title: "Biology",
+          units_completed: 5,
+          total_units: 10,
+        },
+        {
+          module_icon: "mdi-calculator-variant",
+          module_icon_background_color: "light-blue",
+          module_id: 4,
+          module_title: "Math",
+          units_completed: 2,
+          total_units: 2,
+        },
+      ];
+    }
+  },
 });
 </script>
 

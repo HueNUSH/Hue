@@ -47,7 +47,7 @@ export default Vue.extend({
       route: string;
       icon: string;
     }> {
-      // Archived for implementing Unit page later.
+      // Archived for implementing UnitSections.vue later.
 
       // if(this.$route.path.startsWith("/modules") && this.$route.params.module_id != null) {
       //   return [

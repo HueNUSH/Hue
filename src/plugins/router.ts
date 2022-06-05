@@ -3,9 +3,9 @@ import VueRouter, {RouteConfig} from "vue-router";
 import MyModules from "@/views/MyModules.vue";
 import Announcements from "@/views/Announcements.vue";
 import Schedule from "@/views/Schedule.vue";
+import ModuleAbout from "@/views/ModuleAbout.vue";
 import ModuleUnits from "@/views/ModuleUnits.vue";
 import UnitSections from "@/views/UnitSections.vue";
-import Info from "@/views/Info.vue";
 
 Vue.use(VueRouter);
 
@@ -31,8 +31,8 @@ const routes: Array<RouteConfig> = [
     component: Schedule,
   },
   {
-    path: "/modules/info/:module_id",
-    component: Info,
+    path: "/modules/:module_id/about",
+    component: ModuleAbout,
   },
   {
     path: "/modules/:module_id",

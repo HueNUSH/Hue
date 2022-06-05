@@ -3,7 +3,7 @@
     <h1>Welcome back, {{ user.name }}!</h1>
     <p class="text-dark-tertiary">Academic Week</p>
 
-    <h2 class="text-dark-primary text-display text-font-size-16" style="margin-top: 75px;">
+    <h2 class="text-dark-primary text-display-semibold text-font-size-16" style="margin-top: 75px;">
       My modules
     </h2>
     <div style="max-width: 80rem">
@@ -25,7 +25,7 @@
                   </v-sheet>
                 </v-col>
               </v-row>
-              <h3 class="text-display">
+              <h3 class="text-display-semibold text-font-size-22">
                 {{ module.module_title }}
               </h3>
 

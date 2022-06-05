@@ -3,24 +3,14 @@
     <h1>Welcome back, {{ user.name }}!</h1>
     <p class="text-dark-tertiary">Academic Week</p>
 
-    <p class="text-dark-primary text-display" style="margin-top: 75px; font-weight: bold">My modules</p>
+    <p class="text-dark-primary text-display" style="margin-top: 75px; font-weight: bold">
+      My modules
+    </p>
     <div style="max-width: 80rem">
       <v-row>
-        <v-col
-          cols="12"
-          lg="4"
-          md="6"
-          v-for="(module, index) in modules"
-          :key="index"
-        >
-          <router-link
-            class="unit-card"
-            :to="'/modules/' + module.module_id "
-          >
-            <v-card
-              class="pa-4 fill-height d-flex flex-column"
-              elevation="0"
-            >
+        <v-col cols="12" lg="4" md="6" v-for="(module, index) in modules" :key="index">
+          <router-link class="unit-card" :to="'/modules/' + module.module_id">
+            <v-card class="pa-4 fill-height d-flex flex-column" elevation="0">
               <v-row>
                 <v-col cols="auto" class="d-flex align-center">
                   <v-sheet
@@ -43,7 +33,7 @@
                 <b>{{ module.units_completed }}/{{ module.total_units }}</b> sections completed
               </p>
 
-              <v-spacer/>
+              <v-spacer />
 
               <b class="learn-arrow">View units →</b>
             </v-card>
@@ -61,7 +51,7 @@ export default Vue.extend({
   name: "MyModules",
   data: () => ({
     user: {
-      name: "Lustin Jim",
+      name: "Lustin Jim"
     }
   }),
   computed: {
@@ -80,7 +70,7 @@ export default Vue.extend({
           module_id: 1,
           module_title: "Introduction to Chemistry",
           units_completed: 3,
-          total_units: 3,
+          total_units: 3
         },
         {
           module_icon: "mdi-flash-outline",
@@ -88,7 +78,7 @@ export default Vue.extend({
           module_id: 2,
           module_title: "Physics",
           units_completed: 0,
-          total_units: 10,
+          total_units: 10
         },
         {
           module_icon: "mdi-microscope",
@@ -96,7 +86,7 @@ export default Vue.extend({
           module_id: 3,
           module_title: "Biology",
           units_completed: 5,
-          total_units: 10,
+          total_units: 10
         },
         {
           module_icon: "mdi-calculator-variant",
@@ -104,11 +94,11 @@ export default Vue.extend({
           module_id: 4,
           module_title: "Math",
           units_completed: 2,
-          total_units: 2,
-        },
+          total_units: 2
+        }
       ];
     }
-  },
+  }
 });
 </script>
 

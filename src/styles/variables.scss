@@ -20,6 +20,7 @@ $c-error: #BA1B1B;
 // vuetify-loader automatically bootstraps variables below, overriding the framework defaults.
 // See https://vuetifyjs.com/en/features/sass-variables/#vue-cli-install.
 // For valid prop names, see https://vuetifyjs.com/en/api/vuetify/#sass.
+$border-radius-root: 0.5rem;
 $material-light: (
         'background': $c-background,
         'navigation-drawer': $c-primary-background,

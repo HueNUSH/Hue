@@ -2,8 +2,7 @@
   <v-container fluid class="pb-6 pt-16" style="padding-left: 80px; padding-right: 100px">
     <h1>Welcome back, {{ user.name }}!</h1>
     <p class="text-dark-tertiary text-font-size-16">Academic Week</p>
-
-    <h2 class="text-dark-primary text-display-semibold text-font-size-16" style="margin-top: 75px;">
+    <h2 class="text-dark-primary text-display-semibold text-font-size-16 pb-3" style="margin-top: 75px;">
       My modules
     </h2>
     <div style="max-width: 80rem">

@@ -11,9 +11,9 @@
           <router-link class="unit-card" :to="'/modules/' + module.module_id">
             <v-card class="pa-4 fill-height d-flex flex-column" elevation="0">
               <v-row>
-                <v-col cols="auto" class="d-flex align-center">
+                <v-col cols="auto" class="d-flex flex-column">
                   <v-sheet
-                    class="rounded-circle d-flex align-center justify-center"
+                    class="rounded-circle d-flex align-center justify-center align-self-baseline"
                     :color="
                       module.module_icon_background_color === 'orange'
                         ? '#FBDE94'
@@ -30,17 +30,16 @@
                       {{ module.module_icon }}
                     </v-icon>
                   </v-sheet>
+
+
+                  <h3 class="text-dark-primary text-display-semibold text-font-size-22">
+                    {{ module.module_title }}
+                  </h3>
+                  <p class="text-dark-tertiary text-font-size-14">
+                    <b>{{ module.units_completed }}/{{ module.total_units }}</b> sections completed
+                  </p>
                 </v-col>
               </v-row>
-              <h3 class="text-dark-primary text-display-semibold text-font-size-22">
-                {{ module.module_title }}
-              </h3>
-
-              <p class="text-dark-tertiary text-font-size-14">
-                <b>{{ module.units_completed }}/{{ module.total_units }}</b> sections completed
-              </p>
-
-              <v-spacer />
 
               <p class="learn-arrow text-semibold text-font-size-16">View units →</p>
             </v-card>

@@ -3,7 +3,7 @@ import VueRouter, {RouteConfig} from "vue-router";
 import MyModules from "@/views/MyModules.vue";
 import Announcements from "@/views/Announcements.vue";
 import Schedule from "@/views/Schedule.vue";
-import Modules from "@/views/Modules.vue";
+import Units from "@/views/Units.vue";
 import Unit from "@/views/Unit.vue";
 import Info from "@/views/Info.vue";
 import Subchapter from "@/views/Subchapter.vue";
@@ -37,7 +37,7 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: "/modules/:module_id",
-    component: Modules,
+    component: Units,
   },
   {
     path: "/modules/:module_id/:unit_no",

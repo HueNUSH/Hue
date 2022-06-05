@@ -1,6 +1,6 @@
 <template>
   <v-container fluid class="px-12 py-6">
-    <p> Modules page </p>
+    <p> Units of a module </p>
     <p> Module id: {{ $route.params.module_id }}</p>
     <p>This page will display all units</p>
     <v-btn to="/modules/1/1">
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "modules"
+  name: "Units"
 }
 </script>
 

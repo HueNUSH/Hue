@@ -3,7 +3,7 @@
     <h1>Welcome back, {{ user.name }}!</h1>
     <p class="text-dark-tertiary">Academic Week</p>
 
-    <p class="text-dark-primary" style="margin-top: 75px; font-weight: bold">My modules</p>
+    <p class="text-dark-primary text-display" style="margin-top: 75px; font-weight: bold">My modules</p>
     <div style="max-width: 80rem">
       <v-row>
         <v-col
@@ -35,10 +35,10 @@
                   </v-sheet>
                 </v-col>
               </v-row>
-              <h2>
+              <h2 class="text-display">
                 {{ module.module_title }}
               </h2>
-              
+
               <p class="card-subtitle">
                 <b>{{ module.units_completed }}/{{ module.total_units }}</b> sections completed
               </p>

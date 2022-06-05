@@ -2,7 +2,7 @@
 $c-primary-foreground: #8C4F00; // Brown for button texts and icons.
 $c-primary-background: #83543C; // Brown for container backgrounds.
 $c-primary-accent: #B06F4C; // Brown for emphasis on $c-primary-background.
-$c-background: #FCF5EE;
+$c-background: #FBF3E9;
 $c-surface-light: #FCFCFC;
 $c-surface-error: #FFDAD4;
 $c-text-title: #4F2700; // For the title of a page.
@@ -20,6 +20,7 @@ $c-error: #BA1B1B;
 // vuetify-loader automatically bootstraps variables below, overriding the framework defaults.
 // See https://vuetifyjs.com/en/features/sass-variables/#vue-cli-install.
 // For valid prop names, see https://vuetifyjs.com/en/api/vuetify/#sass.
+$border-radius-root: 0.5rem;
 $material-light: (
         'background': $c-background,
         'navigation-drawer': $c-primary-background,

@@ -13,6 +13,10 @@ Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
+    path: "/",
+    redirect: "/modules",
+  },
+  {
     path: "/modules",
     component: MyModules,
   },

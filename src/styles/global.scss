@@ -30,6 +30,22 @@ h2,
     font-size: 1.375rem;
   }
 }
+
+// More spacing helpers
+.p {
+  &l- {
+    &20 {
+      padding-left: 80px;
+    }
+  }
+  &r- {
+    &31 {
+      padding-right: 124px;
+    }
+  }
+}
+
+
 // Uncomment below to check if there are font sizes not explicitly defined.
 //#app {
 //  font-size: 9rem;

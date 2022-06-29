@@ -6,7 +6,8 @@ from database import (
     retrieve_modules,
     retrieve_module,
     add_module,
-    update_module
+    update_module,
+    delete_module
 )
 from models.modules import (
     ErrorResponseModel,
@@ -54,7 +55,21 @@ def update_module_data(module_id, req: UpdateModules = Body(...)):
                 f'Module with ID: {module_id} updated successfully',
                 "Updated module successfully"
             )
+        else:
+            return ErrorResponseModel("An error occured", 400, "Unable to update module")
     except InvalidId as e:
         return ErrorResponseModel("An error occured", 404, "Invalid ID")
 
+@router.delete("/delete_module/{id}", response_description="Module data deleted from the database")
+async def delete_module_data(module_id: str):
+    try:
+        deleted_module = delete_module(module_id)
+        if deleted_module:
+            return ResponseModel(
+                f"Module with ID: {module_id} removed", "Module deleted successfully"
+            )
+        else:
+            return ErrorResponseModel("An error occured", 400, "Unable to delete module")
+    except InvalidId as e:
+        return ErrorResponseModel("An error occured", 404, "Invalid ID")
 

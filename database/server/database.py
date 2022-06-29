@@ -60,3 +60,11 @@ def update_module(module_id: str, module_data: dict):
             return True
 
     return False
+
+def delete_module(module_id: str):
+    module = modules.find_one({"_id": ObjectId(module_id)})
+
+    if module:
+        modules.delete_one({"_id": ObjectId(module_id)})
+        return True
+    return False

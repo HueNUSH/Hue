@@ -24,6 +24,7 @@ schedule = database.schedule_collection
 def retrieve_modules() -> list:
     moduleList = []
     for module in modules.find():
+        module["_id"] = str(module["_id"])
         moduleList.append(module)
     return moduleList
 
@@ -31,6 +32,7 @@ def retrieve_modules() -> list:
 def retrieve_module(moduleId: str) -> dict:
     module = modules.find_one({"_id": ObjectId(moduleId)})
     if module:
+        module["_id"] = str(module["_id"])
         return module
 
 
@@ -41,5 +43,4 @@ def add_module(module_data: dict) -> dict:
 
     # Convert ObjectID back to str as FastAPI can't parse it
     module["_id"] = str(module["_id"])
-    print(module["units"][0])
     return module

@@ -1,7 +1,11 @@
 from fastapi import FastAPI
 import uvicorn
 
+from routes.modules import router as ModuleRouter
+
 app = FastAPI()
+
+app.include_router(ModuleRouter, tags=["Module"], prefix="/modules")
 
 
 @app.get("/", tags=["Root"])

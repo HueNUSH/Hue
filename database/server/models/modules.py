@@ -1,11 +1,10 @@
 from typing import Literal
-
+from bson.objectid import ObjectId
 from pydantic import BaseModel, Field
 
 
 # TODO : Validators for string length
 class UnitSections(BaseModel):
-    sectionId: int = Field(...)
     sectionName: str = Field(...)
     sectionSlug: str = Field(...)
     sectionDesc: str = Field(...)
@@ -15,7 +14,6 @@ class UnitSections(BaseModel):
 
 
 class Units(BaseModel):
-    unitId: int = Field(...)
     unitName: str = Field(...)
     unitSlug: str = Field(...)
     unitDesc: str = Field(...)
@@ -24,12 +22,11 @@ class Units(BaseModel):
 
 
 class Modules(BaseModel):
-    moduleId: int = Field(...)
     moduleName: str = Field(...)
     moduleSlug: str = Field(...)
     moduleDesc: str = Field(...)
     moduleData: str = Field(...)
-    sections: list[UnitSections] = Field(...)
+    units: list[Units] = Field(...)
 
 
 def ResponseModel(data, message):

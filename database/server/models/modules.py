@@ -1,4 +1,4 @@
-from typing import Literal
+from typing import Literal, Optional
 from bson.objectid import ObjectId
 from pydantic import BaseModel, Field
 
@@ -27,6 +27,13 @@ class Modules(BaseModel):
     moduleDesc: str = Field(...)
     moduleData: str = Field(...)
     units: list[Units] = Field(...)
+
+class UpdateModules(BaseModel):
+    moduleName: Optional[str]
+    moduleSlug: Optional[str]
+    moduleDesc: Optional[str]
+    moduleData: Optional[str]
+    units: Optional[list[Units]]
 
 
 def ResponseModel(data, message):

@@ -48,13 +48,14 @@ def add_module(module_data: dict) -> dict:
 
 # Update a module
 def update_module(module_id: str, module_data: dict):
-    module = modules.find_one({"_id": ObjectId(module_id)})
+    module = modules.find_one({"_id": module_id})
+    print(module)
 
     # Convert ObjectID back to str as FastAPI can't parse it
     module["_id"] = str(module["_id"])
 
     if module:
-        result = modules.update_one({'_id': ObjectId(module_id)}, {"$set" : module_data })
+        result = modules.update_one({'_id': module_id}, module_data)
 
         if result:
             return True

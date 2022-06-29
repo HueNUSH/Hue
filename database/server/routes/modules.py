@@ -5,12 +5,14 @@ from bson.errors import InvalidId
 from database import (
     retrieve_modules,
     retrieve_module,
-    add_module
+    add_module,
+    update_module
 )
 from models.modules import (
     ErrorResponseModel,
     ResponseModel,
-    Modules
+    Modules,
+    UpdateModules,
 )
 
 router = APIRouter()
@@ -39,3 +41,20 @@ def get_module(module_id):
     if module:
         return ResponseModel(module, "Module data retrieved successfully")
     return ErrorResponseModel("An error occured", 404, "No module found")
+
+@router.put("/update_module/{id}", response_description="Module updated")
+def update_module_data(module_id, req: UpdateModules = Body(...)):
+    req = {k: v for k, v in req.dict().items() if v is not None}
+
+    try:
+        updated_module = update_module(module_id, req)
+
+        if updated_module:
+            return ResponseModel(
+                f'Module with ID: {module_id} updated successfully',
+                "Updated module successfully"
+            )
+    except InvalidId as e:
+        return ErrorResponseModel("An error occured", 404, "Invalid ID")
+
+

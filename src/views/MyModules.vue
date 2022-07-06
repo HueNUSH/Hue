@@ -104,6 +104,19 @@ export default Vue.extend({
         }
       ];
     }
+  },
+  created() {
+    fetch("http://0.0.0.0:8000/users/get_user/{id}?userId=admin", {
+      method:"GET",
+      headers: {
+        "accept": "application/json",
+        "userId": "admin",
+      }
+    }).then(
+      response => response.json().then(
+        data => console.log(data)
+      )
+    );
   }
 });
 </script>

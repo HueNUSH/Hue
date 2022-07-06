@@ -28,7 +28,7 @@ def retrieve_objects(objCollection) -> list:
     return objList
 
 def retrieve_object(objId, objCollection) -> dict:
-    obj = obj.find_one({"_id": objId})
+    obj = objCollection.find_one({"_id": objId})
     if obj:
         obj["_id"] = str(obj["_id"])
     return obj
@@ -89,4 +89,7 @@ def retrieve_users():
     return retrieve_objects(users)
 
 def retrieve_user(userId: str):
-    return retrieve_user(userId, users)
+    user = users.find_one({"userId": userId})
+    user["_id"] = str(user["_id"])
+    return user
+

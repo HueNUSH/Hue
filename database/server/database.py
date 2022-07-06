@@ -14,57 +14,79 @@ client = MongoClient(MONGO_DETAILS)
 database = client.database
 
 modules = database.modules_collection
+users = database.users_collection
 announcements = database.announcements_collection
 schedule = database.schedule_collection
 
 
-# CRUD Operations
+# General helper functions
+def retrieve_objects(objCollection) -> list:
+    objList = []
+    for obj in objCollection.find():
+        obj["_id"] = str(obj["_id"])
+        objList.append(obj)
+    return objList
 
-# Get all modules
-def retrieve_modules() -> list:
-    moduleList = []
-    for module in modules.find():
-        module["_id"] = str(module["_id"])
-        moduleList.append(module)
-    return moduleList
+def retrieve_object(objId, objCollection) -> dict:
+    obj = obj.find_one({"_id": objId})
+    if obj:
+        obj["_id"] = str(obj["_id"])
+    return obj
 
-# Get a module
-def retrieve_module(moduleId: str) -> dict:
-    module = modules.find_one({"_id": ObjectId(moduleId)})
-    if module:
-        module["_id"] = str(module["_id"])
-        return module
+def add_object(objData: dict, objCollection) -> dict:
+    objId = objCollection.insert_one(objData).inserted_id
+    obj = objCollection.find_one({"_id": objId})
 
+    # Convert ObjectId back to str as FastApi can't parse it
+    obj["_id"] = str(obj["_id"])
+    return obj
 
-# Add a module
-def add_module(module_data: dict) -> dict:
-    module_id = modules.insert_one(module_data).inserted_id
-    module = modules.find_one({"_id": module_id})
-
-    # Convert ObjectID back to str as FastAPI can't parse it
-    module["_id"] = str(module["_id"])
-    return module
-
-
-# Update a module
-def update_module(module_id: str, module_data: dict):
-    module = modules.find_one({"_id": ObjectId(module_id)})
+def update_obj(objId, objData: dict, objCollection) -> bool:
+    obj = objCollection.find_one({"_id": objId})
 
     # Convert ObjectID back to str as FastAPI can't parse it
-    module["_id"] = str(module["_id"])
+    obj["_id"] = str(obj["_id"])
 
-    if module:
-        result = modules.update_one({'_id': ObjectId(module_id)}, {"$set" : module_data })
+    if obj:
+        result = objCollection.update_one({'_id': ObjectId(objId)}, {"$set" : objData })
 
         if result:
             return True
 
     return False
 
-def delete_module(module_id: str):
-    module = modules.find_one({"_id": ObjectId(module_id)})
+def delete_obj(objId, objCollection) -> bool:
+    obj = objCollection.find_one({"_id": ObjectId(objId)})
 
-    if module:
-        modules.delete_one({"_id": ObjectId(module_id)})
+    if obj:
+        objCollection.delete_one({"_id": ObjectId(objId)})
         return True
     return False
+
+
+# CRUD Operations for modules
+def retrieve_modules():
+    return retrieve_objects(modules)
+
+def retrieve_module(moduleId: str):
+    return retrieve_object(ObjectId(moduleId), modules)
+
+def add_module(moduleData: dict):
+    return add_object(moduleData, modules)
+
+def update_module(moduleId: str, moduleData: dict):
+    return update_obj(ObjectId(moduleId), moduleData, modules)
+
+def delete_module(moduleId: str):
+    delete_object(ObjectId(moduleId), modules)
+
+
+# CRUD Operations for users
+def add_user(userData: dict):
+    return add_object(userData, users)
+
+def retrieve_users():
+    return retrieve_objects(users)
+
+def retrieve_user(userId: str):
+    return retrieve_user(userId, users)

@@ -21,7 +21,6 @@ router = APIRouter()
 
 @router.post("/create_module", response_description="Module data added into database")
 def create_module(module: Modules = Body(...)):
-    print(module.units)
     module = jsonable_encoder(module)
     new_module = add_module(module)
     return ResponseModel(new_module, "Module added successfully")

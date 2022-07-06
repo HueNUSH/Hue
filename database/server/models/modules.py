@@ -1,5 +1,4 @@
 from typing import Literal, Optional
-from bson.objectid import ObjectId
 from pydantic import BaseModel, Field
 
 
@@ -10,7 +9,7 @@ class UnitSections(BaseModel):
     sectionDesc: str = Field(...)
     mediaType: Literal['pdf', 'html' 'video'] = Field(...)
     sectionMedia: str = Field(...)
-    isComplete: bool = Field(...)
+    isComplete: bool = False
 
 
 class Units(BaseModel):

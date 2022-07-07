@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Body
 from fastapi.encoders import jsonable_encoder
 from bson.errors import InvalidId
+import pprint
+pp = pprint.PrettyPrinter(indent=4)
 
 from database import (
     retrieve_modules,
@@ -45,6 +47,17 @@ def get_module(module_id):
 @router.put("/update_module/{id}", response_description="Module updated")
 def update_module_data(module_id, req: UpdateModules = Body(...)):
     req = {k: v for k, v in req.dict().items() if v is not None}
+
+    unitsCompleted = 0
+    for unit in req["units"]:
+        sectionsCompleted = 0
+        for section in unit["sections"]:
+            if section["isComplete"]:
+                sectionsCompleted += 1
+        if sectionsCompleted == len(unit["sections"]):
+            unitsCompleted += 1
+            unit["isComplete"] = True
+    req["unitsCompleted"] = unitsCompleted
 
     try:
         updated_module = update_module(module_id, req)

@@ -8,18 +8,18 @@
     <div style="max-width: 80rem">
       <v-row>
         <v-col cols="12" lg="4" md="6" v-for="(module, index) in modules" :key="index">
-          <router-link class="unit-card" :to="'/modules/' + module.module_id">
+          <router-link class="unit-card" :to="'/modules/' + module._id">
             <v-card class="pa-4 fill-height d-flex flex-column" elevation="0">
               <v-row>
                 <v-col cols="auto" class="d-flex flex-column">
                   <v-sheet
                     class="rounded-circle d-flex align-center justify-center align-self-baseline"
                     :color="
-                      module.module_icon_background_color === 'orange'
+                      module.moduleIconBackgroundColor === 'orange'
                         ? '#FBDE94'
-                        : module.module_icon_background_color === 'pink'
+                        : module.moduleIconBackgroundColor === 'pink'
                         ? '#FFC8F9'
-                        : module.module_icon_background_color === 'green'
+                        : module.moduleIconBackgroundColor === 'green'
                         ? '#C5F4B5'
                         : '#B6EDFE'
                     "
@@ -27,16 +27,16 @@
                     :width="40"
                   >
                     <v-icon>
-                      {{ module.module_icon }}
+                      {{ module.moduleIcon }}
                     </v-icon>
                   </v-sheet>
 
 
                   <h3 class="text-dark-primary text-display-semibold text-font-size-22">
-                    {{ module.module_title }}
+                    {{ module.moduleName }}
                   </h3>
                   <p class="text-dark-tertiary text-font-size-14">
-                    <b>{{ module.units_completed }}/{{ module.total_units }}</b> sections completed
+                    <b>{{ module.unitsCompleted }}/{{ module.units.length }}</b> sections completed
                   </p>
                 </v-col>
               </v-row>
@@ -52,71 +52,40 @@
 
 <script lang="ts">
 import Vue from "vue";
+import {Modules} from "@/types/modules";
 
 export default Vue.extend({
   name: "MyModules",
   data: () => ({
     user: {
       name: "Lustin Jim"
-    }
+    },
+    modules: []
   }),
-  computed: {
-    modules(): Array<{
-      module_icon: string;
-      module_icon_background_color: string;
-      module_id: number;
-      module_title: string;
-      units_completed: number;
-      total_units: number;
-    }> {
-      return [
-        {
-          module_icon: "mdi-flask-empty-outline",
-          module_icon_background_color: "orange",
-          module_id: 1,
-          module_title: "Introduction to Chemistry",
-          units_completed: 3,
-          total_units: 3
-        },
-        {
-          module_icon: "mdi-flash-outline",
-          module_icon_background_color: "pink",
-          module_id: 2,
-          module_title: "Physics",
-          units_completed: 0,
-          total_units: 10
-        },
-        {
-          module_icon: "mdi-microscope",
-          module_icon_background_color: "green",
-          module_id: 3,
-          module_title: "Biology",
-          units_completed: 5,
-          total_units: 10
-        },
-        {
-          module_icon: "mdi-calculator-variant",
-          module_icon_background_color: "blue",
-          module_id: 4,
-          module_title: "Math",
-          units_completed: 2,
-          total_units: 2
+  methods: {
+    populateMethods() {
+      fetch("http://0.0.0.0:8000/modules/get_modules", {
+        method: "GET",
+        headers: {
+          "accept": "application/json",
         }
-      ];
+      }).then(
+        response => response.json().then(
+          data => {
+            console.log(data.data[0]);
+
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            for (const moduleKey in data.data[0]) {
+              const module: Modules = JSON.parse(JSON.stringify(data.data[0][moduleKey]));
+              this.modules.push(module);
+            }
+          }
+        )
+      );
     }
   },
   created() {
-    fetch("http://0.0.0.0:8000/users/get_user/{id}?userId=admin", {
-      method:"GET",
-      headers: {
-        "accept": "application/json",
-        "userId": "admin",
-      }
-    }).then(
-      response => response.json().then(
-        data => console.log(data)
-      )
-    );
+    this.populateMethods();
   }
 });
 </script>

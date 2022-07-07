@@ -1,7 +1,12 @@
+import {Units} from "@/types/units";
+
 export class Modules {
   _id!: string
   moduleIcon!: string
-  module_icon_background_color!: string
-  module_title!: string
-
+  moduleIconBackgroundColor!: string
+  moduleName!: string
+  moduleDesc!: string
+  moduleAbout!: string
+  units!: Units[]
+  unitsCompleted!: number
 }

@@ -78,7 +78,7 @@ def update_module(moduleId: str, moduleData: dict):
     return update_obj(ObjectId(moduleId), moduleData, modules)
 
 def delete_module(moduleId: str):
-    delete_object(ObjectId(moduleId), modules)
+    delete_obj(ObjectId(moduleId), modules)
 
 
 # CRUD Operations for users

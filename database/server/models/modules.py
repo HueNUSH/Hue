@@ -13,7 +13,7 @@ class UnitSections(BaseModel):
 class Units(BaseModel):
     unitName: str = Field(...)
     unitDesc: str = Field(...)
-    unitData: str = Field(...)
+    unitAbout: str = Field(...)
     sections: list[UnitSections] = Field(...)
     sectionsCompleted: int = 0
     isComplete: bool = False
@@ -21,7 +21,9 @@ class Units(BaseModel):
 class Modules(BaseModel):
     moduleName: str = Field(...)
     moduleDesc: str = Field(...)
-    moduleData: str = Field(...)
+    moduleAbout: str = Field(...)
+    moduleIcon: str = Field(...)
+    moduleIconBackgroundColor: str = Field(...)
     units: list[Units] = Field(...)
     unitsCompleted: int = 0
 
@@ -35,13 +37,15 @@ class UpdateSections(BaseModel):
 class UpdateUnits(BaseModel):
     unitName: Optional[str]
     unitDesc: Optional[str]
-    unitData: Optional[str]
+    unitAbout: Optional[str]
     sections: Optional[list[UpdateSections]]
 
 class UpdateModules(BaseModel):
     moduleName: Optional[str]
     moduleDesc: Optional[str]
-    moduleData: Optional[str]
+    moduleAbout: Optional[str]
+    moduleIcon: Optional[str]
+    moduleIconBackgroundColor: Optional[str]
     units: Optional[list[UpdateUnits]]
 
 

@@ -8,7 +8,7 @@
     <div style="max-width: 80rem">
       <v-row>
         <v-col cols="12" lg="4" md="6" v-for="(module, index) in modules" :key="index">
-          <router-link class="unit-card" :to="'/modules/' + module._id">
+          <router-link class="unit-card" :to="'/modules/' + module._id" :module="module">
             <v-card class="pa-4 fill-height d-flex flex-column" elevation="0">
               <v-row>
                 <v-col cols="auto" class="d-flex flex-column">
@@ -60,7 +60,7 @@ export default Vue.extend({
     user: {
       name: "Lustin Jim"
     },
-    modules: []
+    modules: [] as Array<Modules>
   }),
   methods: {
     populateMethods() {
@@ -72,11 +72,9 @@ export default Vue.extend({
       }).then(
         response => response.json().then(
           data => {
-            console.log(data.data[0]);
-
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             for (const moduleKey in data.data[0]) {
-              const module: Modules = JSON.parse(JSON.stringify(data.data[0][moduleKey]));
+              const module: Modules = JSON.parse(JSON.stringify(data.data[0][parseInt(moduleKey)]));
               this.modules.push(module);
             }
           }

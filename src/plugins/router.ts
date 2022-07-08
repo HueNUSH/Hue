@@ -35,6 +35,7 @@ const routes: Array<RouteConfig> = [
   {
     path: "/modules/:module_id",
     component: ModuleUnits,
+    props: true,
   },
   {
     path: "/modules/:module_id/:unit_no",

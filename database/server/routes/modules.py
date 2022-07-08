@@ -34,7 +34,7 @@ def get_modules():
         return ResponseModel(modules, "Modules data retrieved successfully")
     return ResponseModel(modules, "Empty list returned")
 
-@router.get("/get_module/{id}", response_description="Module retrieved")
+@router.get("/get_module/", response_description="Module retrieved")
 def get_module(module_id):
     try:
         module = retrieve_module(module_id)
@@ -44,7 +44,7 @@ def get_module(module_id):
         return ResponseModel(module, "Module data retrieved successfully")
     return ErrorResponseModel("An error occured", 404, "No module found")
 
-@router.put("/update_module/{id}", response_description="Module updated")
+@router.put("/update_module", response_description="Module updated")
 def update_module_data(module_id, req: UpdateModules = Body(...)):
     req = {k: v for k, v in req.dict().items() if v is not None}
 
@@ -72,7 +72,7 @@ def update_module_data(module_id, req: UpdateModules = Body(...)):
     except InvalidId as e:
         return ErrorResponseModel("An error occured", 404, "Invalid ID")
 
-@router.delete("/delete_module/{id}", response_description="Module data deleted from the database")
+@router.delete("/delete_module", response_description="Module data deleted from the database")
 async def delete_module_data(module_id: str):
     try:
         deleted_module = delete_module(module_id)

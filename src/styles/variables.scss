@@ -23,5 +23,6 @@ $c-error: #BA1B1B;
 $border-radius-root: 0.5rem;
 $material-light: (
         'background': $c-background,
-        'navigation-drawer': $c-primary-background,
+        'navigation-drawer': $c-surface-light,
+        'app-bar': $c-primary-background
 );

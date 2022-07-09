@@ -1,40 +1,40 @@
 <template>
   <v-app>
-    <v-navigation-drawer
-      permanent
+     <v-app-bar 
+      permanent 
       app
-      clipped>
+      flat 
+      clipped
+      >
+        
+        <v-toolbar-title>
+        <span style="margin-left: 64px">Hue</span>
+        </v-toolbar-title>
+        <!-- <v-spacer></v-spacer> -->
+        <v-toolbar-items class="flex align-center justify-center" style="margin-right: 64px">
+              <v-btn v-for="item in routes"
+              :to="item.route"
+              :key="item.name"
+              style="margin-right: 16px"
+              text
+              auto-height
+              depressed
+              rounded
+              >
+                {{item.name}}
+              </v-btn>
+        </v-toolbar-items>
+        <!-- <v-spacer></v-spacer> -->
+    </v-app-bar>
 
-      <v-list
-        class="mt-12"
-        dense
-        nav>
-        <router-link v-for="item in routes"
-                     :to="item.route"
-                     :key="item.name">
-          <v-list-item link class="mt-3">
-            <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>
-                {{ item.name }}
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </router-link>
-      </v-list>
-    </v-navigation-drawer>
-
-    <v-content>
+    <v-main>
       <router-view/>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-
 export default Vue.extend({
   name: "App",
   data: () => ({
@@ -49,7 +49,7 @@ export default Vue.extend({
     }> {
       return [
         {
-          name: "My modules",
+          name: "My Modules",
           route: "/modules",
           icon: "mdi-grid-large",
         },
@@ -72,16 +72,48 @@ export default Vue.extend({
 <style lang="scss" scoped>
 @import 'styles/variables.scss';
 @import "styles/global.scss";
-
+.v-app-bar a {
+  text-decoration: none;
+}
 .v-list a {
   text-decoration: none;
 }
-
-.v-list-item__icon .v-icon {
+::v-deep .v-btn__content {
   color: $c-text-light-tertiary;
 }
-
-.v-list-item__content {
+::v-deep .v-btn {
+  color: $c-primary-background !important;
+  opacity: 1 !important;
+}
+::v-deep .v-btn--active::before, .v-btn--active:hover::before, .v-btn--active  {
+  opacity: 1 !important;
+  color: $c-primary-accent !important;
+} 
+::v-deep .v-btn-toggle > .v-btn.v-btn {
+  opacity: 0 !important;
+}
+::v-deep .v-btn:focus::before {
+  opacity: 1 !important;
+}
+;;v-deep .v-btn::before {
+  opacity: 0 !important;
+  color: $c-primary-background !important;
+}
+;;v-deep .v-btn:hover::before {
+  color: $c-primary-accent !important;
+  opacity: 0.34 !important;
+}
+::v-deep .v-toolbar__title {
   color: $c-text-light-primary;
+}
+::v-deep .v-toolbar__items  .v-btn{
+  border-radius: 5px;
+  height: 60% !important;
+  text-transform: unset !important;
+}
+::v-deep .v-toolbar__content, .v-toolbar__extension {
+    align-items: center;
+    display: flex;
+    padding: 0 24px;
 }
 </style>

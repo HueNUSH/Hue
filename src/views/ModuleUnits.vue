@@ -1,12 +1,13 @@
 <template>
-  <v-container class="pa-6" max-width="80rem" fluid>
-    <v-card
-      class="px-12 py-6"
+  <v-container fluid class="pb-6" max-width="80rem">
+    <div class="pa-14" id="unit-grid">
+       <v-card
+      class="px-8 py-6 text-font-size-16"
       max-width="80rem"
       elevation="0"
     >
       <router-link to="/modules" class="links">
-        < My modules
+        &lt; My modules
       </router-link> <br/>
 
       <v-row>
@@ -31,9 +32,12 @@
 
     </v-card>
 
-    <div class="pa-14" id="unit-grid">
-      <b class="text-dark-primary">Units • {{ module.unitsCompleted }}/{{ module.units.length }} completed </b>
-      <p/>
+        <p></p>
+      <!-- <b class="text-dark-primary text-font-size-16 pb-3"></b> -->
+      <h2 class="text-dark-primary text-display-semibold text-font-size-16 pb-3" style="margin-top: 5px;">
+      Units • {{ completed_units }}/{{ total_units }} completed 
+      </h2>
+      <p></p>
 
       <v-row>
         <v-col
@@ -66,7 +70,7 @@
 
       <v-card
         id="module-about"
-        class="mt-16 pb-4"
+        class="mt-16 pb-4 text-font-size-16"
         max-width="33rem"
       >
         <v-card-title>

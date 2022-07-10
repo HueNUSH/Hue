@@ -35,7 +35,7 @@
         <p></p>
       <!-- <b class="text-dark-primary text-font-size-16 pb-3"></b> -->
       <h2 class="text-dark-primary text-display-semibold text-font-size-16 pb-3" style="margin-top: 5px;">
-      Units • {{ completed_units }}/{{ total_units }} completed 
+      Units • {{ module.unitsCompleted }}/{{ module.units.length }} completed 
       </h2>
       <p></p>
 
@@ -49,7 +49,7 @@
         >
           <router-link
             class="unit-card"
-            :to="'/modules/' + $route.params.module_id + '/' + index"
+            :to="'/modules/' + $route.params.module_id + '/' + index + '/about'"
           >
             <v-card
               class="pa-4"

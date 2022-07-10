@@ -20,7 +20,6 @@ from models.modules import (
 
 router = APIRouter()
 
-
 @router.post("/create_module", response_description="Module data added into database")
 def create_module(module: Modules = Body(...)):
     module = jsonable_encoder(module)
@@ -43,6 +42,17 @@ def get_module(module_id):
     if module:
         return ResponseModel(module, "Module data retrieved successfully")
     return ErrorResponseModel("An error occured", 404, "No module found")
+
+@router.get("/get_unit/", response_description="Module unit retrieved")
+def get_units(module_id, unit_id):
+    try:
+        module = retrieve_module(module_id)
+        unit = module["units"][int(unit_id)]
+    except InvalidId as e:
+        return ErrorResponseModel("An error occured", "404", "Invalid ID")
+    if unit:
+        return ResponseModel(unit, "Unit data retrieved successfully")
+    return ErrorResponseModel("An error occured", 404, "No module or unit found")
 
 @router.put("/update_module", response_description="Module updated")
 def update_module_data(module_id, req: UpdateModules = Body(...)):

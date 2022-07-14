@@ -32,7 +32,6 @@ class UpdateSections(BaseModel):
     sectionDesc: Optional[str]
     mediaType: Optional[Literal['pdf', 'embed']]
     sectionMedia: Optional[str]
-    sectionIcon: Optional[str]
     isComplete: Optional[bool]
 
 class UpdateUnits(BaseModel):
@@ -40,8 +39,6 @@ class UpdateUnits(BaseModel):
     unitDesc: Optional[str]
     unitAbout: Optional[str]
     sections: Optional[list[UpdateSections]]
-    sectionsCompleted: int = 0
-    isComplete: bool = False
 
 class UpdateModules(BaseModel):
     moduleName: Optional[str]

@@ -20,6 +20,7 @@ from models.modules import (
 
 router = APIRouter()
 
+
 @router.post("/create_module", response_description="Module data added into database")
 def create_module(module: Modules = Body(...)):
     module = jsonable_encoder(module)
@@ -43,17 +44,6 @@ def get_module(module_id):
         return ResponseModel(module, "Module data retrieved successfully")
     return ErrorResponseModel("An error occured", 404, "No module found")
 
-@router.get("/get_unit/", response_description="Module unit retrieved")
-def get_units(module_id, unit_id):
-    try:
-        module = retrieve_module(module_id)
-        unit = module["units"][int(unit_id)]
-    except InvalidId as e:
-        return ErrorResponseModel("An error occured", "404", "Invalid ID")
-    if unit:
-        return ResponseModel(unit, "Unit data retrieved successfully")
-    return ErrorResponseModel("An error occured", 404, "No module or unit found")
-
 @router.put("/update_module", response_description="Module updated")
 def update_module_data(module_id, req: UpdateModules = Body(...)):
     req = {k: v for k, v in req.dict().items() if v is not None}
@@ -62,15 +52,22 @@ def update_module_data(module_id, req: UpdateModules = Body(...)):
     for unit in req["units"]:
         sectionsCompleted = 0
         for section in unit["sections"]:
-            if section["isComplete"]:
-                sectionsCompleted += 1
-        if sectionsCompleted == len(unit["sections"]):
-            unitsCompleted += 1
-            unit["isComplete"] = True
+            sectionsCompleted += section["isComplete"]
+        unit["sectionsCompleted"] = sectionsCompleted
+
+        unit_completed = sectionsCompleted == len(unit["sections"])
+        unitsCompleted += unit_completed
+        unit["isComplete"] = unit_completed
+
     req["unitsCompleted"] = unitsCompleted
 
     try:
-        updated_module = update_module(module_id, req)
+        module = retrieve_module(module_id)
+        for k, v in req.items():
+            module[k] = v
+        module.pop("_id")
+
+        updated_module = update_module(module_id, module)
 
         if updated_module:
             return ResponseModel(

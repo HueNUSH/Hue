@@ -2,6 +2,7 @@
 node_modules
 /dist
 auth_config.json
+client_secret_766984185858-k7ln7n0dnh3sc8go96nulegdumo4fteq.apps.googleusercontent.com.json
 
 # local env files
 .env.local

@@ -5,7 +5,12 @@ import uvicorn
 from routes.modules import router as ModuleRouter
 from routes.users import router as UserRouter
 
-app = FastAPI()
+app = FastAPI(title="HUE API",
+              description="made by code monkeys :slight_smile:",
+              version="0.1.0",
+              docs_url='/chokola/docs',
+              redoc_url='/chokola/redoc',
+              openapi_url='/chokola/openapi.json')
 
 origins = ["*"]
 
@@ -17,11 +22,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(ModuleRouter, tags=["Module"], prefix="/modules")
-app.include_router(UserRouter, tags=["User"], prefix="/users")
+app.include_router(ModuleRouter, tags=["Module"], prefix="/chokola/modules")
+app.include_router(UserRouter, tags=["User"], prefix="/chokola/users")
 
 
-@app.get("/", tags=["Root"])
+@app.get("/chokola/", tags=["Root"])
 async def read_root():
     return {"message": "Welcome to this fantastic app!"}
 

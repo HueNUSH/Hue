@@ -22,8 +22,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(ModuleRouter, tags=["Module"], prefix="/modules")
-app.include_router(UserRouter, tags=["User"], prefix="/users")
+app.include_router(ModuleRouter, tags=["Module"], prefix="/chokola/modules")
+app.include_router(UserRouter, tags=["User"], prefix="/chokola/users")
 
 
 @app.get("/chokola/", tags=["Root"])

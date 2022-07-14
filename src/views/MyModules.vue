@@ -2,6 +2,11 @@
   <v-container fluid class="pb-6 pt-16" style="padding-left: 80px; padding-right: 100px">
     <h1>Welcome back, {{ user.name }}!</h1>
     <p class="text-dark-tertiary text-font-size-16">Academic Week</p>
+    <div style="display: flex;" id="google-login-btn" v-google-identity-login-btn="{ clientId, locale: 'en' }">
+    </div>
+
+    <v-btn elevation="2" @click="signOut"> Sign Out</v-btn>
+
     <h2 class="text-dark-primary text-display-semibold text-font-size-16 pb-3" style="margin-top: 75px;">
       My modules
     </h2>
@@ -12,20 +17,15 @@
             <v-card class="pa-4 fill-height d-flex flex-column" elevation="0">
               <v-row>
                 <v-col cols="auto" class="d-flex flex-column">
-                  <v-sheet
-                    class="rounded-circle d-flex align-center justify-center align-self-baseline"
-                    :color="
-                      module.moduleIconBackgroundColor === 'orange'
-                        ? '#FBDE94'
-                        : module.moduleIconBackgroundColor === 'pink'
+                  <v-sheet class="rounded-circle d-flex align-center justify-center align-self-baseline" :color="
+                    module.moduleIconBackgroundColor === 'orange'
+                      ? '#FBDE94'
+                      : module.moduleIconBackgroundColor === 'pink'
                         ? '#FFC8F9'
                         : module.moduleIconBackgroundColor === 'green'
-                        ? '#C5F4B5'
-                        : '#B6EDFE'
-                    "
-                    :height="40"
-                    :width="40"
-                  >
+                          ? '#C5F4B5'
+                          : '#B6EDFE'
+                  " :height="40" :width="40">
                     <v-icon>
                       {{ module.moduleIcon }}
                     </v-icon>
@@ -52,16 +52,23 @@
 
 <script lang="ts">
 import Vue from "vue";
-import {Modules} from "@/types/modules";
+import { Modules } from "@/types/modules";
+import GoogleSignInButton from "vue-google-identity-login-btn";
+
 
 export default Vue.extend({
   name: "MyModules",
+  directives: {
+    GoogleSignInButton
+  },
   data: () => ({
     user: {
-      name: "Lustin Jim"
+      name: "please sign in"
     },
-    modules: [] as Array<Modules>
+    modules: [] as Array<Modules>,
+    clientId: '766984185858-k7ln7n0dnh3sc8go96nulegdumo4fteq.apps.googleusercontent.com'
   }),
+
   methods: {
     populateMethods() {
       fetch("http://nushigh.school/chokola/modules/get_modules", {
@@ -80,6 +87,15 @@ export default Vue.extend({
           }
         )
       );
+    },
+    onGoogleAuthSuccess(jwtCredentials: any) {
+      console.log(jwtCredentials);
+      const profileData = JSON.parse(atob(jwtCredentials.split('.')[1]));
+      this.user.name = profileData.name;
+      console.table(profileData);
+    },
+    signOut(){
+      google.accounts.id.disableAutoSelect();
     }
   },
   created() {

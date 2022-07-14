@@ -76,7 +76,7 @@ export default Vue.extend({
     }
   },
   async created() {
-    await fetch("http://nushigh.school/chokola/modules/get_unit/?" + new URLSearchParams({
+    await fetch("https://nushigh.school/chokola/modules/get_unit/?" + new URLSearchParams({
       "module_id": this.$route.params.module_id,
       "unit_id": this.$route.params.unit_no
     }), {

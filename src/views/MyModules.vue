@@ -53,6 +53,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { Modules } from "@/types/modules";
+// @ts-ignore
 import GoogleSignInButton from "vue-google-identity-login-btn";
 
 
@@ -71,7 +72,7 @@ export default Vue.extend({
 
   methods: {
     populateMethods() {
-      fetch("http://nushigh.school/chokola/modules/get_modules", {
+      fetch("https://nushigh.school/chokola/modules/get_modules", {
         method: "GET",
         headers: {
           "accept": "application/json",

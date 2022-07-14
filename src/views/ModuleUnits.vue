@@ -102,7 +102,7 @@ export default Vue.extend({
     module: Modules
   }),
   async created() {
-    await fetch("http://0.0.0.0:8000/modules/get_module/?" + new URLSearchParams({
+    await fetch("http://nushigh.school/chokola/modules/get_module/?" + new URLSearchParams({
       "module_id": this.$route.params.module_id
     }), {
       method: "GET",

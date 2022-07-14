@@ -64,7 +64,7 @@ export default Vue.extend({
   }),
   methods: {
     populateMethods() {
-      fetch("http://0.0.0.0:8000/modules/get_modules", {
+      fetch("http://nushigh.school/chokola/modules/get_modules", {
         method: "GET",
         headers: {
           "accept": "application/json",

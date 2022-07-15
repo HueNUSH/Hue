@@ -1,11 +1,12 @@
 <template>
   <v-container fluid class="pb-6 pt-16" style="padding-left: 80px; padding-right: 100px">
-    <h1>Welcome back, {{ user.name }}!</h1>
-    <p class="text-dark-tertiary text-font-size-16">Academic Week</p>
-    <div style="display: flex;" id="google-login-btn" v-google-identity-login-btn="{ clientId, locale: 'en' }">
-    </div>
+    <h1 v-if="isSignedIn">Welcome back, {{ user.username }}!</h1>
+    <h1 v-else>Please Sign In</h1>
 
-    <v-btn elevation="2" @click="signOut"> Sign Out</v-btn>
+    <p class="text-dark-tertiary text-font-size-16">Academic Week</p>
+    <div v-if="!isSignedIn" style="display: flex;" id="google-login-btn" v-google-identity-login-btn="{ clientId, locale: 'en' }">
+    </div>
+    <v-btn elevation="2" v-else @click="signOut"> Sign Out</v-btn>
 
     <h2 class="text-dark-primary text-display-semibold text-font-size-16 pb-3" style="margin-top: 75px;">
       My modules
@@ -53,6 +54,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { Modules } from "@/types/modules";
+import { User } from "@/types/user";
 // @ts-ignore
 import GoogleSignInButton from "vue-google-identity-login-btn";
 
@@ -63,16 +65,15 @@ export default Vue.extend({
     GoogleSignInButton
   },
   data: () => ({
-    user: {
-      name: "please sign in"
-    },
+    isSignedIn: false,
+    user: {},
     modules: [] as Array<Modules>,
-    clientId: '766984185858-k7ln7n0dnh3sc8go96nulegdumo4fteq.apps.googleusercontent.com'
+    clientId: "766984185858-k7ln7n0dnh3sc8go96nulegdumo4fteq.apps.googleusercontent.com"
   }),
 
   methods: {
-    populateMethods() {
-      fetch("https://nushigh.school/chokola/modules/get_modules", {
+    populateGeneralModules() {
+      fetch("http://localhost:8000/chokola/modules/get_modules", {
         method: "GET",
         headers: {
           "accept": "application/json",
@@ -81,26 +82,53 @@ export default Vue.extend({
         response => response.json().then(
           data => {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            for (const moduleKey in data.data[0]) {
-              const module: Modules = JSON.parse(JSON.stringify(data.data[0][parseInt(moduleKey)]));
+            for (const moduleKey in data.data) {
+              const module: Modules = JSON.parse(JSON.stringify(data.data[parseInt(moduleKey)]));
               this.modules.push(module);
             }
           }
         )
       );
     },
+    populateUserModules(userId: string) {
+      fetch("http://localhost:8000/chokola/users/get_user?" + new URLSearchParams({
+        "userId": userId,
+      }), {
+          headers: {
+            "accept": "application/json",
+          }
+        }
+      ).then(
+        response => response.json().then(
+          data => {
+            console.log(data);
+          }
+        )
+      );
+    },
     onGoogleAuthSuccess(jwtCredentials: any) {
       console.log(jwtCredentials);
-      const profileData = JSON.parse(atob(jwtCredentials.split('.')[1]));
-      this.user.name = profileData.name;
+      const profileData = JSON.parse(atob(jwtCredentials.split(".")[1]));
+      this.isSignedIn = true;
+
+      this.user = new User();
+      this.user.userId = profileData.sub;
+      this.user.username = profileData.name;
+      this.user.email = profileData.email;
+      this.user.createdAt = Date.now();
+      this.user.attemptedModules = [];
+      console.log(JSON.stringify(this.user));
+
       console.table(profileData);
     },
-    signOut(){
+    signOut() {
       google.accounts.id.disableAutoSelect();
+      this.user = {};
+      this.isSignedIn = false;
     }
   },
   created() {
-    this.populateMethods();
+    this.populateGeneralModules();
   }
 });
 </script>

@@ -1,6 +1,8 @@
 export class User {
-  login!: string
-  id!: number
-  public_repos!: number
-  followers!: number
+  userId!: string
+  username!: string
+  createdAt!: number
+  email!: string
+  isAdmin = false
+  attemptedModules!: Array<string>
 }

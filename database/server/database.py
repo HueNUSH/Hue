@@ -7,6 +7,10 @@ from models.modules import (
     Modules
 )
 
+from models.users import (
+    Users
+)
+
 MONGO_DETAILS = "mongodb://localhost:27017"
 
 client = MongoClient(MONGO_DETAILS)
@@ -27,8 +31,8 @@ def retrieve_objects(objCollection) -> list:
         objList.append(obj)
     return objList
 
-def retrieve_object(objId, objCollection) -> dict:
-    obj = objCollection.find_one({"_id": objId})
+def retrieve_object(objId, objCollection, idKey = "_id") -> dict:
+    obj = objCollection.find_one({idKey: objId})
     if obj:
         obj["_id"] = str(obj["_id"])
     return obj
@@ -41,25 +45,25 @@ def add_object(objData: dict, objCollection) -> dict:
     obj["_id"] = str(obj["_id"])
     return obj
 
-def update_obj(objId, objData: dict, objCollection) -> bool:
-    obj = objCollection.find_one({"_id": objId})
+def update_obj(objId, objData: dict, objCollection, idKey = "_id") -> bool:
+    obj = objCollection.find_one({idKey: objId})
 
     # Convert ObjectID back to str as FastAPI can't parse it
     obj["_id"] = str(obj["_id"])
-
     if obj:
-        result = objCollection.update_one({'_id': ObjectId(objId)}, {"$set" : objData })
+        result = objCollection.update_one({idKey: objId}, {"$set" : objData })
 
         if result:
             return True
 
     return False
 
-def delete_obj(objId, objCollection) -> bool:
-    obj = objCollection.find_one({"_id": ObjectId(objId)})
+def delete_obj(objId, objCollection, idKey = "_id") -> bool:
+    obj = objCollection.find_one({idKey: objId})
+    print(obj)
 
     if obj:
-        objCollection.delete_one({"_id": ObjectId(objId)})
+        objCollection.delete_one({idKey: objId})
         return True
     return False
 
@@ -89,7 +93,13 @@ def retrieve_users():
     return retrieve_objects(users)
 
 def retrieve_user(userId: str):
-    user = users.find_one({"userId": userId})
-    user["_id"] = str(user["_id"])
-    return user
+    return retrieve_object(userId, users, idKey = "userId")
 
+def update_user(userId: str, userData: dict):
+    return update_obj(userId, userData, users, idKey = "userId")
+
+def update_user_module(userId: str, moduleId, moduleData: dict):
+    return update_obj(userId, {f"attemptedModules.{moduleId}": moduleData}, users, idKey = "userId")
+
+def delete_user(userId):
+    return delete_obj(userId, users, idKey = "userId")

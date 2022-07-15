@@ -8,17 +8,16 @@ from models.modules import (
 
 
 class Users(BaseModel):
-    username: str = Field(...)
     userId: str = Field(...)
+    username: str = Field(...)
     createdAt: int = Field(...)
     email: str = Field(...)
     isAdmin: Optional[bool] = False #Default false
-    attemptedModules: Optional[list[Modules]] = None #Default no attempted modules
+    attemptedModules: list[str] = [] #Default no attempted modules
 
-class UpdateUsers:
+class UpdateUsers(BaseModel):
     username: Optional[str]
     userId: Optional[str]
     createdAt: Optional[int]
     email: Optional[str]
     isAdmin: Optional[bool]
-    attemptedModules: Optional[list[Modules]]

@@ -48,19 +48,6 @@ def get_module(module_id):
 def update_module_data(module_id, req: UpdateModules = Body(...)):
     req = {k: v for k, v in req.dict().items() if v is not None}
 
-    unitsCompleted = 0
-    for unit in req["units"]:
-        sectionsCompleted = 0
-        for section in unit["sections"]:
-            sectionsCompleted += section["isComplete"]
-        unit["sectionsCompleted"] = sectionsCompleted
-
-        unit_completed = sectionsCompleted == len(unit["sections"])
-        unitsCompleted += unit_completed
-        unit["isComplete"] = unit_completed
-
-    req["unitsCompleted"] = unitsCompleted
-
     try:
         module = retrieve_module(module_id)
         for k, v in req.items():
@@ -80,7 +67,7 @@ def update_module_data(module_id, req: UpdateModules = Body(...)):
         return ErrorResponseModel("An error occured", 404, "Invalid ID")
 
 @router.delete("/delete_module", response_description="Module data deleted from the database")
-async def delete_module_data(module_id: str):
+def delete_module_data(module_id: str):
     try:
         deleted_module = delete_module(module_id)
         if deleted_module:

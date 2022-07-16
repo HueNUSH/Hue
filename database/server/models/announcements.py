@@ -4,8 +4,9 @@ from pydantic import BaseModel, Field
 class Announcement(BaseModel):
     moduleId: int = Field(...)
     timestamp: int = Field(...)
+    editedTimestamp: int = Field(...)
     title: str = Field(...)
-    data: str = Field(...)
+    body: str = Field(...)
 
 
 def ResponseModel(data, message):

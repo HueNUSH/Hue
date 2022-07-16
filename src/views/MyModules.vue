@@ -66,7 +66,7 @@ export default Vue.extend({
   },
   data: () => ({
     isSignedIn: false,
-    user: {},
+    user: {} as User,
     modules: [] as Array<Modules>,
     clientId: "766984185858-k7ln7n0dnh3sc8go96nulegdumo4fteq.apps.googleusercontent.com"
   }),
@@ -144,7 +144,7 @@ export default Vue.extend({
     },
     signOut() {
       google.accounts.id.disableAutoSelect();
-      this.user = {};
+      this.user = {} as User;
       this.isSignedIn = false;
     }
   },

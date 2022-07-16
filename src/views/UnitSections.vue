@@ -76,7 +76,7 @@ export default Vue.extend({
     }
   },
   async created() {
-    await fetch("https://nushigh.school/chokola/modules/get_unit/?" + new URLSearchParams({
+    await fetch("http://localhost:8000/chokola/modules/get_unit/?" + new URLSearchParams({
       "module_id": this.$route.params.module_id,
       "unit_id": this.$route.params.unit_no
     }), {
@@ -84,7 +84,7 @@ export default Vue.extend({
     }).then(
       response => response.json().then(
         data => {
-          this.unit = JSON.parse(JSON.stringify(data.data[0]));
+          this.unit = JSON.parse(JSON.stringify(data.data));
         }
       )
     );

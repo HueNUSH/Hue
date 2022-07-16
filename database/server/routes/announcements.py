@@ -2,7 +2,7 @@ from fastapi import APIRouter, Body
 from fastapi.encoders import jsonable_encoder
 from bson.errors import InvalidId
 import pprint
-import time
+from datetime import datetime
 pp = pprint.PrettyPrinter(indent=4)
 
 from database import (
@@ -23,7 +23,8 @@ router = APIRouter()
 
 @router.post("/create_announcement", response_description="Added announcement to the database")
 def create_announcement(announcement: Announcement = Body(...)):
-    announcement.timestamp = int(time.time())
+    announcement.timestamp = (datetime.now()).strftime("%d/%m/%Y %H:%M:%S")
+    announcement.editedTimestamp = ""
     announcement = jsonable_encoder(announcement)
     new_announcement = add_announcement(announcement)
     return ResponseModel(new_announcement, "Announcement added successfully")
@@ -46,7 +47,7 @@ def get_announcement(announcement_id):
     return ErrorResponseModel("An error occured", 404, "No module found")
 
 @router.put("/update_announcement", response_description="Announcement updated")
-def update_announcement(announcement_id, req: Announcement = Body(...)):
+def update_announcement_data(announcement_id, req: Announcement = Body(...)):
     req = {k: v for k, v in req.dict().items() if v is not None}
 
     try:
@@ -54,7 +55,7 @@ def update_announcement(announcement_id, req: Announcement = Body(...)):
         for k, v in req.items():
             announcement[k] = v
         announcement.pop("_id")
-        announcement['editedTimestamp'] = int(time.time())
+        announcement['editedTimestamp'] = (datetime.now()).strftime("%d/%m/%Y %H:%M:%S")
         updated_announcement = update_announcement(announcement_id, announcement)
 
         if updated_announcement:
@@ -68,7 +69,7 @@ def update_announcement(announcement_id, req: Announcement = Body(...)):
         return ErrorResponseModel("An error occured", 404, "Invalid ID")
 
 @router.delete("/delete_announcement", response_description="Announcement deleted from the database")
-def delete_announcement(announcement_id: str):
+def delete_announcement_data(announcement_id: str):
     try:
         deleted_announcement = delete_announcement(announcement_id)
         if deleted_announcement:

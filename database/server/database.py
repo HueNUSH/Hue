@@ -114,7 +114,7 @@ def retrieve_announcement(announcementId : str):
 def add_announcement(announcementData : dict):
     return add_object(announcementData,announcements)
 
-def update_announcment(announcementId : str, announcementData : dict):
+def update_announcement(announcementId : str, announcementData : dict):
     return update_obj(ObjectId(announcementId), announcementData, announcements)
 
 def delete_announcement(announcementId : str):

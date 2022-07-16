@@ -3,8 +3,8 @@ from pydantic import BaseModel, Field
 
 class Announcement(BaseModel):
     moduleId: str = Field(...)
-    timestamp: int = Field(...)
-    editedTimestamp: int = Field(...)
+    timestamp: str = Field(...)
+    editedTimestamp: str = Field(...)
     title: str = Field(...)
     body: str = Field(...)
 

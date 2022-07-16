@@ -5,10 +5,12 @@ from bson.errors import InvalidId
 from database import (
     retrieve_user,
     retrieve_module,
+    retrieve_modules,
     retrieve_users,
     add_user,
     update_user_module,
     delete_user,
+    users,
 )
 from models.modules import (
     ErrorResponseModel,
@@ -24,8 +26,11 @@ router = APIRouter()
 @router.post("/create_user", response_description="User data added into database")
 def create_user(user: Users = Body(...)):
     user = jsonable_encoder(user)
-    modules = {_id: retrieve_module(_id) for _id in user["attemptedModules"]}
-    user["attemptedModules"] = modules
+    if len(user["userModules"]) == 0:
+        user["userModules"] = {module["_id"]:module for module in retrieve_modules()}
+    else:
+        modules = {_id: retrieve_module(_id) for _id in user["userModules"]}
+        user["userModules"] = modules
 
     new_user = add_user(user)
     return ResponseModel(new_user, "User added successfully")
@@ -46,6 +51,11 @@ def get_user(userId):
     if user:
         return ResponseModel(user, "User data retrieved successfully")
     return ErrorResponseModel("An error occured", 404, "No user found")
+
+@router.get("/user_exists")
+def user_exists(userId):
+    print(users.count_documents({"userId": userId}, limit=1))
+    return ResponseModel({"exists": bool(users.count_documents({"userId": userId}, limit=1))}, f"Counted documents with userId: {userId}")
 
 @router.put("/update_user", response_description="User updated")
 def update_user_data(userId, req: UpdateUsers = Body(...)):
@@ -72,7 +82,7 @@ def update_user_data(userId, req: UpdateUsers = Body(...)):
 @router.put("/complete_section", response_description="User section completed")
 def complete_section(userId: str, moduleId: str, unit_index: int, section_index: int):
     user = retrieve_user(userId)
-    module = user["attemptedModules"][moduleId]
+    module = user["userModules"][moduleId]
     module["units"][unit_index]["sections"][section_index]["isComplete"] = True
 
     req = {k: v for k, v in module.items()}

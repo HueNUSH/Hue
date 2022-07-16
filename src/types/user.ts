@@ -4,5 +4,5 @@ export class User {
   createdAt!: number
   email!: string
   isAdmin = false
-  attemptedModules!: Array<string>
+  userModules!: Array<string>
 }

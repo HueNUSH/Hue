@@ -35,7 +35,7 @@
         <p></p>
       <!-- <b class="text-dark-primary text-font-size-16 pb-3"></b> -->
       <h2 class="text-dark-primary text-display-semibold text-font-size-16 pb-3" style="margin-top: 5px;">
-      Units • {{ module.unitsCompleted }}/{{ module.units.length }} completed 
+      Units • {{ module.unitsCompleted }}/{{ module.units.length }} completed
       </h2>
       <p></p>
 
@@ -102,14 +102,14 @@ export default Vue.extend({
     module: Modules
   }),
   async created() {
-    await fetch("https://nushigh.school/chokola/modules/get_module/?" + new URLSearchParams({
+    await fetch("http://localhost:8000/chokola/modules/get_module?" + new URLSearchParams({
       "module_id": this.$route.params.module_id
     }), {
       method: "GET",
     }).then(
       response => response.json().then(
         data => {
-          this.module = JSON.parse(JSON.stringify(data.data[0]));
+          this.module = JSON.parse(JSON.stringify(data.data));
           }
       )
     );

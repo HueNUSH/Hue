@@ -34,7 +34,7 @@ def get_modules():
         return ResponseModel(modules, "Modules data retrieved successfully")
     return ResponseModel(modules, "Empty list returned")
 
-@router.get("/get_module/", response_description="Module retrieved")
+@router.get("/get_module", response_description="Module retrieved")
 def get_module(module_id):
     try:
         module = retrieve_module(module_id)

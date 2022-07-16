@@ -13,7 +13,7 @@ class Users(BaseModel):
     createdAt: int = Field(...)
     email: str = Field(...)
     isAdmin: Optional[bool] = False #Default false
-    attemptedModules: list[str] = [] #Default no attempted modules
+    userModules: list[str] = [] #Default no attempted modules
 
 class UpdateUsers(BaseModel):
     username: Optional[str]

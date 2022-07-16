@@ -101,7 +101,11 @@ export default Vue.extend({
       ).then(
         response => response.json().then(
           data => {
-            console.log(data);
+            this.modules = [] as Array<Modules>;
+            for (const moduleId in data.data.userModules) {
+              const module: Modules = JSON.parse(JSON.stringify(data.data.userModules[moduleId]));
+              this.modules.push(module);
+            }
           }
         )
       );
@@ -112,14 +116,31 @@ export default Vue.extend({
       this.isSignedIn = true;
 
       this.user = new User();
-      this.user.userId = profileData.sub;
+      this.user.userId = "string"; // profileData.sub;
       this.user.username = profileData.name;
       this.user.email = profileData.email;
       this.user.createdAt = Date.now();
-      this.user.attemptedModules = [];
-      console.log(JSON.stringify(this.user));
+      this.user.userModules = [];
 
-      console.table(profileData);
+      fetch("http://localhost:8000/chokola/users/user_exists?" + new URLSearchParams({
+        "userId": this.user.userId,
+      }), {
+          headers: {
+            "accept": "application/json",
+          }
+        }
+      ).then(
+        response => response.json().then(
+          data => {
+            if (!data.data.exists) {
+
+            }
+
+            this.populateUserModules(this.user.userId);
+          }
+        )
+      );
+
     },
     signOut() {
       google.accounts.id.disableAutoSelect();

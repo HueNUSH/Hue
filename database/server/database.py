@@ -99,7 +99,7 @@ def update_user(userId: str, userData: dict):
     return update_obj(userId, userData, users, idKey = "userId")
 
 def update_user_module(userId: str, moduleId, moduleData: dict):
-    return update_obj(userId, {f"attemptedModules.{moduleId}": moduleData}, users, idKey = "userId")
+    return update_obj(userId, {f"userModules.{moduleId}": moduleData}, users, idKey = "userId")
 
 def delete_user(userId):
     return delete_obj(userId, users, idKey = "userId")

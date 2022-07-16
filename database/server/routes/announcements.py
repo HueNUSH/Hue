@@ -9,7 +9,7 @@ from database import (
     add_announcement,
     retrieve_announcement,
     retrieve_announcements,
-    update_announcment,
+    update_announcement,
     delete_announcement
 )
 from models.announcements import (

@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 
 
 class Announcement(BaseModel):
-    moduleId: int = Field(...)
+    moduleId: str = Field(...)
     timestamp: int = Field(...)
     editedTimestamp: int = Field(...)
     title: str = Field(...)

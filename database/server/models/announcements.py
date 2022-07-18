@@ -2,10 +2,11 @@ from pydantic import BaseModel, Field
 
 
 class Announcement(BaseModel):
-    moduleId: int = Field(...)
-    timestamp: int = Field(...)
+    moduleId: str = Field(...)
+    timestamp: str = Field(...)
+    editedTimestamp: str = Field(...)
     title: str = Field(...)
-    data: str = Field(...)
+    body: str = Field(...)
 
 
 def ResponseModel(data, message):

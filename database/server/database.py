@@ -102,3 +102,19 @@ def update_user_module(userId: str, moduleId, moduleData: dict):
 
 def delete_user(userId):
     return delete_obj(userId, users, idKey = "userId")
+
+# CRUD Operations for announcements
+def retrieve_announcements():
+    return retrieve_objects(announcements)
+
+def retrieve_announcement(announcementId : str):
+    return retrieve_object(ObjectId(announcementId), announcements)
+
+def add_announcement(announcementData : dict):
+    return add_object(announcementData,announcements)
+
+def update_announcement(announcementId : str, announcementData : dict):
+    return update_obj(ObjectId(announcementId), announcementData, announcements)
+
+def delete_announcement(announcementId : str):
+    delete_obj(ObjectId(announcementId),announcements)

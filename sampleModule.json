@@ -15,21 +15,24 @@
           "sectionDesc": "Section 1 Desc",
           "mediaType": "pdf",
           "sectionMedia": "file.pdf",
-          "isComplete": false
+          "isComplete": false,
+          "sectionIcon": "string"
         },
         {
           "sectionName": "Section 2",
           "sectionDesc": "Section 2 Desc",
           "mediaType": "embed",
           "sectionMedia": "html",
-          "isComplete": false
+          "isComplete": false,
+          "sectionIcon": "string"
         },
         {
           "sectionName": "Section 3",
           "sectionDesc": "Section 3 Desc",
           "mediaType": "pdf",
           "sectionMedia": "file2.pdf",
-          "isComplete": false
+          "isComplete": false,
+          "sectionIcon": "string"
         }
       ],
       "sectionsCompleted": 0,
@@ -45,21 +48,24 @@
           "sectionDesc": "Section 1 Desc",
           "mediaType": "pdf",
           "sectionMedia": "file.pdf",
-          "isComplete": false
+          "isComplete": false,
+          "sectionIcon": "string"
         },
         {
           "sectionName": "Section 2",
           "sectionDesc": "Section 2 Desc",
           "mediaType": "embed",
           "sectionMedia": "html",
-          "isComplete": false
+          "isComplete": false,
+          "sectionIcon": "string"
         },
         {
           "sectionName": "Section 3",
           "sectionDesc": "Section 3 Desc",
           "mediaType": "pdf",
           "sectionMedia": "file2.pdf",
-          "isComplete": false
+          "isComplete": false,
+          "sectionIcon": "string"
         }
       ],
       "sectionsCompleted": 0,
@@ -75,21 +81,24 @@
           "sectionDesc": "Section 1 Desc",
           "mediaType": "pdf",
           "sectionMedia": "file.pdf",
-          "isComplete": false
+          "isComplete": false,
+          "sectionIcon": "string"
         },
         {
           "sectionName": "Section 2",
           "sectionDesc": "Section 2 Desc",
           "mediaType": "embed",
           "sectionMedia": "html",
-          "isComplete": false
+          "isComplete": false,
+          "sectionIcon": "string"
         },
         {
           "sectionName": "Section 3",
           "sectionDesc": "Section 3 Desc",
           "mediaType": "pdf",
           "sectionMedia": "file2.pdf",
-          "isComplete": false
+          "isComplete": false,
+          "sectionIcon": "string"
         }
       ],
       "sectionsCompleted": 0,

@@ -60,9 +60,8 @@ def update_obj(objId, objData: dict, objCollection, idKey = "_id") -> bool:
 
 def delete_obj(objId, objCollection, idKey = "_id") -> bool:
     obj = objCollection.find_one({idKey: objId})
-    print(obj)
 
-    if obj:
+    if obj is not None:
         objCollection.delete_one({idKey: objId})
         return True
     return False
@@ -82,7 +81,7 @@ def update_module(moduleId: str, moduleData: dict):
     return update_obj(ObjectId(moduleId), moduleData, modules)
 
 def delete_module(moduleId: str):
-    delete_obj(ObjectId(moduleId), modules)
+    return delete_obj(ObjectId(moduleId), modules)
 
 
 # CRUD Operations for users

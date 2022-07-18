@@ -102,6 +102,7 @@ export default Vue.extend({
         response => response.json().then(
           data => {
             this.modules = [] as Array<Modules>;
+            console.log(data);
             for (const moduleId in data.data.userModules) {
               const module: Modules = JSON.parse(JSON.stringify(data.data.userModules[moduleId]));
               this.modules.push(module);
@@ -116,7 +117,7 @@ export default Vue.extend({
       this.isSignedIn = true;
 
       this.user = new User();
-      this.user.userId = "string"; // profileData.sub;
+      this.user.userId = profileData.sub;
       this.user.username = profileData.name;
       this.user.email = profileData.email;
       this.user.createdAt = Date.now();
@@ -133,19 +134,36 @@ export default Vue.extend({
         response => response.json().then(
           data => {
             if (!data.data.exists) {
-
+              for (const moduleKey in this.modules) {
+                this.user.userModules.push(this.modules[parseInt(moduleKey)]._id);
+              }
+              this.createNewUser();
             }
-
-            this.populateUserModules(this.user.userId);
+            else this.populateUserModules(this.user.userId);
           }
         )
       );
-
+    },
+    createNewUser() {
+      fetch("http://localhost:8000/chokola/users/create_user", {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(this.user),
+      }).then(
+        response => {
+          if (response.status === 200) this.populateUserModules(this.user.userId);
+          else console.log("Couldn't create user"); //TODO: Error Handling
+        }
+      );
     },
     signOut() {
       google.accounts.id.disableAutoSelect();
       this.user = {} as User;
       this.isSignedIn = false;
+      this.populateGeneralModules();
     }
   },
   created() {

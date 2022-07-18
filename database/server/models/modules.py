@@ -8,6 +8,7 @@ class UnitSections(BaseModel):
     sectionDesc: str = Field(...)
     mediaType: Literal['pdf', 'embed'] = Field(...)
     sectionMedia: str = Field(...)
+    sectionIcon: str = Field(...)
     isComplete: bool = False
 
 class Units(BaseModel):
@@ -33,15 +34,12 @@ class UpdateSections(BaseModel):
     mediaType: Optional[Literal['pdf', 'embed']]
     sectionMedia: Optional[str]
     sectionIcon: Optional[str]
-    isComplete: Optional[bool]
 
 class UpdateUnits(BaseModel):
     unitName: Optional[str]
     unitDesc: Optional[str]
     unitAbout: Optional[str]
     sections: Optional[list[UpdateSections]]
-    sectionsCompleted: int = 0
-    isComplete: bool = False
 
 class UpdateModules(BaseModel):
     moduleName: Optional[str]

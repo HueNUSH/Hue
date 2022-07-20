@@ -65,6 +65,37 @@ def get_user_module(userId, moduleId):
         except KeyError as e:
             return ErrorResponseModel("An error occured", 404, f"User does not contain module with id {moduleId}")
 
+
+@router.get("/get_user_unit", response_description="User unit retrieved")
+def get_user_unit(userId, moduleId, unitIndex: int):
+    try:
+        user = retrieve_user(userId)
+    except InvalidId as e:
+        return ErrorResponseModel("An error occured", 404, "Invalid ID")
+    if user:
+        try:
+            module = user["userModules"][moduleId]
+            if unitIndex < len(module["units"]):
+                unit = module["units"][unitIndex]
+                return ResponseModel(unit, "Unit data retrieved successfully")
+            else:
+                return ErrorResponseModel("An eror occured", 404, "No unit exists")
+        except KeyError as e:
+            return ErrorResponseModel("An error occured", 404, f"User does not contain module with id {moduleId}")
+
+@router.get("/get_user_module", response_description="User module retrieved")
+def get_user_module(userId, moduleId):
+    try:
+        user = retrieve_user(userId)
+    except InvalidId as e:
+        return ErrorResponseModel("An error occured", 404, "Invalid ID")
+    if user:
+        try:
+            module = user["userModules"][moduleId]
+            return ResponseModel(module, "Module data retrieved successfully")
+        except KeyError as e:
+            return ErrorResponseModel("An error occured", 404, f"User does not contain module with id {moduleId}")
+
 @router.get("/user_exists")
 def user_exists(userId):
     print(users.count_documents({"userId": userId}, limit=1))

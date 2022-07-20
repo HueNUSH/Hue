@@ -95,24 +95,72 @@
 <script lang="ts">
 import Vue from "vue";
 import {Modules} from "@/types/modules";
+import NotFound from "@/views/NotFound.vue";
 
 export default Vue.extend({
   name: "ModuleUnits",
   data: () => ({
-    module: Modules
+    module: {} as Modules,
+    userId: "",
   }),
-  async created() {
-    await fetch("http://localhost:8000/chokola/modules/get_module?" + new URLSearchParams({
-      "module_id": this.$route.params.module_id
-    }), {
-      method: "GET",
-    }).then(
-      response => response.json().then(
-        data => {
-          this.module = JSON.parse(JSON.stringify(data.data));
+  methods: {
+    async populateGeneralModule(moduleId: string) {
+      await fetch("http://localhost:8000/chokola/modules/get_module?" + new URLSearchParams({
+        "module_id": moduleId
+      }), {
+        method: "GET",
+      }).then(
+        response => response.json().then(
+          data => {
+            this.module = JSON.parse(JSON.stringify(data.data));
           }
-      )
-    );
+        )
+      );
+    },
+
+    async populateUserModule(userId: string, moduleId: string) {
+      await fetch("http://localhost:8000/chokola/users/get_user_module?" + new URLSearchParams({
+        "userId": userId,
+        "moduleId": moduleId
+      }), {
+        method: "GET",
+      }).then(
+        response => response.json().then(
+          data => {
+            this.module = JSON.parse(JSON.stringify(data.data));
+          }
+        )
+      );
+    }
+  },
+  async created() {
+    const userId = this.$cookies.get("userId");
+
+    if (userId === null) {
+      await this.populateGeneralModule(this.$route.params.module_id);
+    }
+    else {
+      await fetch("http://localhost:8000/chokola/users/user_exists?" + new URLSearchParams({
+        "userId": userId,
+      }), {
+          headers: {
+            "accept": "application/json",
+          }
+        }
+      ).then(
+        response => response.json().then(
+          data => {
+            if (data.data.exists) {
+              this.userId = userId;
+              this.populateUserModule(this.userId, this.$route.params.module_id);
+            }
+            else {
+              this.populateGeneralModule(this.$route.params.module_id);
+            }
+          }
+        )
+      );
+    }
   }
 });
 </script>

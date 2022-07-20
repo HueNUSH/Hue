@@ -23,7 +23,7 @@
                   <v-divider></v-divider>
                 </v-list-item>
 
-                <v-list-item v-for="(section, index) in unit.sections" 
+                <v-list-item v-for="(section, index) in unit.sections"
                   :key="section.sectionName"
                   :to="'/modules/' + $route.params.module_id + '/' + $route.params.unit_no + '/' + section.sectionName"
                   @click="carrySectionData(section.sectionDesc, section.mediaType, section.sectionMedia)"
@@ -66,28 +66,73 @@ export default Vue.extend({
     unit: Units,
     sectionDesc: "",
     mediaType: "",
-    sectionMedia: ""
+    sectionMedia: "",
+    userId: "",
   }),
   methods: {
     carrySectionData(sectionDesc:string, mediaType:string, sectionMedia:string){
       this.sectionDesc = sectionDesc;
       this.sectionMedia = sectionMedia;
       this.mediaType = mediaType;
+    },
+
+    async populateGeneralSections(moduleId: string, unitIndex: string) {
+      await fetch("http://localhost:8000/chokola/modules/get_unit/?" + new URLSearchParams({
+        "module_id": moduleId,
+        "unit_index": unitIndex
+      }), {
+        method: "GET",
+      }).then(
+        response => response.json().then(
+          data => {
+            this.unit = JSON.parse(JSON.stringify(data.data));
+          }
+        )
+      );
+    },
+    async populateUserSections(userId: string, moduleId: string, unitIndex: string) {
+      fetch("http://localhost:8000/chokola/users/get_user_unit?" + new URLSearchParams({
+        "userId": userId,
+        "moduleId": moduleId,
+        "unitIndex": unitIndex
+      }), {
+        method: "GET",
+      }).then(
+        response => response.json().then(
+          data => {
+            this.unit = JSON.parse(JSON.stringify(data.data));
+          }
+        )
+      );
     }
   },
   async created() {
-    await fetch("http://localhost:8000/chokola/modules/get_unit/?" + new URLSearchParams({
-      "module_id": this.$route.params.module_id,
-      "unit_id": this.$route.params.unit_no
-    }), {
-      method: "GET",
-    }).then(
-      response => response.json().then(
-        data => {
-          this.unit = JSON.parse(JSON.stringify(data.data));
+    const userId = this.$cookies.get("userId");
+    if (userId === null) {
+      await this.populateGeneralSections(this.$route.params.module_id, this.$route.params.unit_no);
+    }
+    else {
+      await fetch("http://localhost:8000/chokola/users/user_exists?" + new URLSearchParams({
+        "userId": userId,
+      }), {
+          headers: {
+            "accept": "application/json",
+          }
         }
-      )
-    );
+      ).then(
+        response => response.json().then(
+          data => {
+            if (data.data.exists) {
+              this.userId = userId;
+              this.populateUserSections(userId, this.$route.params.module_id, this.$route.params.unit_no);
+            }
+            else {
+              this.populateGeneralSections(this.$route.params.module_id, this.$route.params.unit_no);
+            }
+          }
+        )
+      );
+    }
   }
 });
 </script>

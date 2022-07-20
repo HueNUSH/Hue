@@ -45,10 +45,10 @@ def get_module(module_id):
     return ErrorResponseModel("An error occured", 404, "No module found")
 
 @router.get("/get_unit/", response_description="Module unit retrieved")
-def get_units(module_id, unit_id):
+def get_units(module_id, unit_index):
     try:
         module = retrieve_module(module_id)
-        unit = module["units"][int(unit_id)]
+        unit = module["units"][int(unit_index)]
     except InvalidId as e:
         return ErrorResponseModel("An error occured", "404", "Invalid ID")
     if unit:

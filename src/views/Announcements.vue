@@ -1,10 +1,10 @@
 <template>
   <v-container fluid class="pb-6 pt-16" style="padding-left: 80px; padding-right: 100px">
-    <h1>Announcements</h1>
+    <h1 class="mb-5">Announcements</h1>
     <v-row>
-      <v-col cols="12" lg="4" md="6" v-for="(announcement, index) in announcements" :key="index">
+      <v-col cols="12" style="max-width:75%" v-for="(announcement, index) in announcements" :key="index">
       <v-card class="mx-auto">
-        <v-card-text class="pb-0">
+        <v-card-text class="pb-2 mt-2">
           <p class="text-dark-primary text-display-semibold text-font-size-22">
             {{announcement.title}}
           </p>

@@ -23,7 +23,7 @@
                   <v-divider></v-divider>
                 </v-list-item>
 
-                <v-list-item v-for="(section, index) in unit.sections" 
+                <v-list-item v-for="(section, index) in unit.sections"
                   :key="section.sectionName"
                   :to="'/modules/' + $route.params.module_id + '/' + $route.params.unit_no + '/' + section.sectionName"
                   @click="carrySectionData(section.sectionDesc, section.mediaType, section.sectionMedia)"
@@ -76,9 +76,10 @@ export default Vue.extend({
     }
   },
   async created() {
+    
     await fetch("http://localhost:8000/chokola/modules/get_unit/?" + new URLSearchParams({
       "module_id": this.$route.params.module_id,
-      "unit_id": this.$route.params.unit_no
+      "unit_index": this.$route.params.unit_no
     }), {
       method: "GET",
     }).then(

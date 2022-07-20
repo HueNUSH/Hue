@@ -95,13 +95,15 @@
 <script lang="ts">
 import Vue from "vue";
 import {Modules} from "@/types/modules";
+import NotFound from "@/views/NotFound.vue";
 
 export default Vue.extend({
   name: "ModuleUnits",
   data: () => ({
-    module: Modules
+    module: Modules,
   }),
   async created() {
+    console.log(this.$cookies.get("userId"));
     await fetch("http://localhost:8000/chokola/modules/get_module?" + new URLSearchParams({
       "module_id": this.$route.params.module_id
     }), {

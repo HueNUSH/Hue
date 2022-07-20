@@ -37,7 +37,7 @@
                     {{ module.moduleName }}
                   </h3>
                   <p class="text-dark-tertiary text-font-size-14">
-                    <b>{{ module.unitsCompleted }}/{{ module.units.length }}</b> sections completed
+                    <b>{{ module.unitsCompleted }}/{{ module.units.length }}</b> units completed
                   </p>
                 </v-col>
               </v-row>
@@ -53,11 +53,13 @@
 
 <script lang="ts">
 import Vue from "vue";
+import VueCookies from "vue-cookies"
 import { Modules } from "@/types/modules";
 import { User } from "@/types/user";
 // @ts-ignore
 import GoogleSignInButton from "vue-google-identity-login-btn";
 
+Vue.use(VueCookies, { expire: "1m", path: "/"});
 
 export default Vue.extend({
   name: "MyModules",
@@ -112,7 +114,6 @@ export default Vue.extend({
       );
     },
     onGoogleAuthSuccess(jwtCredentials: any) {
-      console.log(jwtCredentials);
       const profileData = JSON.parse(atob(jwtCredentials.split(".")[1]));
       this.isSignedIn = true;
 
@@ -139,7 +140,10 @@ export default Vue.extend({
               }
               this.createNewUser();
             }
-            else this.populateUserModules(this.user.userId);
+            else {
+              this.populateUserModules(this.user.userId);
+              this.$cookies.set("userId", this.user.userId);
+            }
           }
         )
       );
@@ -154,7 +158,10 @@ export default Vue.extend({
         body: JSON.stringify(this.user),
       }).then(
         response => {
-          if (response.status === 200) this.populateUserModules(this.user.userId);
+          if (response.status === 200) {
+            this.populateUserModules(this.user.userId);
+            this.$cookies.set("userId", this.user.userId);
+          }
           else console.log("Couldn't create user"); //TODO: Error Handling
         }
       );
@@ -167,7 +174,15 @@ export default Vue.extend({
     }
   },
   created() {
-    this.populateGeneralModules();
+    if (this.$cookies.get("userId") === null) {
+      console.log("here");
+      this.populateGeneralModules();
+    }
+    else {
+      this.user.userId = this.$cookies.get("userId");
+      this.populateUserModules(this.user.userId);
+      this.isSignedIn = true;
+    }
   }
 });
 </script>

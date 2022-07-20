@@ -11,6 +11,7 @@
     "@auth0/auth0-spa-js": "^1.22.0",
     "@types/google.accounts": "^0.0.2",
     "vue": "^2.6.12",
+    "vue-cookies": "^1.8.1",
     "vue-google-identity-login-btn": "^1.0.2",
     "vue-router": "^3.5.1",
     "vuetify": "^2.5.1",

@@ -76,19 +76,23 @@ export default Vue.extend({
     }
   },
   async created() {
-    
-    await fetch("http://localhost:8000/chokola/modules/get_unit/?" + new URLSearchParams({
-      "module_id": this.$route.params.module_id,
-      "unit_index": this.$route.params.unit_no
-    }), {
-      method: "GET",
-    }).then(
-      response => response.json().then(
-        data => {
-          this.unit = JSON.parse(JSON.stringify(data.data));
-        }
-      )
-    );
+    if (this.$cookies.get("userId") === null) {
+      await fetch("http://localhost:8000/chokola/modules/get_unit/?" + new URLSearchParams({
+        "module_id": this.$route.params.module_id,
+        "unit_index": this.$route.params.unit_no
+      }), {
+        method: "GET",
+      }).then(
+        response => response.json().then(
+          data => {
+            this.unit = JSON.parse(JSON.stringify(data.data));
+          }
+        )
+      );
+    }
+    else {
+
+    }
   }
 });
 </script>

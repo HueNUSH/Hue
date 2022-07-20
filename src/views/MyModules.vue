@@ -174,14 +174,33 @@ export default Vue.extend({
     }
   },
   created() {
-    if (this.$cookies.get("userId") === null) {
+    const userId = this.$cookies.get("userId");
+    if (userId === null) {
       console.log("here");
       this.populateGeneralModules();
     }
     else {
-      this.user.userId = this.$cookies.get("userId");
-      this.populateUserModules(this.user.userId);
-      this.isSignedIn = true;
+      fetch("http://localhost:8000/chokola/users/user_exists?" + new URLSearchParams({
+        "userId": userId,
+      }), {
+          headers: {
+            "accept": "application/json",
+          }
+        }
+      ).then(
+        response => response.json().then(
+          data => {
+            if (data.data.exists) {
+              this.user.userId = userId;
+              this.populateUserModules(this.user.userId);
+              this.isSignedIn = true;
+            }
+            else {
+              this.populateGeneralModules();
+            }
+          }
+        )
+      );
     }
   }
 });

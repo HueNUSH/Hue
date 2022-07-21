@@ -3,17 +3,23 @@
     <h1 class="mb-5">Announcements</h1>
     <v-row>
       <v-col cols="12" style="max-width:75%" v-for="(announcement, index) in announcements" :key="index">
-      <v-card class="mx-auto">
-        <v-card-text class="pb-2 mt-2">
-          <p class="text-dark-primary text-display-semibold text-font-size-22">
-            {{announcement.title}}
-          </p>
-          <p class="text-dark-tertiary text-font-size-14">Announcement posted on {{announcement.timestamp}}</p>
-          <p v-if="announcement.editedTimestamp != ''" class="text-dark-tertiary text-font-size-14">Edited on {{announcement.editedTimestamp}}</p>
-          <p class="text-dark-tertiary text-font-size-16">{{announcement.body}}</p>
-          <v-spacer></v-spacer>
-        </v-card-text>
-      </v-card>
+        <v-card class="mx-auto">
+          <div style="display:inline-block;vertical-align: top;width:10px">
+            <v-sheet color="#8C4F00" height="200px" width="10px"></v-sheet>
+          </div>
+          <div style="display:inline-block;vertical-align: top;">
+            <v-card-text class="pb-2 mt-2">
+            <p class="text-dark-primary text-display-semibold text-font-size-22">
+              {{ announcement.title }}
+            </p>
+            <p class="text-dark-tertiary text-font-size-14">Announcement posted on {{ announcement.timestamp }}</p>
+            <p v-if="announcement.editedTimestamp != ''" class="text-dark-tertiary text-font-size-14">Edited on
+              {{ announcement.editedTimestamp }}</p>
+            <p class="text-dark-tertiary text-font-size-16">{{ announcement.body }}</p>
+            <v-spacer></v-spacer>
+          </v-card-text>
+          </div>
+        </v-card>
 
       </v-col>
     </v-row>

@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Body
 from fastapi.encoders import jsonable_encoder
 from bson.errors import InvalidId
-from sympy import true
 
 from database import (
     retrieve_user,

@@ -8,7 +8,7 @@
           <template v-slot:day-content="{ day, attributes }">
             <span> {{ day.day }}</span>
             <p v-for="attr in attributes" :key="attr.key" class="text-xs leading-tight rounded-sm p-1 mt-0 mb-1"
-              :class="attr.customData.class">
+              >
               {{ attr.customData.title }}
             </p>
           </template>
@@ -92,8 +92,10 @@ export default Vue.extend({
 ::v-deep .vc-day {
   padding: 0 5px 3px 5px;
   text-align: left;
+  min-height: 90px;
   height: 90px;
   min-width: 60px;
+  width: 125px;
   background-color: white;
 
   & .weekday-1,

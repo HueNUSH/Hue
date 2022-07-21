@@ -75,7 +75,7 @@ export default Vue.extend({
 
   methods: {
     populateGeneralModules() {
-      fetch("http://localhost:8000/chokola/modules/get_modules", {
+      fetch("https://nushigh.school/chokola/modules/get_modules", {
         method: "GET",
         headers: {
           "accept": "application/json",
@@ -84,6 +84,7 @@ export default Vue.extend({
         response => response.json().then(
           data => {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            this.modules = [] as Array<Modules>;
             for (const moduleKey in data.data) {
               const module: Modules = JSON.parse(JSON.stringify(data.data[parseInt(moduleKey)]));
               this.modules.push(module);
@@ -93,7 +94,7 @@ export default Vue.extend({
       );
     },
     populateUserModules(userId: string) {
-      fetch("http://localhost:8000/chokola/users/get_user?" + new URLSearchParams({
+      fetch("https://nushigh.school/chokola/users/get_user?" + new URLSearchParams({
         "userId": userId,
       }), {
           headers: {
@@ -124,7 +125,7 @@ export default Vue.extend({
       this.user.createdAt = Date.now();
       this.user.userModules = [];
 
-      fetch("http://localhost:8000/chokola/users/user_exists?" + new URLSearchParams({
+      fetch("https://nushigh.school/chokola/users/user_exists?" + new URLSearchParams({
         "userId": this.user.userId,
       }), {
           headers: {
@@ -149,7 +150,7 @@ export default Vue.extend({
       );
     },
     createNewUser() {
-      fetch("http://localhost:8000/chokola/users/create_user", {
+      fetch("https://nushigh.school/chokola/users/create_user", {
         method: "POST",
         headers: {
           "Accept": "application/json",
@@ -180,7 +181,7 @@ export default Vue.extend({
       this.populateGeneralModules();
     }
     else {
-      fetch("http://localhost:8000/chokola/users/user_exists?" + new URLSearchParams({
+      fetch("https://nushigh.school/chokola/users/user_exists?" + new URLSearchParams({
         "userId": userId,
       }), {
           headers: {
@@ -192,6 +193,7 @@ export default Vue.extend({
           data => {
             if (data.data.exists) {
               this.user.userId = userId;
+              this.user.username = data.data.username;
               this.populateUserModules(this.user.userId);
               this.isSignedIn = true;
             }

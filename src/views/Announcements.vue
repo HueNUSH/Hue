@@ -32,7 +32,7 @@ export default Vue.extend({
 
   methods: {
     populateAnnouncements() {
-      fetch("http://localhost:8000/chokola/announcements/get_announcements", {
+      fetch("https://nushigh.school/chokola/announcements/get_announcements", {
         method: "GET",
         headers: {
           "accept": "application/json",

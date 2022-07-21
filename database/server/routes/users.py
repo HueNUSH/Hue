@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Body
 from fastapi.encoders import jsonable_encoder
 from bson.errors import InvalidId
+from sympy import true
 
 from database import (
     retrieve_user,
@@ -98,9 +99,11 @@ def get_user_module(userId, moduleId):
 
 @router.get("/user_exists")
 def user_exists(userId):
-    print(users.count_documents({"userId": userId}, limit=1))
-    return ResponseModel({"exists": bool(users.count_documents({"userId": userId}, limit=1))}, f"Counted documents with userId: {userId}")
-
+    if(users.count_documents({"userId": userId}, limit=1)):
+        user = retrieve_user(userId)
+        return ResponseModel({"exists": True, "username" : user["username"]}, f"Counted documents with userId: {userId}")
+    else:
+         return ResponseModel({"exists": False}, f"Counted documents with userId: {userId}")
 @router.put("/update_user", response_description="User updated")
 def update_user_data(userId, req: UpdateUsers = Body(...)):
     req = {k: v for k, v in req.dict().items() if v is not None}

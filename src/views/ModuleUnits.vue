@@ -105,7 +105,7 @@ export default Vue.extend({
   }),
   methods: {
     async populateGeneralModule(moduleId: string) {
-      await fetch("http://localhost:8000/chokola/modules/get_module?" + new URLSearchParams({
+      await fetch("https://nushigh.school/chokola/modules/get_module?" + new URLSearchParams({
         "module_id": moduleId
       }), {
         method: "GET",
@@ -119,7 +119,7 @@ export default Vue.extend({
     },
 
     async populateUserModule(userId: string, moduleId: string) {
-      await fetch("http://localhost:8000/chokola/users/get_user_module?" + new URLSearchParams({
+      await fetch("https://nushigh.school/chokola/users/get_user_module?" + new URLSearchParams({
         "userId": userId,
         "moduleId": moduleId
       }), {
@@ -140,7 +140,7 @@ export default Vue.extend({
       await this.populateGeneralModule(this.$route.params.module_id);
     }
     else {
-      await fetch("http://localhost:8000/chokola/users/user_exists?" + new URLSearchParams({
+      await fetch("https://nushigh.school/chokola/users/user_exists?" + new URLSearchParams({
         "userId": userId,
       }), {
           headers: {

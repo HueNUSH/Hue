@@ -77,7 +77,7 @@ export default Vue.extend({
     },
 
     async populateGeneralSections(moduleId: string, unitIndex: string) {
-      await fetch("http://localhost:8000/chokola/modules/get_unit/?" + new URLSearchParams({
+      await fetch("https://nushigh.school/chokola/modules/get_unit/?" + new URLSearchParams({
         "module_id": moduleId,
         "unit_index": unitIndex
       }), {
@@ -91,7 +91,7 @@ export default Vue.extend({
       );
     },
     async populateUserSections(userId: string, moduleId: string, unitIndex: string) {
-      fetch("http://localhost:8000/chokola/users/get_user_unit?" + new URLSearchParams({
+      fetch("https://nushigh.school/chokola/users/get_user_unit?" + new URLSearchParams({
         "userId": userId,
         "moduleId": moduleId,
         "unitIndex": unitIndex
@@ -112,7 +112,7 @@ export default Vue.extend({
       await this.populateGeneralSections(this.$route.params.module_id, this.$route.params.unit_no);
     }
     else {
-      await fetch("http://localhost:8000/chokola/users/user_exists?" + new URLSearchParams({
+      await fetch("https://nushigh.school/chokola/users/user_exists?" + new URLSearchParams({
         "userId": userId,
       }), {
           headers: {

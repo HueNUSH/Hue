@@ -1,34 +1,25 @@
 <template>
   <v-container fluid class="pl-20 pr-31 py-16">
     <h1>Schedule</h1>
-    <div class="pt-4">
-      <vc-calendar class="custom-calendar max-w-full" :masks="masks" :attributes="attributes" disable-page-swipe
-        is-expanded>
-        <template v-slot:day-content="{ day, attributes }">
-          <span> {{day.day}}</span>
-          <p v-for="attr in attributes"
-              :key="attr.key"
-              class="text-xs leading-tight rounded-sm p-1 mt-0 mb-1"
+    <div d-flex>
+      <div class="pt-4" style="display:inline-block;vertical-align: top">
+        <vc-calendar class="custom-calendar max-w-full" :masks="masks" :attributes="attributes" disable-page-swipe
+          is-expanded>
+          <template v-slot:day-content="{ day, attributes }">
+            <span> {{ day.day }}</span>
+            <p v-for="attr in attributes" :key="attr.key" class="text-xs leading-tight rounded-sm p-1 mt-0 mb-1"
               :class="attr.customData.class">
-            {{attr.customData.title}}    
-          </p>
-          <!-- <div class="flex flex-col h-full z-10 overflow-hidden">
-          <span class="day-label text-sm text-gray-900">{{ day.day }}</span>
-          <div class="flex-grow overflow-y-auto overflow-x-auto">
-            <p
-              v-for="attr in attributes"
-              :key="attr.key"
-              class="text-xs leading-tight rounded-sm p-1 mt-0 mb-1"
-              :class="attr.customData.class"
-            >
-              
+              {{ attr.customData.title }}
             </p>
-          </div>
-        </div> -->
-        </template>
-      </vc-calendar>
+          </template>
+        </vc-calendar>
+      </div>
+      <div class="pa-14" style="display:inline-block;vertical-align: top;width:35%">
+        <h1>Lectures Timings for Chemistry</h1>
+        <p></p>
+        <h3>We will conduct lectures every XXX at XXX</h3>
+      </div>
     </div>
-
   </v-container>
 </template>
 
@@ -55,7 +46,7 @@ export default Vue.extend({
       {
         key: 1,
         customData: {
-          title: 'Test text.',
+          title: 'Lecture 1000-1200.',
           class: 'bg-red-600 text-white',
         },
         dates: new Date(year, month, 1),
@@ -71,8 +62,20 @@ export default Vue.extend({
 @import "../styles/global.scss";
 
 ::v-deep .vc-header {
-  background-color: #f1f5f8;
+  background-color: $c-primary-background;
   padding: 10px 0;
+}
+
+::v-deep .vc-title {
+  color: $c-text-light-primary;
+}
+
+::v-deep .vc-svg-icon path {
+  fill: $c-text-light-primary  !important;
+}
+
+::v-deep .vc-svg-icon {
+  fill: $c-primary-foreground;
 }
 
 ::v-deep.vc-weeks {
@@ -89,7 +92,7 @@ export default Vue.extend({
 ::v-deep .vc-day {
   padding: 0 5px 3px 5px;
   text-align: left;
-  height: 60px;
+  height: 90px;
   min-width: 60px;
   background-color: white;
 
@@ -97,15 +100,18 @@ export default Vue.extend({
   & .weekday-7 {
     background-color: #eff8ff;
   }
+
   &:not(.on-bottom) {
+    border-bottom: 1px solid #b8c2cc;
+
+    &.weekday-1 {
       border-bottom: 1px solid #b8c2cc;
-      &.weekday-1 {
-        border-bottom: 1px solid #b8c2cc;
-      }
     }
-    &:not(.on-right) {
-      border-right: 1px solid #b8c2cc;
-    }
+  }
+
+  &:not(.on-right) {
+    border-right: 1px solid #b8c2cc;
+  }
 }
 
 ::v-deep .vc-day-dots {

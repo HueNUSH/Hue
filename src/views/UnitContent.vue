@@ -15,10 +15,13 @@
         <embed :src="this.$props.sectionMedia" style="width:100%;height: 100vh;">
     </div>
 
-
     <div v-else-if="this.$props.mediaType === 'embed'">
         <iframe :src="this.$props.sectionMedia" frameborder="0" width="960"
         height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+    </div>
+
+    <div v-else-if="this.$props.mediaType === 'slides'">
+        <iframe src="this.$props.sectionMedia" width="476px" height="288px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
     </div>
 
 

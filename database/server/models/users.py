@@ -6,7 +6,6 @@ from models.modules import (
     Modules
 )
 
-
 class Users(BaseModel):
     userId: str = Field(...)
     username: str = Field(...)

@@ -23,24 +23,29 @@ from models.users import (
 
 router = APIRouter()
 
+
+def create_user_progress(module_id: str):
+    unitProgress = []
+    for index, unit in enumerate(retrieve_module(module_id)["units"]):
+        sectionProgress = [0 for _ in range(len(unit["sections"]))]
+
+        unitProgress.append({
+                "sectionsCompleted": 0,
+                "sectionProgress": sectionProgress
+            })
+
+    return {
+            "unitsCompleted": 0,
+            "unitProgress": unitProgress
+            }
+
 @router.post("/create_user", response_description="User data added into database")
 def create_user(user: Users = Body(...)):
     user = jsonable_encoder(user)
 
     modules = {}
     for _id in user["userModules"]:
-        unitProgress = []
-        for index, unit in enumerate(retrieve_module(_id)["units"]):
-            sectionProgress = [0 for _ in range(len(unit["sections"]))]
-
-            unitProgress.append({
-                    "sectionsCompleted": 0,
-                    "sectionProgress": sectionProgress
-                })
-        modules[_id] = {
-                "unitsCompleted": 0,
-                "unitProgress": unitProgress
-                }
+        modules[_id] = create_user_progress(_id)
 
     user["userModules"] = modules
 
@@ -89,9 +94,10 @@ def get_user_unit(userId, moduleId, unitIndex: int):
             module = retrieve_module(moduleId)
             if unitIndex < len(module["units"]):
                 unit = module["units"][unitIndex]
+
                 return ResponseModel(unit, "Unit data retrieved successfully")
             else:
-                return ErrorResponseModel("An eror occured", 404, "No unit exists")
+                return ErrorResponseModel("An error occured", 404, "No unit exists")
         else:
             return ErrorResponseModel("An error occured", 404, f"User does not contain module with id {moduleId}")
 
@@ -144,6 +150,19 @@ def complete_section(userId: str, moduleId: str, unit_index: int = Query(default
             unit["sectionsCompleted"] = unit["sectionProgress"].count(1)
             if unit["sectionsCompleted"] == len(unit["sectionProgress"]):
                 moduleProgress["unitsCompleted"] += 1
+    else:
+        try:
+            module = retrieve_module(moduleId)
+            if module:
+                user["userModules"][moduleId] = create_user_progress(moduleId)
+
+                update_user_module(userId, moduleId, user["userModules"][moduleId])
+                # Recursive function yooooo
+                complete_section(userId, moduleId, unit_index, section_index)
+            else:
+                return ErrorResponseModel("An error occured", 404, f"Module with id {moduleId} not found")
+        except InvalidId as e:
+            return ErrorResponseModel("An error occured", 404, "Invalid ID")
 
 
     updated_user = update_user_module(userId, moduleId, user["userModules"][moduleId])

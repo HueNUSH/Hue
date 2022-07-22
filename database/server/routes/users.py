@@ -81,7 +81,7 @@ def get_user_module(userId: str, moduleId: str):
         return ErrorResponseModel("An error occured", 404, "Invalid ID")
     if user:
         if moduleId in user["userModules"]:
-            module = retrieve_module(module)
+            module = retrieve_module(moduleId)
 
             return ResponseModel(module, "Module data retrieved successfully")
         else:

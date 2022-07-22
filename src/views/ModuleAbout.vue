@@ -8,11 +8,8 @@
     </router-link>
     <p></p>
     <h1>About this module</h1>
-<<<<<<< HEAD
     <p></p>
     <p style="width:40%">{{aboutText}}</p>
-=======
->>>>>>> refactor_user
     
   </v-container>
 </template>

@@ -1,12 +1,14 @@
 <template>
-  <v-container fluid class="px-12 py-6">
+  <v-container fluid class="pb-6 pt-16" style="padding-left: 80px; padding-right: 100px">
     <router-link
       :to="'/modules/' + $route.params.module_id"
       class="links"
     >
-      < Back to module
+      &lt; Back to module
     </router-link>
+    <p></p>
     <h1>About this module</h1>
+    
   </v-container>
 </template>
 

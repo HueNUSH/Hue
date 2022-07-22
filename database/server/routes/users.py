@@ -26,11 +26,16 @@ router = APIRouter()
 @router.post("/create_user", response_description="User data added into database")
 def create_user(user: Users = Body(...)):
     user = jsonable_encoder(user)
-    if len(user["userModules"]) == 0:
-        user["userModules"] = {module["_id"]:module for module in retrieve_modules()}
-    else:
-        modules = {_id: retrieve_module(_id) for _id in user["userModules"]}
-        user["userModules"] = modules
+    
+    modules = { }
+    for _id in user["userModules"]:
+        unitProgress = {}
+        for index, unit in enumerate(retrieve_module(_id)["units"]):
+            sectionProgress = [0 for _ in range(len(unit["sections"]))]
+            unitProgress[str(index)] = sectionProgress
+        modules[_id] = unitProgress
+    
+    user["userModules"] = modules
 
     new_user = add_user(user)
     return ResponseModel(new_user, "User added successfully")
@@ -60,7 +65,8 @@ def get_user_module(userId, moduleId):
         return ErrorResponseModel("An error occured", 404, "Invalid ID")
     if user:
         try:
-            module = user["userModules"][moduleId]
+            #module = user["userModules"][moduleId]
+            module = retrieve_module(module)
             return ResponseModel(module, "Module data retrieved successfully")
         except KeyError as e:
             return ErrorResponseModel("An error occured", 404, f"User does not contain module with id {moduleId}")

@@ -53,6 +53,7 @@
 
 <script lang="ts">
 import Vue from "vue";
+// @ts-ignore 
 import VueCookies from "vue-cookies"
 import { Modules } from "@/types/modules";
 import { User } from "@/types/user";
@@ -138,6 +139,7 @@ export default Vue.extend({
             if (!data.data.exists) {
               for (const moduleKey in this.modules) {
                 this.user.userModules.push(this.modules[parseInt(moduleKey)]._id);
+                console.log(this.modules[parseInt(moduleKey)]._id);
               }
               this.createNewUser();
             }

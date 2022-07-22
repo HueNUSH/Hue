@@ -63,7 +63,7 @@ import Vue from "vue"
 export default Vue.extend({
   name: "UnitSections",
   data: () => ({
-    unit: Units,
+    unit: {} as Units,
     sectionDesc: "",
     mediaType: "",
     sectionMedia: "",

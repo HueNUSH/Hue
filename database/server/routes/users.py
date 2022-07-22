@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Body
+from fastapi import APIRouter, Body, Query
 from fastapi.encoders import jsonable_encoder
 from bson.errors import InvalidId
 
@@ -27,13 +27,20 @@ router = APIRouter()
 def create_user(user: Users = Body(...)):
     user = jsonable_encoder(user)
 
-    modules = { }
+    modules = {}
     for _id in user["userModules"]:
         unitProgress = []
         for index, unit in enumerate(retrieve_module(_id)["units"]):
             sectionProgress = [0 for _ in range(len(unit["sections"]))]
-            unitProgress.append(sectionProgress)
-        modules[_id] = unitProgress
+
+            unitProgress.append({
+                    "sectionsCompleted": 0,
+                    "sectionProgress": sectionProgress
+                })
+        modules[_id] = {
+                "unitsCompleted": 0,
+                "unitProgress": unitProgress
+                }
 
     user["userModules"] = modules
 
@@ -64,7 +71,7 @@ def get_user_module(userId, moduleId):
     except InvalidId as e:
         return ErrorResponseModel("An error occured", 404, "Invalid ID")
     if user:
-        if user["userModules"].has_key(moduleId):
+        if moduleId in user["userModules"]:
             module = retrieve_module(module)
             return ResponseModel(module, "Module data retrieved successfully")
         else:
@@ -78,7 +85,7 @@ def get_user_unit(userId, moduleId, unitIndex: int):
     except InvalidId as e:
         return ErrorResponseModel("An error occured", 404, "Invalid ID")
     if user:
-        if user["userModules"].has_key(moduleId):
+        if moduleId in user["userModules"]:
             module = retrieve_module(moduleId)
             if unitIndex < len(module["units"]):
                 unit = module["units"][unitIndex]
@@ -118,27 +125,28 @@ def update_user_data(userId, req: UpdateUsers = Body(...)):
         return ErrorResponseModel("An error occured", 404, "Invalid ID")
 
 @router.put("/complete_section", response_description="User section completed")
-def complete_section(userId: str, moduleId: str, unit_index: int, section_index: int):
+def complete_section(userId: str, moduleId: str, unit_index: int = Query(default = None, ge=0), section_index: int = Query(default = None, ge=0)):
     user = retrieve_user(userId)
-    module = user["userModules"][moduleId]
-    module["units"][unit_index]["sections"][section_index]["isComplete"] = True
 
-    req = {k: v for k, v in module.items()}
+    if moduleId in user["userModules"]:
+        moduleProgress = user["userModules"][moduleId]
 
-    unitsCompleted = 0
-    for unit in req["units"]:
-        sectionsCompleted = 0
-        for section in unit["sections"]:
-            sectionsCompleted += section["isComplete"]
-        unit["sectionsCompleted"] = sectionsCompleted
+        if not unit_index < len(moduleProgress["unitProgress"]):
+            return ErrorResponseModel("An error occured", 404, "No unit found")
+        unit = moduleProgress["unitProgress"][unit_index]
 
-        unit_completed = sectionsCompleted == len(unit["sections"])
-        unitsCompleted += unit_completed
-        unit["isComplete"] = unit_completed
+        if not section_index < len(unit["sectionProgress"]):
+            return ErrorResponseModel("An error occured", 404, "No section found")
 
-    req["unitsCompleted"] = unitsCompleted
+        # Just in case this endpoint is called on a completed section
+        if not unit["sectionProgress"][section_index]:
+            unit["sectionProgress"][section_index] = 1
+            unit["sectionsCompleted"] = unit["sectionProgress"].count(1)
+            if unit["sectionsCompleted"] == len(unit["sectionProgress"]):
+                moduleProgress["unitsCompleted"] += 1
 
-    updated_user = update_user_module(userId, moduleId, req)
+
+    updated_user = update_user_module(userId, moduleId, user["userModules"][moduleId])
     if updated_user:
         return ResponseModel(
             f'User with ID: {userId} updated section complete successfully',

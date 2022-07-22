@@ -9,13 +9,15 @@
     <h1>About this unit</h1>
     <p>
       This is module {{$route.params.module_id}} and unit {{$route.params.unit_no}}
+      The about is as such: {{this.$props.unitAbout}}
     </p>
   </v-container>
 </template>
 
 <script>
 export default {
-  name: "UnitAbout"
+  name: "UnitAbout",
+  props: ["unitAbout"]
 };
 </script>
 

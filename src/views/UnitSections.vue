@@ -47,7 +47,7 @@
           </router-link>
 
           <v-main class="py-6" fluid full-width>
-            <router-view :sectionDesc="sectionDesc" :sectionMedia="sectionMedia" :mediaType="mediaType"/>
+            <router-view :sectionDesc="sectionDesc" :sectionMedia="sectionMedia" :mediaType="mediaType" :unitAbout="unitAbout"/>
           </v-main>
 
         </div>
@@ -63,10 +63,11 @@ import Vue from "vue"
 export default Vue.extend({
   name: "UnitSections",
   data: () => ({
-    unit: Units,
+    unit: {} as Units,
     sectionDesc: "",
     mediaType: "",
     sectionMedia: "",
+    unitAbout: "",
     userId: "",
   }),
   methods: {
@@ -86,6 +87,7 @@ export default Vue.extend({
         response => response.json().then(
           data => {
             this.unit = JSON.parse(JSON.stringify(data.data));
+            this.unitAbout = this.unit.unitAbout;
           }
         )
       );
@@ -101,6 +103,7 @@ export default Vue.extend({
         response => response.json().then(
           data => {
             this.unit = JSON.parse(JSON.stringify(data.data));
+            this.unitAbout = this.unit.unitAbout;
           }
         )
       );
@@ -133,6 +136,7 @@ export default Vue.extend({
         )
       );
     }
+    
   }
 });
 </script>

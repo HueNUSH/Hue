@@ -77,13 +77,15 @@
           About this module
         </v-card-title>
         <v-card-text>
-          {{ module.moduleAbout }}
+          {{ module.moduleAbout.slice(0, 200) }}...
         </v-card-text>
 
         <br/>
         <router-link
           class="learn-arrow ma-4 links"
-          :to="'/modules/' + $route.params.module_id + '/about'"
+          :to="{
+            path: '/modules/' + $route.params.module_id + '/about',
+          }"
         >
           View full description →
         </router-link>

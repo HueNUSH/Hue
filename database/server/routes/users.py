@@ -49,7 +49,7 @@ def create_user(user: Users = Body(...)):
             modules[_id] = create_user_progress(_id)
     else:
         for module in retrieve_modules():
-            modules[]
+            modules[module["_id"]] = create_user_progress(module["_id"])
 
     user["userModules"] = modules
 

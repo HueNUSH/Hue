@@ -44,8 +44,12 @@ def create_user(user: Users = Body(...)):
     user = jsonable_encoder(user)
 
     modules = {}
-    for _id in user["userModules"]:
-        modules[_id] = create_user_progress(_id)
+    if len(user["userModules"]) > 0:
+        for _id in user["userModules"]:
+            modules[_id] = create_user_progress(_id)
+    else:
+        for module in retrieve_modules():
+            modules[]
 
     user["userModules"] = modules
 
@@ -135,35 +139,31 @@ def update_user_data(userId: str, req: UpdateUsers = Body(...)):
 def complete_section(userId: str, moduleId: str, unit_index: int = Query(default = None, ge=0), section_index: int = Query(default = None, ge=0)):
     user = retrieve_user(userId)
 
-    if moduleId in user["userModules"]:
-        moduleProgress = user["userModules"][moduleId]
-
-        if not unit_index < len(moduleProgress["unitProgress"]):
-            return ErrorResponseModel("An error occured", 404, "No unit found")
-        unit = moduleProgress["unitProgress"][unit_index]
-
-        if not section_index < len(unit["sectionProgress"]):
-            return ErrorResponseModel("An error occured", 404, "No section found")
-
-        # Just in case this endpoint is called on a completed section
-        if not unit["sectionProgress"][section_index]:
-            unit["sectionProgress"][section_index] = 1
-            unit["sectionsCompleted"] = unit["sectionProgress"].count(1)
-            if unit["sectionsCompleted"] == len(unit["sectionProgress"]):
-                moduleProgress["unitsCompleted"] += 1
-    else:
+    if moduleId not in user["userModules"]:
         try:
             module = retrieve_module(moduleId)
             if module:
                 user["userModules"][moduleId] = create_user_progress(moduleId)
-
-                update_user_module(userId, moduleId, user["userModules"][moduleId])
-                # Recursive function yooooo
-                return complete_section(userId, moduleId, unit_index, section_index)
             else:
                 return ErrorResponseModel("An error occured", 404, f"Module with id {moduleId} not found")
         except InvalidId as e:
             return ErrorResponseModel("An error occured", 404, "Invalid ID")
+
+    moduleProgress = user["userModules"][moduleId]
+
+    if not unit_index < len(moduleProgress["unitProgress"]):
+        return ErrorResponseModel("An error occured", 404, "No unit found")
+    unit = moduleProgress["unitProgress"][unit_index]
+
+    if not section_index < len(unit["sectionProgress"]):
+        return ErrorResponseModel("An error occured", 404, "No section found")
+
+    # Just in case this endpoint is called on a completed section
+    if not unit["sectionProgress"][section_index]:
+        unit["sectionProgress"][section_index] = 1
+        unit["sectionsCompleted"] = unit["sectionProgress"].count(1)
+        if unit["sectionsCompleted"] == len(unit["sectionProgress"]):
+            moduleProgress["unitsCompleted"] += 1
 
 
     updated_user = update_user_module(userId, moduleId, user["userModules"][moduleId])

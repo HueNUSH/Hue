@@ -53,7 +53,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-// @ts-ignore 
+// @ts-ignore
 import VueCookies from "vue-cookies"
 import { Modules } from "@/types/modules";
 import { User } from "@/types/user";
@@ -75,27 +75,33 @@ export default Vue.extend({
   }),
 
   methods: {
-    populateGeneralModules() {
-      fetch("https://nushigh.school/chokola/modules/get_modules", {
-        method: "GET",
-        headers: {
-          "accept": "application/json",
-        }
-      }).then(
-        response => response.json().then(
-          data => {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            this.modules = [] as Array<Modules>;
-            for (const moduleKey in data.data) {
-              const module: Modules = JSON.parse(JSON.stringify(data.data[parseInt(moduleKey)]));
-              this.modules.push(module);
-            }
+    getGeneralModules(): Promise<Array<Modules>>{
+      return new Promise<Array<Modules>>(resolve => {
+        fetch("https://localhost:8000/chokola/modules/get_modules", {
+          method: "GET",
+          headers: {
+            "accept": "application/json",
           }
-        )
+        }).then(
+          response => response.json().then(
+            data => {
+              resolve(data.data);
+            }
+          )
+        );
+      });
+    },
+    populateGeneralModules() {
+      this.getGeneralModules().then(data => {
+          for (const moduleKey in data) {
+            const module: Modules = JSON.parse(JSON.stringify(data[parseInt(moduleKey)]));
+            this.modules.push(module);
+          }
+        }
       );
     },
     populateUserModules(userId: string) {
-      fetch("https://nushigh.school/chokola/users/get_user?" + new URLSearchParams({
+      fetch("https://localhost:8000/chokola/users/get_user?" + new URLSearchParams({
         "userId": userId,
       }), {
           headers: {
@@ -139,7 +145,6 @@ export default Vue.extend({
             if (!data.data.exists) {
               for (const moduleKey in this.modules) {
                 this.user.userModules.push(this.modules[parseInt(moduleKey)]._id);
-                console.log(this.modules[parseInt(moduleKey)]._id);
               }
               this.createNewUser();
             }

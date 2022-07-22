@@ -60,7 +60,7 @@ def get_users():
     return ResponseModel(users, "Empty list returned")
 
 @router.get("/get_user", response_description="User retrieved")
-def get_user(userId):
+def get_user(userId: str):
     try:
         user = retrieve_user(userId)
     except InvalidId as e:
@@ -70,7 +70,7 @@ def get_user(userId):
     return ErrorResponseModel("An error occured", 404, "No user found")
 
 @router.get("/get_user_module", response_description="User module retrieved")
-def get_user_module(userId, moduleId):
+def get_user_module(userId: str, moduleId: str):
     try:
         user = retrieve_user(userId)
     except InvalidId as e:
@@ -78,13 +78,14 @@ def get_user_module(userId, moduleId):
     if user:
         if moduleId in user["userModules"]:
             module = retrieve_module(module)
+
             return ResponseModel(module, "Module data retrieved successfully")
         else:
             return ErrorResponseModel("An error occured", 404, f"User does not contain module with id {moduleId}")
 
 
 @router.get("/get_user_unit", response_description="User unit retrieved")
-def get_user_unit(userId, moduleId, unitIndex: int):
+def get_user_unit(userId: str, moduleId: str, unitIndex: int):
     try:
         user = retrieve_user(userId)
     except InvalidId as e:
@@ -102,14 +103,14 @@ def get_user_unit(userId, moduleId, unitIndex: int):
             return ErrorResponseModel("An error occured", 404, f"User does not contain module with id {moduleId}")
 
 @router.get("/user_exists")
-def user_exists(userId):
+def user_exists(userId: str):
     if(users.count_documents({"userId": userId}, limit=1)):
         user = retrieve_user(userId)
         return ResponseModel({"exists": True, "username" : user["username"]}, f"Counted documents with userId: {userId}")
     else:
          return ResponseModel({"exists": False}, f"Counted documents with userId: {userId}")
 @router.put("/update_user", response_description="User updated")
-def update_user_data(userId, req: UpdateUsers = Body(...)):
+def update_user_data(userId: str, req: UpdateUsers = Body(...)):
     req = {k: v for k, v in req.dict().items() if v is not None}
 
     try:
@@ -158,7 +159,7 @@ def complete_section(userId: str, moduleId: str, unit_index: int = Query(default
 
                 update_user_module(userId, moduleId, user["userModules"][moduleId])
                 # Recursive function yooooo
-                complete_section(userId, moduleId, unit_index, section_index)
+                return complete_section(userId, moduleId, unit_index, section_index)
             else:
                 return ErrorResponseModel("An error occured", 404, f"Module with id {moduleId} not found")
         except InvalidId as e:

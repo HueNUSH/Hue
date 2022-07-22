@@ -1,12 +1,12 @@
 <template>
   <v-app>
-     <v-app-bar 
-      permanent 
+     <v-app-bar
+      permanent
       app
-      flat 
+      flat
       clipped
       >
-        
+
         <v-toolbar-title>
         <span style="margin-left: 64px">Hue</span>
         </v-toolbar-title>
@@ -35,6 +35,10 @@
 
 <script lang="ts">
 import Vue from "vue";
+
+Vue.prototype.$backendLink = "http://localhost:8000";
+// Vue.prototype.$backendLink = "https://nushigh.school";
+
 export default Vue.extend({
   name: "App",
   data: () => ({
@@ -88,7 +92,7 @@ export default Vue.extend({
 ::v-deep .v-btn--active::before, .v-btn--active:hover::before, .v-btn--active  {
   opacity: 1 !important;
   color: $c-primary-accent !important;
-} 
+}
 ::v-deep .v-btn-toggle > .v-btn.v-btn {
   opacity: 0 !important;
 }

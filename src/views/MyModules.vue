@@ -77,7 +77,7 @@ export default Vue.extend({
   methods: {
     getGeneralModules(): Promise<Array<Modules>>{
       return new Promise<Array<Modules>>(resolve => {
-        fetch("https://nushigh.school/chokola/modules/get_modules", {
+        fetch(Vue.prototype.$backendLink + "/chokola/modules/get_modules", {
           method: "GET",
           headers: {
             "accept": "application/json",
@@ -93,7 +93,7 @@ export default Vue.extend({
     },
     getModule(moduleId : string): Promise<Modules>{
       return new Promise<Modules>(resolve => {
-        fetch("https://nushigh.school/chokola/modules/get_module?" + new URLSearchParams({
+        fetch(Vue.prototype.$backendLink + "/chokola/modules/get_module?" + new URLSearchParams({
           "module_id" : moduleId,
         }), {
           method: "GET",
@@ -107,7 +107,7 @@ export default Vue.extend({
             }
           )
         );
-      })
+      });
     },
     populateGeneralModules() {
       this.getGeneralModules().then(data => {
@@ -119,7 +119,7 @@ export default Vue.extend({
       );
     },
     populateUserModules(userId: string) {
-      fetch("https://nushigh.school/chokola/users/get_user?" + new URLSearchParams({
+      fetch(Vue.prototype.$backendLink + "/chokola/users/get_user?" + new URLSearchParams({
         "userId": userId,
       }), {
           headers: {
@@ -140,7 +140,7 @@ export default Vue.extend({
             this.modules.push(module);
                 }
               );
-              
+
             }
           }
         )
@@ -157,7 +157,7 @@ export default Vue.extend({
       this.user.createdAt = Date.now();
       this.user.userModules = [];
 
-      fetch("https://nushigh.school/chokola/users/user_exists?" + new URLSearchParams({
+      fetch(Vue.prototype.$backendLink + "/chokola/users/user_exists?" + new URLSearchParams({
         "userId": this.user.userId,
       }), {
           headers: {
@@ -182,7 +182,7 @@ export default Vue.extend({
       );
     },
     createNewUser() {
-      fetch("https://nushigh.school/chokola/users/create_user", {
+      fetch(Vue.prototype.$backendLink + "/chokola/users/create_user", {
         method: "POST",
         headers: {
           "Accept": "application/json",
@@ -213,7 +213,7 @@ export default Vue.extend({
       this.populateGeneralModules();
     }
     else {
-      fetch("https://nushigh.school/chokola/users/user_exists?" + new URLSearchParams({
+      fetch("http://localhost:8000/chokola/users/user_exists?" + new URLSearchParams({
         "userId": userId,
       }), {
           headers: {

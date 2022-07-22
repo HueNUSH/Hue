@@ -95,7 +95,6 @@
 <script lang="ts">
 import Vue from "vue";
 import {Modules} from "@/types/modules";
-import NotFound from "@/views/NotFound.vue";
 
 export default Vue.extend({
   name: "ModuleUnits",
@@ -105,7 +104,7 @@ export default Vue.extend({
   }),
   methods: {
     async populateGeneralModule(moduleId: string) {
-      await fetch("https://nushigh.school/chokola/modules/get_module?" + new URLSearchParams({
+      await fetch(Vue.prototype.$backendLink + "/chokola/modules/get_module?" + new URLSearchParams({
         "module_id": moduleId
       }), {
         method: "GET",
@@ -119,7 +118,7 @@ export default Vue.extend({
     },
 
     async populateUserModule(userId: string, moduleId: string) {
-      await fetch("https://nushigh.school/chokola/users/get_user_module?" + new URLSearchParams({
+      await fetch(Vue.prototype.$backendLink + "/chokola/users/get_user_module?" + new URLSearchParams({
         "userId": userId,
         "moduleId": moduleId
       }), {
@@ -140,7 +139,7 @@ export default Vue.extend({
       await this.populateGeneralModule(this.$route.params.module_id);
     }
     else {
-      await fetch("https://nushigh.school/chokola/users/user_exists?" + new URLSearchParams({
+      await fetch(Vue.prototype.$backendLink + "/chokola/users/user_exists?" + new URLSearchParams({
         "userId": userId,
       }), {
           headers: {

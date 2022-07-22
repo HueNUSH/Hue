@@ -11,13 +11,13 @@
       This is module {{$route.params.module_id}} and unit {{$route.params.unit_no}}, section {{this.$props.sectionDesc}}
     </p>
 
-    <div v-if="this.$props.mediaType == 'pdf'">
+    <div v-if="this.$props.mediaType === 'pdf'">
         <embed :src="this.$props.sectionMedia" style="width:100%;height: 100vh;">
     </div>
 
-    
-    <div v-else-if="this.$props.mediaType == 'embed'">
-        <iframe :src="this.$props.sectionMedia" frameborder="0" width="960" 
+
+    <div v-else-if="this.$props.mediaType === 'embed'">
+        <iframe :src="this.$props.sectionMedia" frameborder="0" width="960"
         height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
     </div>
 

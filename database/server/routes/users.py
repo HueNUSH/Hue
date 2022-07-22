@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Body
+from fastapi import APIRouter, Body, Query
 from fastapi.encoders import jsonable_encoder
 from bson.errors import InvalidId
 
@@ -23,14 +23,35 @@ from models.users import (
 
 router = APIRouter()
 
+
+def create_user_progress(module_id: str):
+    unitProgress = []
+    for index, unit in enumerate(retrieve_module(module_id)["units"]):
+        sectionProgress = [0 for _ in range(len(unit["sections"]))]
+
+        unitProgress.append({
+                "sectionsCompleted": 0,
+                "sectionProgress": sectionProgress
+            })
+
+    return {
+            "unitsCompleted": 0,
+            "unitProgress": unitProgress
+            }
+
 @router.post("/create_user", response_description="User data added into database")
 def create_user(user: Users = Body(...)):
     user = jsonable_encoder(user)
-    if len(user["userModules"]) == 0:
-        user["userModules"] = {module["_id"]:module for module in retrieve_modules()}
+
+    modules = {}
+    if len(user["userModules"]) > 0:
+        for _id in user["userModules"]:
+            modules[_id] = create_user_progress(_id)
     else:
-        modules = {_id: retrieve_module(_id) for _id in user["userModules"]}
-        user["userModules"] = modules
+        for module in retrieve_modules():
+            modules[module["_id"]] = create_user_progress(module["_id"])
+
+    user["userModules"] = modules
 
     new_user = add_user(user)
     return ResponseModel(new_user, "User added successfully")
@@ -43,7 +64,7 @@ def get_users():
     return ResponseModel(users, "Empty list returned")
 
 @router.get("/get_user", response_description="User retrieved")
-def get_user(userId):
+def get_user(userId: str):
     try:
         user = retrieve_user(userId)
     except InvalidId as e:
@@ -53,58 +74,47 @@ def get_user(userId):
     return ErrorResponseModel("An error occured", 404, "No user found")
 
 @router.get("/get_user_module", response_description="User module retrieved")
-def get_user_module(userId, moduleId):
+def get_user_module(userId: str, moduleId: str):
     try:
         user = retrieve_user(userId)
     except InvalidId as e:
         return ErrorResponseModel("An error occured", 404, "Invalid ID")
     if user:
-        try:
-            module = user["userModules"][moduleId]
+        if moduleId in user["userModules"]:
+            module = retrieve_module(module)
+
             return ResponseModel(module, "Module data retrieved successfully")
-        except KeyError as e:
+        else:
             return ErrorResponseModel("An error occured", 404, f"User does not contain module with id {moduleId}")
 
 
 @router.get("/get_user_unit", response_description="User unit retrieved")
-def get_user_unit(userId, moduleId, unitIndex: int):
+def get_user_unit(userId: str, moduleId: str, unitIndex: int):
     try:
         user = retrieve_user(userId)
     except InvalidId as e:
         return ErrorResponseModel("An error occured", 404, "Invalid ID")
     if user:
-        try:
-            module = user["userModules"][moduleId]
+        if moduleId in user["userModules"]:
+            module = retrieve_module(moduleId)
             if unitIndex < len(module["units"]):
                 unit = module["units"][unitIndex]
+
                 return ResponseModel(unit, "Unit data retrieved successfully")
             else:
-                return ErrorResponseModel("An eror occured", 404, "No unit exists")
-        except KeyError as e:
-            return ErrorResponseModel("An error occured", 404, f"User does not contain module with id {moduleId}")
-
-@router.get("/get_user_module", response_description="User module retrieved")
-def get_user_module(userId, moduleId):
-    try:
-        user = retrieve_user(userId)
-    except InvalidId as e:
-        return ErrorResponseModel("An error occured", 404, "Invalid ID")
-    if user:
-        try:
-            module = user["userModules"][moduleId]
-            return ResponseModel(module, "Module data retrieved successfully")
-        except KeyError as e:
+                return ErrorResponseModel("An error occured", 404, "No unit exists")
+        else:
             return ErrorResponseModel("An error occured", 404, f"User does not contain module with id {moduleId}")
 
 @router.get("/user_exists")
-def user_exists(userId):
+def user_exists(userId: str):
     if(users.count_documents({"userId": userId}, limit=1)):
         user = retrieve_user(userId)
         return ResponseModel({"exists": True, "username" : user["username"]}, f"Counted documents with userId: {userId}")
     else:
          return ResponseModel({"exists": False}, f"Counted documents with userId: {userId}")
 @router.put("/update_user", response_description="User updated")
-def update_user_data(userId, req: UpdateUsers = Body(...)):
+def update_user_data(userId: str, req: UpdateUsers = Body(...)):
     req = {k: v for k, v in req.dict().items() if v is not None}
 
     try:
@@ -126,27 +136,37 @@ def update_user_data(userId, req: UpdateUsers = Body(...)):
         return ErrorResponseModel("An error occured", 404, "Invalid ID")
 
 @router.put("/complete_section", response_description="User section completed")
-def complete_section(userId: str, moduleId: str, unit_index: int, section_index: int):
+def complete_section(userId: str, moduleId: str, unit_index: int = Query(default = None, ge=0), section_index: int = Query(default = None, ge=0)):
     user = retrieve_user(userId)
-    module = user["userModules"][moduleId]
-    module["units"][unit_index]["sections"][section_index]["isComplete"] = True
 
-    req = {k: v for k, v in module.items()}
+    if moduleId not in user["userModules"]:
+        try:
+            module = retrieve_module(moduleId)
+            if module:
+                user["userModules"][moduleId] = create_user_progress(moduleId)
+            else:
+                return ErrorResponseModel("An error occured", 404, f"Module with id {moduleId} not found")
+        except InvalidId as e:
+            return ErrorResponseModel("An error occured", 404, "Invalid ID")
 
-    unitsCompleted = 0
-    for unit in req["units"]:
-        sectionsCompleted = 0
-        for section in unit["sections"]:
-            sectionsCompleted += section["isComplete"]
-        unit["sectionsCompleted"] = sectionsCompleted
+    moduleProgress = user["userModules"][moduleId]
 
-        unit_completed = sectionsCompleted == len(unit["sections"])
-        unitsCompleted += unit_completed
-        unit["isComplete"] = unit_completed
+    if not unit_index < len(moduleProgress["unitProgress"]):
+        return ErrorResponseModel("An error occured", 404, "No unit found")
+    unit = moduleProgress["unitProgress"][unit_index]
 
-    req["unitsCompleted"] = unitsCompleted
+    if not section_index < len(unit["sectionProgress"]):
+        return ErrorResponseModel("An error occured", 404, "No section found")
 
-    updated_user = update_user_module(userId, moduleId, req)
+    # Just in case this endpoint is called on a completed section
+    if not unit["sectionProgress"][section_index]:
+        unit["sectionProgress"][section_index] = 1
+        unit["sectionsCompleted"] = unit["sectionProgress"].count(1)
+        if unit["sectionsCompleted"] == len(unit["sectionProgress"]):
+            moduleProgress["unitsCompleted"] += 1
+
+
+    updated_user = update_user_module(userId, moduleId, user["userModules"][moduleId])
     if updated_user:
         return ResponseModel(
             f'User with ID: {userId} updated section complete successfully',

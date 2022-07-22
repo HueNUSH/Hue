@@ -53,6 +53,7 @@
 
 <script lang="ts">
 import Vue from "vue";
+// @ts-ignore
 import VueCookies from "vue-cookies"
 import { Modules } from "@/types/modules";
 import { User } from "@/types/user";
@@ -74,23 +75,47 @@ export default Vue.extend({
   }),
 
   methods: {
-    populateGeneralModules() {
-      fetch("https://nushigh.school/chokola/modules/get_modules", {
-        method: "GET",
-        headers: {
-          "accept": "application/json",
-        }
-      }).then(
-        response => response.json().then(
-          data => {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            this.modules = [] as Array<Modules>;
-            for (const moduleKey in data.data) {
-              const module: Modules = JSON.parse(JSON.stringify(data.data[parseInt(moduleKey)]));
-              this.modules.push(module);
-            }
+    getGeneralModules(): Promise<Array<Modules>>{
+      return new Promise<Array<Modules>>(resolve => {
+        fetch("https://nushigh.school/chokola/modules/get_modules", {
+          method: "GET",
+          headers: {
+            "accept": "application/json",
           }
-        )
+        }).then(
+          response => response.json().then(
+            data => {
+              resolve(data.data);
+            }
+          )
+        );
+      });
+    },
+    getModule(moduleId : string): Promise<Modules>{
+      return new Promise<Modules>(resolve => {
+        fetch("https://nushigh.school/chokola/modules/get_module?" + new URLSearchParams({
+          "module_id" : moduleId,
+        }), {
+          method: "GET",
+          headers: {
+            "accept": "application/json",
+          }
+        }).then(
+          response => response.json().then(
+            data => {
+              resolve(data.data);
+            }
+          )
+        );
+      })
+    },
+    populateGeneralModules() {
+      this.getGeneralModules().then(data => {
+          for (const moduleKey in data) {
+            const module: Modules = JSON.parse(JSON.stringify(data[parseInt(moduleKey)]));
+            this.modules.push(module);
+          }
+        }
       );
     },
     populateUserModules(userId: string) {
@@ -107,8 +132,15 @@ export default Vue.extend({
             this.modules = [] as Array<Modules>;
             console.log(data);
             for (const moduleId in data.data.userModules) {
-              const module: Modules = JSON.parse(JSON.stringify(data.data.userModules[moduleId]));
-              this.modules.push(module);
+              console.log(moduleId);
+
+              this.getModule(moduleId).then(
+                data => {
+                  const module: Modules = JSON.parse(JSON.stringify(data));
+            this.modules.push(module);
+                }
+              );
+              
             }
           }
         )

@@ -77,7 +77,7 @@ export default Vue.extend({
   methods: {
     getGeneralModules(): Promise<Array<Modules>>{
       return new Promise<Array<Modules>>(resolve => {
-        fetch("https://localhost:8000/chokola/modules/get_modules", {
+        fetch("https://nushigh.school/chokola/modules/get_modules", {
           method: "GET",
           headers: {
             "accept": "application/json",
@@ -91,6 +91,24 @@ export default Vue.extend({
         );
       });
     },
+    getModule(moduleId : string): Promise<Modules>{
+      return new Promise<Modules>(resolve => {
+        fetch("https://nushigh.school/chokola/modules/get_module?" + new URLSearchParams({
+          "module_id" : moduleId,
+        }), {
+          method: "GET",
+          headers: {
+            "accept": "application/json",
+          }
+        }).then(
+          response => response.json().then(
+            data => {
+              resolve(data.data);
+            }
+          )
+        );
+      })
+    },
     populateGeneralModules() {
       this.getGeneralModules().then(data => {
           for (const moduleKey in data) {
@@ -101,7 +119,7 @@ export default Vue.extend({
       );
     },
     populateUserModules(userId: string) {
-      fetch("https://localhost:8000/chokola/users/get_user?" + new URLSearchParams({
+      fetch("https://nushigh.school/chokola/users/get_user?" + new URLSearchParams({
         "userId": userId,
       }), {
           headers: {
@@ -114,8 +132,15 @@ export default Vue.extend({
             this.modules = [] as Array<Modules>;
             console.log(data);
             for (const moduleId in data.data.userModules) {
-              const module: Modules = JSON.parse(JSON.stringify(data.data.userModules[moduleId]));
-              this.modules.push(module);
+              console.log(moduleId);
+
+              this.getModule(moduleId).then(
+                data => {
+                  const module: Modules = JSON.parse(JSON.stringify(data));
+            this.modules.push(module);
+                }
+              );
+              
             }
           }
         )

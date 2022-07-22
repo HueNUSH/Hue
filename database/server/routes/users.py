@@ -26,15 +26,15 @@ router = APIRouter()
 @router.post("/create_user", response_description="User data added into database")
 def create_user(user: Users = Body(...)):
     user = jsonable_encoder(user)
-    
+
     modules = { }
     for _id in user["userModules"]:
-        unitProgress = {}
+        unitProgress = []
         for index, unit in enumerate(retrieve_module(_id)["units"]):
             sectionProgress = [0 for _ in range(len(unit["sections"]))]
-            unitProgress[str(index)] = sectionProgress
+            unitProgress.append(sectionProgress)
         modules[_id] = unitProgress
-    
+
     user["userModules"] = modules
 
     new_user = add_user(user)
@@ -64,11 +64,10 @@ def get_user_module(userId, moduleId):
     except InvalidId as e:
         return ErrorResponseModel("An error occured", 404, "Invalid ID")
     if user:
-        try:
-            #module = user["userModules"][moduleId]
+        if user["userModules"].has_key(moduleId):
             module = retrieve_module(module)
             return ResponseModel(module, "Module data retrieved successfully")
-        except KeyError as e:
+        else:
             return ErrorResponseModel("An error occured", 404, f"User does not contain module with id {moduleId}")
 
 
@@ -79,27 +78,14 @@ def get_user_unit(userId, moduleId, unitIndex: int):
     except InvalidId as e:
         return ErrorResponseModel("An error occured", 404, "Invalid ID")
     if user:
-        try:
-            module = user["userModules"][moduleId]
+        if user["userModules"].has_key(moduleId):
+            module = retrieve_module(moduleId)
             if unitIndex < len(module["units"]):
                 unit = module["units"][unitIndex]
                 return ResponseModel(unit, "Unit data retrieved successfully")
             else:
                 return ErrorResponseModel("An eror occured", 404, "No unit exists")
-        except KeyError as e:
-            return ErrorResponseModel("An error occured", 404, f"User does not contain module with id {moduleId}")
-
-@router.get("/get_user_module", response_description="User module retrieved")
-def get_user_module(userId, moduleId):
-    try:
-        user = retrieve_user(userId)
-    except InvalidId as e:
-        return ErrorResponseModel("An error occured", 404, "Invalid ID")
-    if user:
-        try:
-            module = user["userModules"][moduleId]
-            return ResponseModel(module, "Module data retrieved successfully")
-        except KeyError as e:
+        else:
             return ErrorResponseModel("An error occured", 404, f"User does not contain module with id {moduleId}")
 
 @router.get("/user_exists")

@@ -15,9 +15,8 @@
         <embed :src="this.$props.sectionMedia" style="width:100%;height: 100vh;">
     </div>
 
-    
     <div v-else-if="this.$props.mediaType === 'embed'">
-        <iframe :src="this.$props.sectionMedia" frameborder="0" width="960" 
+        <iframe :src="this.$props.sectionMedia" frameborder="0" width="960"
         height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
     </div>
 

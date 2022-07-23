@@ -3,13 +3,13 @@
     <router-link to="/modules">
       < My modules
     </router-link>
-    <h1>404 Not found, double check the link you went to</h1>
+    <h1>422 Validation Error, double check the link you went to</h1>
   </v-container>
 </template>
 
 <script>
 export default {
-  name: "NotFound"
+  name: "ServerError"
 };
 </script>
 

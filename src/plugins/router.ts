@@ -34,6 +34,7 @@ const routes: Array<RouteConfig> = [
     component: ModuleAbout,
   },
   {
+    name: "moduleUnits",
     path: "/modules/:module_id",
     component: ModuleUnits,
     props: true,
@@ -48,6 +49,7 @@ const routes: Array<RouteConfig> = [
       },
 
       {
+        name: "unitContent",
         path: "/modules/:module_id/:unit_no/:section",
         component: UnitContent,
       },
@@ -55,11 +57,16 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: "/:pathMatch(.*)*",
+    name: "NotFound",
     component: NotFound,
   },
 ];
 
-export default new VueRouter({
-  mode: "history",
-  routes,
-});
+const router = new VueRouter(
+  {
+    mode: "history",
+    routes,
+  }
+);
+
+export default router;

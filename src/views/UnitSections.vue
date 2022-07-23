@@ -1,15 +1,17 @@
 <template>
   <v-app>
-    <v-container fluid class="px-12 py-6 text-font-size-16">
-      <div d-flex>
-        <div class="pa-14" style="display:inline-block;vertical-align: top;">
-          <v-card elevation="12" width="256">
+    <v-container fluid class="px-12 py-6 text-font-size-16 fill-height">
+      <v-row class="d-flex align-start fill-height">
+        <v-col cols="3" class="pa-14">
+          <v-card elevation="12" class="d-inline-flex">
             <v-navigation-drawer floating permanent>
 
               <v-list dense rounded class="py-6">
 
                 <v-list-item :key="'About'"
-                  :to="'/modules/' + $route.params.module_id + '/' + $route.params.unit_no + '/about'">
+                             :to="'/modules/' + $route.params.module_id + '/' + $route.params.unit_no + '/about'"
+                             @click="sectionIndex = -1"
+                >
                   <v-list-item-icon>
                     <v-icon>mdi-information</v-icon>
                   </v-list-item-icon>
@@ -23,25 +25,28 @@
                   <v-divider></v-divider>
                 </v-list-item>
 
-                <v-list-item v-for="(section, index) in unit.sections"
-                  :key="section.sectionName"
-                  :to="'/modules/' + $route.params.module_id + '/' + $route.params.unit_no + '/' + section.sectionName"
-                  @click="carrySectionData(section.sectionDesc, section.mediaType, section.sectionMedia)"
+                  <v-list-item v-for="(section, index) in unit.sections"
+                               :key="section.sectionName"
+                               :to="'/modules/' + $route.params.module_id + '/' + $route.params.unit_no + '/' + section.sectionName"
+                               @click="carrySectionData(section.sectionDesc, section.mediaType, section.sectionMedia, index);"
+                               active-class="highlighted"
+                               :class="index === sectionIndex ? 'highlighted' : 'highlighted'"
                   >
-                  <v-list-item-icon>
-                    <v-icon>{{ section.sectionIcon }}</v-icon>
-                  </v-list-item-icon>
+                    <v-list-item-icon>
+                      <v-icon>{{ section.sectionIcon }}</v-icon>
+                    </v-list-item-icon>
 
-                  <v-list-item-content>
-                    <v-list-item-title>{{ section.sectionName }}</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
+                    <v-list-item-content>
+                      <v-list-item-title>{{ section.sectionName }}</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
               </v-list>
             </v-navigation-drawer>
           </v-card>
-        </div>
+        </v-col>
 
-        <div class="pa-14" style="display:inline-block;vertical-align: top;width:70%">
+
+        <v-col cols="8" class="pa-14 ">
           <router-link :to="'/modules/' + $route.params.module_id" class="links">
             &lt; Back to Module
           </router-link>
@@ -49,17 +54,23 @@
           <v-main class="py-6" fluid full-width>
             <router-view :sectionDesc="sectionDesc" :sectionMedia="sectionMedia" :mediaType="mediaType" :unitAbout="unitAbout"/>
           </v-main>
-
-        </div>
-
-      </div>
+        </v-col>
+        <v-col>
+          <v-btn icon @click="completeSection">
+            <v-icon size="50px">
+              mdi-arrow-right-bold-circle-outline
+            </v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-container>
   </v-app>
 </template>
 
 <script lang="ts">
 import { Units } from "@/types/units";
-import Vue from "vue"
+import Vue from "vue";
+import router from "@/plugins/router";
 export default Vue.extend({
   name: "UnitSections",
   data: () => ({
@@ -68,17 +79,53 @@ export default Vue.extend({
     mediaType: "",
     sectionMedia: "",
     unitAbout: "",
+    sectionIndex: -1,
     userId: "",
   }),
   methods: {
-    carrySectionData(sectionDesc:string, mediaType:string, sectionMedia:string){
+    carrySectionData(sectionDesc:string, mediaType:string, sectionMedia:string, sectionIndex: number){
       this.sectionDesc = sectionDesc;
       this.sectionMedia = sectionMedia;
       this.mediaType = mediaType;
+      this.sectionIndex = sectionIndex;
+    },
+    async completeSection(){
+      if (this.sectionIndex >= 0 && this.userId !== "") {
+        await fetch(Vue.prototype.$backendLink + "/chokola/users/complete_section?" + new URLSearchParams({
+          "userId": this.userId,
+          "moduleId": this.$route.params.module_id,
+          "unit_index": this.$route.params.unit_no,
+          "section_index": String(this.sectionIndex)
+        }), {
+          method: "PUT",
+          headers: {
+            "Accept": "application/json",
+          },
+        }).then(
+          response => response.json().then(
+            data => {
+              console.log(data);
+            }
+          )
+        );
+      }
+      if (this.sectionIndex !== this.unit.sections.length-1) {
+        await router.push({name: "unitContent", params: {
+            module_id: this.$route.params.module_id,
+            unit_no: this.$route.params.unit_no,
+            section: this.unit.sections[this.sectionIndex + 1].sectionName
+          }}
+        );
+        const section = this.unit.sections[this.sectionIndex+1];
+        this.carrySectionData(section.sectionDesc, section.mediaType, section.sectionMedia, this.sectionIndex+1);
+      }
+      else {
+        await router.push({name: "moduleUnits", params:{module_id: this.$route.params.module_id}});
+      }
     },
 
     async populateGeneralSections(moduleId: string, unitIndex: string) {
-      await fetch("https://nushigh.school/chokola/modules/get_unit/?" + new URLSearchParams({
+      await fetch(Vue.prototype.$backendLink + "/chokola/modules/get_unit/?" + new URLSearchParams({
         "module_id": moduleId,
         "unit_index": unitIndex
       }), {
@@ -93,7 +140,7 @@ export default Vue.extend({
       );
     },
     async populateUserSections(userId: string, moduleId: string, unitIndex: string) {
-      fetch("https://nushigh.school/chokola/users/get_user_unit?" + new URLSearchParams({
+      fetch(Vue.prototype.$backendLink + "/chokola/users/get_user_unit?" + new URLSearchParams({
         "userId": userId,
         "moduleId": moduleId,
         "unitIndex": unitIndex
@@ -110,33 +157,37 @@ export default Vue.extend({
     }
   },
   async created() {
-    const userId = this.$cookies.get("userId");
-    if (userId === null) {
-      await this.populateGeneralSections(this.$route.params.module_id, this.$route.params.unit_no);
-    }
-    else {
-      await fetch("https://nushigh.school/chokola/users/user_exists?" + new URLSearchParams({
-        "userId": userId,
-      }), {
-          headers: {
-            "accept": "application/json",
-          }
+    Vue.prototype.$moduleExists(this.$route.params.module_id).then(async (exists: boolean) => {
+      if (!exists) {
+        this.$emit("not-found");
+      } else {
+        const userId = this.$cookies.get("userId");
+
+        if (userId === null) {
+          await this.populateGeneralSections(this.$route.params.module_id, this.$route.params.unit_no);
+        } else {
+          await fetch("http://localhost:8000/chokola/users/user_exists?" + new URLSearchParams({
+            "userId": userId,
+          }), {
+              headers: {
+                "accept": "application/json",
+              }
+            }
+          ).then(
+            response => response.json().then(
+              data => {
+                if (data.data.exists) {
+                  this.userId = userId;
+                  this.populateUserSections(userId, this.$route.params.module_id, this.$route.params.unit_no);
+                } else {
+                  this.populateGeneralSections(this.$route.params.module_id, this.$route.params.unit_no);
+                }
+              }
+            )
+          );
         }
-      ).then(
-        response => response.json().then(
-          data => {
-            if (data.data.exists) {
-              this.userId = userId;
-              this.populateUserSections(userId, this.$route.params.module_id, this.$route.params.unit_no);
-            }
-            else {
-              this.populateGeneralSections(this.$route.params.module_id, this.$route.params.unit_no);
-            }
-          }
-        )
-      );
-    }
-    
+      }
+    });
   }
 });
 </script>
@@ -154,5 +205,17 @@ export default Vue.extend({
 .v-list-item--active:hover:before,
 .v-list-item:focus:before {
   opacity: 0.2 !important;
+}
+
+::v-deep .v-btn__content {
+  color: $c-text-dark-tertiary;
+}
+
+.v-btn {
+  position: fixed;
+  right: 5%;
+  bottom: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0 auto;  // Without this the box extends the width of the page
 }
 </style>

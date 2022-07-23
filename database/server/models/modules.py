@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 class UnitSections(BaseModel):
     sectionName: str = Field(...)
     sectionDesc: str = Field(...)
-    mediaType: Literal['pdf', 'embed'] = Field(...)
+    mediaType: Literal['pdf', 'embed', 'slides'] = Field(...)
     sectionMedia: str = Field(...)
     sectionIcon: str = Field(...)
     isComplete: bool = False
@@ -31,7 +31,7 @@ class Modules(BaseModel):
 class UpdateSections(BaseModel):
     sectionName: Optional[str]
     sectionDesc: Optional[str]
-    mediaType: Optional[Literal['pdf', 'embed']]
+    mediaType: Optional[Literal['pdf', 'embed', 'slides']]
     sectionMedia: Optional[str]
     sectionIcon: Optional[str]
 

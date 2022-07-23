@@ -22,7 +22,7 @@
     </div>
 
     <div v-else-if="this.$props.mediaType === 'slides'">
-        <iframe src="this.$props.sectionMedia" width="476px" height="288px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
+        <iframe :src="this.$props.sectionMedia" width="476px" height="288px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
     </div>
 
 

@@ -154,32 +154,37 @@ export default Vue.extend({
     }
   },
   async created() {
-    const userId = this.$cookies.get("userId");
-    if (userId === null) {
-      await this.populateGeneralSections(this.$route.params.module_id, this.$route.params.unit_no);
-    }
-    else {
-      await fetch("http://localhost:8000/chokola/users/user_exists?" + new URLSearchParams({
-        "userId": userId,
-      }), {
-          headers: {
-            "accept": "application/json",
-          }
+    Vue.prototype.$moduleExists(this.$route.params.module_id).then(async (exists: boolean) => {
+      if (!exists) {
+        this.$emit("not-found");
+      } else {
+        const userId = this.$cookies.get("userId");
+
+        if (userId === null) {
+          await this.populateGeneralSections(this.$route.params.module_id, this.$route.params.unit_no);
+        } else {
+          await fetch("http://localhost:8000/chokola/users/user_exists?" + new URLSearchParams({
+            "userId": userId,
+          }), {
+              headers: {
+                "accept": "application/json",
+              }
+            }
+          ).then(
+            response => response.json().then(
+              data => {
+                if (data.data.exists) {
+                  this.userId = userId;
+                  this.populateUserSections(userId, this.$route.params.module_id, this.$route.params.unit_no);
+                } else {
+                  this.populateGeneralSections(this.$route.params.module_id, this.$route.params.unit_no);
+                }
+              }
+            )
+          );
         }
-      ).then(
-        response => response.json().then(
-          data => {
-            if (data.data.exists) {
-              this.userId = userId;
-              this.populateUserSections(userId, this.$route.params.module_id, this.$route.params.unit_no);
-            }
-            else {
-              this.populateGeneralSections(this.$route.params.module_id, this.$route.params.unit_no);
-            }
-          }
-        )
-      );
-    }
+      }
+    });
   }
 });
 </script>

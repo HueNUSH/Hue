@@ -133,18 +133,16 @@ export default Vue.extend({
     }
   },
   async created() {
-    await Vue.prototype.$moduleExists(this.$route.params.module_id).then((exists: boolean) => {
+    Vue.prototype.$moduleExists(this.$route.params.module_id).then(async (exists: boolean) => {
       if (!exists) {
         this.$emit("not-found");
-      }
-      else {
+      } else {
         const userId = this.$cookies.get("userId");
 
         if (userId === null) {
-          this.populateGeneralModule(this.$route.params.module_id);
-        }
-        else {
-          fetch(Vue.prototype.$backendLink + "/chokola/users/user_exists?" + new URLSearchParams({
+          await this.populateGeneralModule(this.$route.params.module_id);
+        } else {
+          await fetch(Vue.prototype.$backendLink + "/chokola/users/user_exists?" + new URLSearchParams({
             "userId": userId,
           }), {
               headers: {
@@ -157,8 +155,7 @@ export default Vue.extend({
                 if (data.data.exists) {
                   this.userId = userId;
                   this.populateUserModule(this.userId, this.$route.params.module_id);
-                }
-                else {
+                } else {
                   this.populateGeneralModule(this.$route.params.module_id);
                 }
               }

@@ -130,9 +130,7 @@ export default Vue.extend({
         response => response.json().then(
           data => {
             this.modules = [] as Array<Modules>;
-            console.log(data);
             for (const moduleId in data.data.userModules) {
-              console.log(moduleId);
 
               this.getModule(moduleId).then(
                 data => {
@@ -209,11 +207,10 @@ export default Vue.extend({
   created() {
     const userId = this.$cookies.get("userId");
     if (userId === null) {
-      console.log("here");
       this.populateGeneralModules();
     }
     else {
-      fetch("http://localhost:8000/chokola/users/user_exists?" + new URLSearchParams({
+      fetch(Vue.prototype.$backendLink + "/chokola/users/user_exists?" + new URLSearchParams({
         "userId": userId,
       }), {
           headers: {

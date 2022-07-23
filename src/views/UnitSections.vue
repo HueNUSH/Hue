@@ -117,7 +117,6 @@ export default Vue.extend({
         );
         const section = this.unit.sections[this.sectionIndex+1];
         this.carrySectionData(section.sectionDesc, section.mediaType, section.sectionMedia, this.sectionIndex+1);
-        this.selectedItem = this.sectionIndex;
       }
       else {
         await router.push({name: "moduleUnits", params:{module_id: this.$route.params.module_id}});

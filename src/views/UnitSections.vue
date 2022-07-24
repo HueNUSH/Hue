@@ -27,11 +27,13 @@
 
                   <v-list-item v-for="(section, index) in unit.sections"
                                :key="section.sectionName"
-                               :to="'/modules/' + $route.params.module_id + '/' + $route.params.unit_no + '/' + section.sectionName"
+                               :to="'/modules/' + $route.params.module_id + '/' + $route.params.unit_no + '/' + index"
                                @click="carrySectionData(section.sectionDesc, section.mediaType, section.sectionMedia, index);"
                                active-class="highlighted"
-                               :class="index === sectionIndex ? 'highlighted' : 'highlighted'"
+                               :class="index === sectionIndex ? 'v-list-item--active' : 'true'"
                   >
+                  <!-- highlighted v-list-item--active v-list-item v-list-item--link theme--light highlighted -->
+                  <!-- v-list-item v-list-item--link theme--light highlighted -->
                     <v-list-item-icon>
                       <v-icon>{{ section.sectionIcon }}</v-icon>
                     </v-list-item-icon>
@@ -89,6 +91,8 @@ export default Vue.extend({
       this.sectionIndex = sectionIndex;
     },
     async completeSection(){
+      console.log(this.sectionIndex)
+      console.log(this.userId)
       if (this.sectionIndex >= 0 && this.userId !== "") {
         await fetch(Vue.prototype.$backendLink + "/chokola/users/complete_section?" + new URLSearchParams({
           "userId": this.userId,
@@ -112,7 +116,7 @@ export default Vue.extend({
         await router.push({name: "unitContent", params: {
             module_id: this.$route.params.module_id,
             unit_no: this.$route.params.unit_no,
-            section: this.unit.sections[this.sectionIndex + 1].sectionName
+            section: String(this.sectionIndex + 1)
           }}
         );
         const section = this.unit.sections[this.sectionIndex+1];
@@ -163,7 +167,7 @@ export default Vue.extend({
         if (userId === null) {
           await this.populateGeneralSections(this.$route.params.module_id, this.$route.params.unit_no);
         } else {
-          await fetch("http://localhost:8000/chokola/users/user_exists?" + new URLSearchParams({
+          await fetch(Vue.prototype.$backendLink + "/chokola/users/user_exists?" + new URLSearchParams({
             "userId": userId,
           }), {
               headers: {
@@ -178,8 +182,10 @@ export default Vue.extend({
                   this.populateUserSections(userId, this.$route.params.module_id, this.$route.params.unit_no);
                 } else {
                   this.populateGeneralSections(this.$route.params.module_id, this.$route.params.unit_no);
+      
                 }
-              }
+                this.sectionIndex = +(this.$route.params.section)
+              } 
             )
           );
         }

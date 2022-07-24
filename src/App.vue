@@ -1,5 +1,5 @@
 <template>
-  <v-app @not-found="notFound = true; console.log('here')">
+  <v-app @not-found="notFound = true;">
     <v-app-bar
       permanent
       app
@@ -38,8 +38,8 @@
 import Vue from "vue";
 import NotFound from "@/views/NotFound.vue";
 
-Vue.prototype.$backendLink = "http://localhost:8000";
-// Vue.prototype.$backendLink = "https://nushigh.school";
+//Vue.prototype.$backendLink = "http://localhost:8000";
+Vue.prototype.$backendLink = "https://nushigh.school";
 
 Vue.prototype.$moduleExists = function (moduleId: string): Promise<boolean> {
   return new Promise<boolean>(resolve => {

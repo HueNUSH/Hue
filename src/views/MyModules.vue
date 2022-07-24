@@ -91,10 +91,13 @@ export default Vue.extend({
         );
       });
     },
-    getModule(moduleId : string): Promise<Modules>{
-      return new Promise<Modules>(resolve => {
-        fetch(Vue.prototype.$backendLink + "/chokola/modules/get_module?" + new URLSearchParams({
-          "module_id" : moduleId,
+    getModule(moduleId : string, userId : string): Promise<Modules>{
+      
+        return new Promise<Modules>(resolve => {
+        fetch(Vue.prototype.$backendLink + "/chokola/users/get_user_module?" + new URLSearchParams({
+          "userId" : userId,
+          "moduleId" : moduleId
+          
         }), {
           method: "GET",
           headers: {
@@ -108,7 +111,7 @@ export default Vue.extend({
           )
         );
       });
-    },
+    } ,
     populateGeneralModules() {
       this.getGeneralModules().then(data => {
           for (const moduleKey in data) {
@@ -132,7 +135,7 @@ export default Vue.extend({
             this.modules = [] as Array<Modules>;
             for (const moduleId in data.data.userModules) {
 
-              this.getModule(moduleId).then(
+              this.getModule(moduleId, userId).then(
                 data => {
                   const module: Modules = JSON.parse(JSON.stringify(data));
             this.modules.push(module);
@@ -198,6 +201,7 @@ export default Vue.extend({
       );
     },
     signOut() {
+      //@ts-ignore
       google.accounts.id.disableAutoSelect();
       this.user = {} as User;
       this.isSignedIn = false;

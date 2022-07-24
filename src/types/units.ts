@@ -6,5 +6,6 @@ export class Units {
   unitAbout!: string
   sections!: Sections[]
   sectionsCompleted!: number
+  sectionProgress!: number[]
   isComplete!: boolean
 }

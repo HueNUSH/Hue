@@ -16,7 +16,8 @@ class Units(BaseModel):
     unitDesc: str = Field(...)
     unitAbout: str = Field(...)
     sections: list[UnitSections] = Field(...)
-    sectionsCompleted: list[int] = Field(...)
+    sectionsCompleted: int = 0
+    sectionProgress: list[int] = Field(...)
     isComplete: bool = False
 
 class Modules(BaseModel):

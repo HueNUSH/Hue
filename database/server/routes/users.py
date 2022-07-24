@@ -99,7 +99,8 @@ def get_user_unit(userId: str, moduleId: str, unitIndex: int):
             module = retrieve_module(moduleId)
             if unitIndex < len(module["units"]):
                 unit = module["units"][unitIndex]
-                unit["sectionsCompleted"] = user["userModules"][moduleId]["unitProgress"][unitIndex]["sectionProgress"] #god help me
+                unit["sectionsCompleted"] = user["userModules"][moduleId]["unitProgress"][unitIndex]["sectionsCompleted"]
+                unit["sectionProgress"] = user["userModules"][moduleId]["unitProgress"][unitIndex]["sectionProgress"] #god help me
                 return ResponseModel(unit, "Unit data retrieved successfully")
             else:
                 return ErrorResponseModel("An error occured", 404, "No unit exists")

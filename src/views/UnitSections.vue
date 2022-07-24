@@ -82,6 +82,7 @@ export default Vue.extend({
     sectionMedia: "",
     sectionIndex: -1,
     userId: "",
+    sectionProgress : [] as Array<number>
   }),
   methods: {
     carrySectionData(sectionDesc:string, mediaType:string, sectionMedia:string, sectionIndex: number){
@@ -152,6 +153,8 @@ export default Vue.extend({
         response => response.json().then(
           data => {
             this.unit = JSON.parse(JSON.stringify(data.data));
+            this.sectionProgress = this.unit.sectionProgress
+            console.log(this.sectionProgress)
           }
         )
       );

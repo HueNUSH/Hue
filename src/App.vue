@@ -29,7 +29,9 @@
 
     <v-main>
       <NotFound v-if="notFound"/>
-      <router-view v-else @not-found="notFound = true"/>
+      <router-view
+        v-else
+        @not-found="(bool) => this.notFound = bool"/>
     </v-main>
   </v-app>
 </template>
@@ -92,6 +94,11 @@ export default Vue.extend({
         },
       ];
     },
+  },
+  watch: {
+    $route (to, from) {
+      this.notFound = false;
+    }
   }
 });
 </script>

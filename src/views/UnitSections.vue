@@ -80,6 +80,7 @@ export default Vue.extend({
     sectionDesc: "",
     mediaType: "",
     sectionMedia: "",
+    unitAbout: "",
     sectionIndex: -1,
     userId: "",
     sectionProgress : [] as Array<number>
@@ -166,7 +167,7 @@ export default Vue.extend({
   async created() {
     Vue.prototype.$moduleExists(this.$route.params.module_id).then(async (exists: boolean) => {
       if (!exists) {
-        this.$emit("not-found");
+        this.$emit("not-found", true);
       } else {
         const userId = this.$cookies.get("userId");
 

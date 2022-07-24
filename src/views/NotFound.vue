@@ -8,9 +8,12 @@
 </template>
 
 <script>
-export default {
-  name: "NotFound"
-};
+import Vue from "vue";
+
+export default Vue.extend({
+  name: "NotFound",
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+});
 </script>
 
 <style lang="scss" scoped>

@@ -1,22 +1,24 @@
 from fastapi import APIRouter, Body
 from fastapi.encoders import jsonable_encoder
 from bson.errors import InvalidId
+from bson.objectid import ObjectId
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
 
 from database import (
-    retrieve_modules,
-    retrieve_module,
-    add_module,
-    update_module,
-    delete_module
-)
+        retrieve_modules,
+        retrieve_module,
+        add_module,
+        update_module,
+        delete_module,
+        modules
+        )
 from models.modules import (
-    ErrorResponseModel,
-    ResponseModel,
-    Modules,
-    UpdateModules,
-)
+        ErrorResponseModel,
+        ResponseModel,
+        Modules,
+        UpdateModules,
+        )
 
 router = APIRouter()
 
@@ -44,6 +46,18 @@ def get_module(module_id):
         return ResponseModel(module, "Module data retrieved successfully")
     return ErrorResponseModel("An error occured", 404, "No module found")
 
+
+@router.get("/module_exists")
+def module_exists(moduleId: str):
+    try:
+        moduleId = ObjectId(moduleId)
+    except InvalidId as e:
+        return ResponseModel({"exists": False}, f"Counted documents with moduleId: {moduleId}")
+    if(modules.count_documents({"_id": moduleId}, limit=1)):
+        return ResponseModel({"exists": True}, f"Counted documents with moduleId: {str(moduleId)}")
+    else:
+        return ResponseModel({"exists": False}, f"Counted documents with moduleId: {str(moduleId)}")
+
 @router.get("/get_unit/", response_description="Module unit retrieved")
 def get_units(module_id, unit_index):
     try:
@@ -54,6 +68,19 @@ def get_units(module_id, unit_index):
     if unit:
         return ResponseModel(unit, "Unit data retrieved successfully")
     return ErrorResponseModel("An error occured", 404, "No module or unit found")
+
+@router.get("/get_section/", response_description="Module section retrieved")
+def get_units(module_id, unit_index, section_index):
+    try:
+        module = retrieve_module(module_id)
+        unit = module["units"][int(unit_index)]
+        section = unit["sections"][int(section_index)]
+    except InvalidId as e:
+        return ErrorResponseModel("An error occured", "404", "Invalid ID")
+    if section:
+        return ResponseModel(section, "Unit data retrieved successfully")
+    return ErrorResponseModel("An error occured", 404, "No module or unit or section found")
+
 
 @router.put("/update_module", response_description="Module updated")
 def update_module_data(module_id, req: UpdateModules = Body(...)):
@@ -69,9 +96,9 @@ def update_module_data(module_id, req: UpdateModules = Body(...)):
 
         if updated_module:
             return ResponseModel(
-                f'Module with ID: {module_id} updated successfully',
-                "Updated module successfully"
-            )
+                    f'Module with ID: {module_id} updated successfully',
+                    "Updated module successfully"
+                    )
         else:
             return ErrorResponseModel("An error occured", 400, "Unable to update module")
     except InvalidId as e:
@@ -83,8 +110,8 @@ def delete_module_data(module_id: str):
         deleted_module = delete_module(module_id)
         if deleted_module:
             return ResponseModel(
-                f"Module with ID: {module_id} removed", "Module deleted successfully"
-            )
+                    f"Module with ID: {module_id} removed", "Module deleted successfully"
+                    )
         else:
             return ErrorResponseModel("An error occured", 400, "Unable to delete module")
     except InvalidId as e:

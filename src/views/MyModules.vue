@@ -77,7 +77,7 @@ export default Vue.extend({
   methods: {
     getGeneralModules(): Promise<Array<Modules>>{
       return new Promise<Array<Modules>>(resolve => {
-        fetch("https://nushigh.school/chokola/modules/get_modules", {
+        fetch(Vue.prototype.$backendLink + "/chokola/modules/get_modules", {
           method: "GET",
           headers: {
             "accept": "application/json",
@@ -91,10 +91,13 @@ export default Vue.extend({
         );
       });
     },
-    getModule(moduleId : string): Promise<Modules>{
-      return new Promise<Modules>(resolve => {
-        fetch("https://nushigh.school/chokola/modules/get_module?" + new URLSearchParams({
-          "module_id" : moduleId,
+    getModule(moduleId : string, userId : string): Promise<Modules>{
+      
+        return new Promise<Modules>(resolve => {
+        fetch(Vue.prototype.$backendLink + "/chokola/users/get_user_module?" + new URLSearchParams({
+          "userId" : userId,
+          "moduleId" : moduleId
+          
         }), {
           method: "GET",
           headers: {
@@ -107,8 +110,8 @@ export default Vue.extend({
             }
           )
         );
-      })
-    },
+      });
+    } ,
     populateGeneralModules() {
       this.getGeneralModules().then(data => {
           for (const moduleKey in data) {
@@ -119,7 +122,7 @@ export default Vue.extend({
       );
     },
     populateUserModules(userId: string) {
-      fetch("https://nushigh.school/chokola/users/get_user?" + new URLSearchParams({
+      fetch(Vue.prototype.$backendLink + "/chokola/users/get_user?" + new URLSearchParams({
         "userId": userId,
       }), {
           headers: {
@@ -130,17 +133,15 @@ export default Vue.extend({
         response => response.json().then(
           data => {
             this.modules = [] as Array<Modules>;
-            console.log(data);
             for (const moduleId in data.data.userModules) {
-              console.log(moduleId);
 
-              this.getModule(moduleId).then(
+              this.getModule(moduleId, userId).then(
                 data => {
                   const module: Modules = JSON.parse(JSON.stringify(data));
             this.modules.push(module);
                 }
               );
-              
+
             }
           }
         )
@@ -157,7 +158,7 @@ export default Vue.extend({
       this.user.createdAt = Date.now();
       this.user.userModules = [];
 
-      fetch("https://nushigh.school/chokola/users/user_exists?" + new URLSearchParams({
+      fetch(Vue.prototype.$backendLink + "/chokola/users/user_exists?" + new URLSearchParams({
         "userId": this.user.userId,
       }), {
           headers: {
@@ -182,7 +183,7 @@ export default Vue.extend({
       );
     },
     createNewUser() {
-      fetch("https://nushigh.school/chokola/users/create_user", {
+      fetch(Vue.prototype.$backendLink + "/chokola/users/create_user", {
         method: "POST",
         headers: {
           "Accept": "application/json",
@@ -200,6 +201,7 @@ export default Vue.extend({
       );
     },
     signOut() {
+      //@ts-ignore
       google.accounts.id.disableAutoSelect();
       this.user = {} as User;
       this.isSignedIn = false;
@@ -209,11 +211,10 @@ export default Vue.extend({
   created() {
     const userId = this.$cookies.get("userId");
     if (userId === null) {
-      console.log("here");
       this.populateGeneralModules();
     }
     else {
-      fetch("https://nushigh.school/chokola/users/user_exists?" + new URLSearchParams({
+      fetch(Vue.prototype.$backendLink + "/chokola/users/user_exists?" + new URLSearchParams({
         "userId": userId,
       }), {
           headers: {

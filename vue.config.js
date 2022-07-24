@@ -8,5 +8,5 @@ module.exports = {
       .rule("ts")
       .use("ts-loader")
       .loader("ts-loader");
-  },
+  }
 };

@@ -69,6 +69,19 @@ def get_units(module_id, unit_index):
         return ResponseModel(unit, "Unit data retrieved successfully")
     return ErrorResponseModel("An error occured", 404, "No module or unit found")
 
+@router.get("/get_section/", response_description="Module section retrieved")
+def get_units(module_id, unit_index, section_index):
+    try:
+        module = retrieve_module(module_id)
+        unit = module["units"][int(unit_index)]
+        section = unit["sections"][int(section_index)]
+    except InvalidId as e:
+        return ErrorResponseModel("An error occured", "404", "Invalid ID")
+    if section:
+        return ResponseModel(section, "Unit data retrieved successfully")
+    return ErrorResponseModel("An error occured", 404, "No module or unit or section found")
+
+
 @router.put("/update_module", response_description="Module updated")
 def update_module_data(module_id, req: UpdateModules = Body(...)):
     req = {k: v for k, v in req.dict().items() if v is not None}

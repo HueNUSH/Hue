@@ -82,7 +82,11 @@ def get_user_module(userId: str, moduleId: str):
     if user:
         if moduleId in user["userModules"]:
             module = retrieve_module(moduleId)
-
+            for index, unit in enumerate(module["units"]):
+                unit["sectionsCompleted"] = user["userModules"][moduleId]["unitProgress"][index]["sectionsCompleted"]
+                unit["sectionProgress"] = user["userModules"][moduleId]["unitProgress"][index]["sectionProgress"] #god help me
+                if sum(unit["sectionProgress"]) == unit["sectionsCompleted"]:
+                    module["unitsCompleted"] += 1
             return ResponseModel(module, "Module data retrieved successfully")
         else:
             return ErrorResponseModel("An error occured", 404, f"User does not contain module with id {moduleId}")

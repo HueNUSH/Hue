@@ -26,11 +26,11 @@
                 </v-list-item>
 
                   <v-list-item v-for="(section, index) in unit.sections"
-                               :key="section.sectionName"
+                               :key="section.sectionName" 
                                :to="'/modules/' + $route.params.module_id + '/' + $route.params.unit_no + '/' + index"
                                @click="carrySectionData(section.sectionDesc, section.mediaType, section.sectionMedia, index);"
-                               active-class="highlighted"
-                               :class="index === sectionIndex ? 'v-list-item--active' : 'true'"
+                               
+                               
                   >
                   <!-- highlighted v-list-item--active v-list-item v-list-item--link theme--light highlighted -->
                   <!-- v-list-item v-list-item--link theme--light highlighted -->
@@ -39,7 +39,7 @@
                     </v-list-item-icon>
 
                     <v-list-item-content>
-                      <v-list-item-title>{{ section.sectionName }}</v-list-item-title>
+                      <v-list-item-title>{{ sectionProgress[index] === 0 ? section.sectionName : section.sectionName + ' ✓'  }}</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
               </v-list>
@@ -152,9 +152,11 @@ export default Vue.extend({
       }).then(
         response => response.json().then(
           data => {
+            console.log("here")
             this.unit = JSON.parse(JSON.stringify(data.data));
             this.sectionProgress = this.unit.sectionProgress
-            console.log(this.sectionProgress)
+            
+            console.log(+this.sectionProgress[0])
           }
         )
       );
@@ -183,11 +185,14 @@ export default Vue.extend({
                 if (data.data.exists) {
                   this.userId = userId;
                   this.populateUserSections(userId, this.$route.params.module_id, this.$route.params.unit_no);
+
                 } else {
                   this.populateGeneralSections(this.$route.params.module_id, this.$route.params.unit_no);
       
                 }
-                this.sectionIndex = +(this.$route.params.section)
+                if(this.$route.params.section != undefined) {
+                  console.log(this.$route.params.section)
+                  this.sectionIndex = +(this.$route.params.section)}
               } 
             )
           );

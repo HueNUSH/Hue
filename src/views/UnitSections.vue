@@ -39,7 +39,7 @@
                     </v-list-item-icon>
 
                     <v-list-item-content>
-                      <v-list-item-title>{{ sectionProgress[index] === 0 ? section.sectionName : section.sectionName + ' ✓'  }}</v-list-item-title>
+                      <v-list-item-title>{{ sectionProgress[index] === 1 ? section.sectionName + ' ✓': section.sectionName   }}</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
               </v-list>

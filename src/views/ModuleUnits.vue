@@ -59,7 +59,7 @@
                 {{ unit.unitName }}
               </h2>
               <p class="card-subtitle">
-                <b>{{ unit.sectionsCompleted }}/{{ unit.sections.length }}</b> sections completed
+                <b>{{ unit.sectionsCompleted === undefined ? 0:unit.sectionsCompleted}}/{{ unit.sections.length }}</b> sections completed
               </p>
               <br/>
               <b class="learn-arrow">Learn →</b>

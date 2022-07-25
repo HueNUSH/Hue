@@ -6,22 +6,28 @@
     >
       &lt; Back to unit
     </router-link> -->
-    <h1>This section tests {{$route.params.section}} rendering</h1>
+    <h1>This section tests {{ $route.params.section }} rendering</h1>
     <p>
-      This is module {{$route.params.module_id}} and unit {{$route.params.unit_no}}, section {{sectionDescVal}}
+      This is module {{ $route.params.module_id }} and unit {{ $route.params.unit_no }}, section {{ sectionDescVal }}
     </p>
 
     <div v-if="mediaTypeVal === 'pdf'">
-        <embed :src="sectionMediaVal" style="width:100%;height: 100vh;">
+      <embed :src="sectionMediaVal" style="width:100%;height: 100vh;">
     </div>
 
     <div v-else-if="mediaTypeVal === 'embed'">
-        <iframe :src="sectionMediaVal" frameborder="0" width="960"
-        height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+      <iframe :src="sectionMediaVal" frameborder="0" width="960" height="569" allowfullscreen="true"
+        mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
     </div>
 
     <div v-else-if="mediaTypeVal === 'slides'">
-        <iframe :src="sectionMediaVal" width="476px" height="288px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
+      <!-- <iframe :src="sectionMediaVal" width="476px" height="288px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe> -->
+      <iframe
+        
+        :src="sectionMediaVal"
+        width="476px" height="288px" frameborder="0">This is an embedded <a target="_blank"
+          href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank"
+          href="https://office.com/webapps">Office</a>.</iframe>
     </div>
 
 
@@ -41,18 +47,18 @@ export default Vue.extend({
     section: {} as Sections
   }),
   watch: {
-    $props : {
-      handler(){
+    $props: {
+      handler() {
         this.sectionDescVal = this.$props.sectionDesc;
         this.mediaTypeVal = this.$props.mediaType;
-        this.sectionMediaVal = this.$props.sectionMedia;    
+        this.sectionMediaVal = this.$props.sectionMedia;
       },
       deep: true,
       immediate: true
     }
   },
   methods: {
-    async getSectionData(moduleId: string, unitIndex: string, sectionIndex : string){
+    async getSectionData(moduleId: string, unitIndex: string, sectionIndex: string) {
       await fetch(Vue.prototype.$backendLink + "/chokola/modules/get_section/?" + new URLSearchParams({
         "module_id": moduleId,
         "unit_index": unitIndex,
@@ -64,17 +70,17 @@ export default Vue.extend({
           data => {
             this.section = JSON.parse(JSON.stringify(data.data));
             this.sectionDescVal = this.section.sectionDesc;
-          this.mediaTypeVal = this.section.mediaType;
-          this.sectionMediaVal = this.section.sectionMedia;    
+            this.mediaTypeVal = this.section.mediaType;
+            this.sectionMediaVal = this.section.sectionMedia;
+            console.log(this.section.sectionMedia)
           }
         )
       );
     }
   },
-async created(){
-  console.log(this.$route.params.section);
-  this.getSectionData(this.$route.params.module_id, this.$route.params.unit_no, this.$route.params.section)
-}
+  async created() {
+    this.getSectionData(this.$route.params.module_id, this.$route.params.unit_no, this.$route.params.section)
+  }
 
 });
 </script>
@@ -82,5 +88,4 @@ async created(){
 <style lang="scss" scoped>
 @import "../styles/variables.scss";
 @import "../styles/global.scss";
-
 </style>

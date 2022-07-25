@@ -85,7 +85,7 @@ def get_user_module(userId: str, moduleId: str):
             for index, unit in enumerate(module["units"]):
                 unit["sectionsCompleted"] = user["userModules"][moduleId]["unitProgress"][index]["sectionsCompleted"]
                 unit["sectionProgress"] = user["userModules"][moduleId]["unitProgress"][index]["sectionProgress"] #god help me
-                if sum(unit["sectionProgress"]) == unit["sectionsCompleted"]:
+                if sum(unit["sectionProgress"]) == len(unit["sectionProgress"]):
                     module["unitsCompleted"] += 1
             return ResponseModel(module, "Module data retrieved successfully")
         else:

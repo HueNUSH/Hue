@@ -1,25 +1,34 @@
 <template>
   <v-container fluid class="pl-20 pr-31 py-16">
     <h1>Schedule</h1>
-    <div d-flex>
-      <div class="pt-4" style="display:inline-block;vertical-align: top">
+
+    <v-row class="d-flex align-start fill-height">
+      <v-col cols="8" class="pa-14">
         <vc-calendar class="custom-calendar max-w-full" :masks="masks" :attributes="attributes" disable-page-swipe
           is-expanded>
           <template v-slot:day-content="{ day, attributes }">
             <span> {{ day.day }}</span>
-            <p v-for="attr in attributes" :key="attr.key" class="text-xs leading-tight rounded-sm p-1 mt-0 mb-1"
-              >
+            <p v-for="attr in attributes" :key="attr.key" class="text-xs leading-tight rounded-sm p-1 mt-0 mb-1">
               {{ attr.customData.title }}
             </p>
           </template>
         </vc-calendar>
-      </div>
-      <div class="pa-14" style="display:inline-block;vertical-align: top;width:35%">
+      </v-col>
+      <v-col cols="3" class="pa-14">
         <h1>Lectures Timings for Chemistry</h1>
         <p></p>
         <h3>We will conduct lectures every XXX at XXX</h3>
+      </v-col>
+    </v-row>
+<!-- 
+    <div d-flex>
+      <div class="pt-4" style="display:inline-block;vertical-align: top">
+
       </div>
-    </div>
+      <div class="pa-14" style="display:inline-block;vertical-align: top;width:35%">
+
+      </div>
+    </div> -->
   </v-container>
 </template>
 

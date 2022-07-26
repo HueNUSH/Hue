@@ -20,15 +20,6 @@
         <h3>We will conduct lectures every XXX at XXX</h3>
       </v-col>
     </v-row>
-<!-- 
-    <div d-flex>
-      <div class="pt-4" style="display:inline-block;vertical-align: top">
-
-      </div>
-      <div class="pa-14" style="display:inline-block;vertical-align: top;width:35%">
-
-      </div>
-    </div> -->
   </v-container>
 </template>
 

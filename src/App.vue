@@ -5,6 +5,7 @@
       app
       flat
       clipped
+      v-if="!construction"
     >
 
       <v-toolbar-title>
@@ -29,9 +30,7 @@
 
     <v-main>
       <NotFound v-if="notFound"/>
-      <router-view
-        v-else
-        @not-found="(bool) => this.notFound = bool"/>
+      <router-view v-else @not-found="(bool) => this.notFound = bool"/>
     </v-main>
   </v-app>
 </template>
@@ -39,7 +38,7 @@
 <script lang="ts">
 import Vue from "vue";
 import NotFound from "@/views/NotFound.vue";
-
+import ComingSoon from "@/views/ComingSoon.vue";
 //Vue.prototype.$backendLink = "http://localhost:8000";
 Vue.prototype.$backendLink = "https://nushigh.school";
 
@@ -66,9 +65,11 @@ export default Vue.extend({
   name: "App",
   components: {
     NotFound,
+    ComingSoon,
   },
   data: ()=> ({
     notFound: false,
+    construction: true,
   }),
   computed: {
     routes(): Array<{

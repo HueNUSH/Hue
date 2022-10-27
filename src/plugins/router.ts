@@ -9,10 +9,19 @@ import UnitSections from "@/views/UnitSections.vue";
 import UnitAbout from "@/views/UnitAbout.vue";
 import UnitContent from "@/views/UnitContent.vue";
 import NotFound from "@/views/NotFound.vue";
+import ComingSoon from "@/views/ComingSoon.vue"
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
+  {
+    path: "/",
+    redirect: "/comingsoon",
+  },
+  {
+    path: "/comingsoon",
+    component: ComingSoon,
+  },
   {
     path: "/",
     redirect: "/modules",

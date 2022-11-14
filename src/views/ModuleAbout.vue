@@ -24,7 +24,7 @@ export default Vue.extend({
   }),
   methods: {
      async getModuleAbout(moduleId: string) {
-     await fetch("https://nushigh.school/chokola/modules/get_module?" + new URLSearchParams({
+     await fetch("https://huelearning.space/chokola/modules/get_module?" + new URLSearchParams({
         "module_id": moduleId
       }), {
         method: "GET",

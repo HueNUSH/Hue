@@ -38,7 +38,7 @@ export default Vue.extend({
 
   methods: {
     populateAnnouncements() {
-      fetch("https://nushigh.school/chokola/announcements/get_announcements", {
+      fetch("https://huelearning.space/chokola/announcements/get_announcements", {
         method: "GET",
         headers: {
           "accept": "application/json",

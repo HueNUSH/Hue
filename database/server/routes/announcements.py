@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Body
+from fastapi import APIRouter, Body, Depends
 from fastapi.encoders import jsonable_encoder
 from bson.errors import InvalidId
 import pprint
 from datetime import datetime
 pp = pprint.PrettyPrinter(indent=4)
+import auth
 
 from database import (
     add_announcement,
@@ -20,9 +21,16 @@ from models.announcements import (
 
 router = APIRouter()
 
+from fastapi.security import HTTPBearer  
+
+token_auth_scheme = HTTPBearer()
 
 @router.post("/create_announcement", response_description="Added announcement to the database")
-def create_announcement(announcement: Announcement = Body(...)):
+def create_announcement(announcement: Announcement = Body(...), token : str = Depends(token_auth_scheme)):
+    result = auth.VerifyToken(token.credentials).verify()
+    if result.get("status"):
+        return ErrorResponseModel("Bad request", 400, "You are unauthenticated!")
+
     announcement.timestamp = (datetime.now()).strftime("%d/%m/%Y %H:%M:%S")
     announcement.editedTimestamp = ""
     announcement = jsonable_encoder(announcement)

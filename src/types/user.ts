@@ -3,6 +3,5 @@ export class User {
   username!: string
   createdAt!: number
   email!: string
-  isAdmin = false
   userModules!: Array<string>
 }

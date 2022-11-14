@@ -11,7 +11,6 @@ class Users(BaseModel):
     username: str = Field(...)
     createdAt: int = Field(...)
     email: str = Field(...)
-    isAdmin: Optional[bool] = False #Default false
     userModules: list[str] = [] #Default no attempted modules
 
 class UpdateUsers(BaseModel):
@@ -19,4 +18,3 @@ class UpdateUsers(BaseModel):
     userId: Optional[str]
     createdAt: Optional[int]
     email: Optional[str]
-    isAdmin: Optional[bool]

@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Body
+from fastapi import APIRouter, Body, Depends
 from fastapi.encoders import jsonable_encoder
 from bson.errors import InvalidId
 from bson.objectid import ObjectId
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
+from routes.auth import VerifyToken
 
 from database import (
         retrieve_modules,
@@ -22,9 +23,16 @@ from models.modules import (
 
 router = APIRouter()
 
+from fastapi.security import HTTPBearer  
+
+token_auth_scheme = HTTPBearer()
 
 @router.post("/create_module", response_description="Module data added into database")
-def create_module(module: Modules = Body(...)):
+def create_module(module: Modules = Body(...), token : str = Depends(token_auth_scheme)):
+    result = VerifyToken(token.credentials).verify()
+    if result.get("status"):
+        return ErrorResponseModel("Bad request", 400, "You are unauthenticated!")
+
     module = jsonable_encoder(module)
     new_module = add_module(module)
     return ResponseModel(new_module, "Module added successfully")
@@ -105,7 +113,11 @@ def update_module_data(module_id, req: UpdateModules = Body(...)):
         return ErrorResponseModel("An error occured", 404, "Invalid ID")
 
 @router.delete("/delete_module", response_description="Module data deleted from the database")
-def delete_module_data(module_id: str):
+def delete_module_data(module_id: str, token : str = Depends(token_auth_scheme)):
+    result = VerifyToken(token.credentials).verify()
+    if result.get("status"):
+        return ErrorResponseModel("Bad request", 400, "You are unauthenticated!")
+
     try:
         deleted_module = delete_module(module_id)
         if deleted_module:

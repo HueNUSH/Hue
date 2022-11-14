@@ -1,7 +1,7 @@
-from fastapi import APIRouter, Body, Query
+from fastapi import APIRouter, Body, Query, Depends
 from fastapi.encoders import jsonable_encoder
 from bson.errors import InvalidId
-
+from routes.auth import VerifyToken
 from database import (
     retrieve_user,
     retrieve_module,
@@ -23,6 +23,9 @@ from models.users import (
 
 router = APIRouter()
 
+from fastapi.security import HTTPBearer  
+
+token_auth_scheme = HTTPBearer()
 
 def create_user_progress(module_id: str):
     unitProgress = []
@@ -118,27 +121,28 @@ def user_exists(userId: str):
         return ResponseModel({"exists": True, "username" : user["username"]}, f"Counted documents with userId: {userId}")
     else:
          return ResponseModel({"exists": False}, f"Counted documents with userId: {userId}")
-@router.put("/update_user", response_description="User updated")
-def update_user_data(userId: str, req: UpdateUsers = Body(...)):
-    req = {k: v for k, v in req.dict().items() if v is not None}
+# @router.put("/update_user", response_description="User updated")
+# def update_user_data(userId: str, req: UpdateUsers = Body(...)):
 
-    try:
-        user = retrieve_user(userId)
-        for k, v in req.items():
-            user[k] = v
-        user.pop("_id")
+#     req = {k: v for k, v in req.dict().items() if v is not None}
 
-        updated_user = update_user(userId, user)
+#     try:
+#         user = retrieve_user(userId)
+#         for k, v in req.items():
+#             user[k] = v
+#         user.pop("_id")
 
-        if updated_module:
-            return ResponseModel(
-                f'User with ID: {userId} updated successfully',
-                "Updated user successfully"
-            )
-        else:
-            return ErrorResponseModel("An error occured", 400, "Unable to update user")
-    except InvalidId as e:
-        return ErrorResponseModel("An error occured", 404, "Invalid ID")
+#         updated_user = update_user(userId, user)
+
+#         if updated_module:
+#             return ResponseModel(
+#                 f'User with ID: {userId} updated successfully',
+#                 "Updated user successfully"
+#             )
+#         else:
+#             return ErrorResponseModel("An error occured", 400, "Unable to update user")
+#     except InvalidId as e:
+#         return ErrorResponseModel("An error occured", 404, "Invalid ID")
 
 @router.put("/complete_section", response_description="User section completed")
 def complete_section(userId: str, moduleId: str, unit_index: int = Query(default = None, ge=0), section_index: int = Query(default = None, ge=0)):
@@ -181,7 +185,11 @@ def complete_section(userId: str, moduleId: str, unit_index: int = Query(default
         return ErrorResponseModel("An error occured", 400, "Unable to update user")
 
 @router.delete("/delete_user", response_description="User deleted")
-def delete_user_data(userId: str):
+def delete_user_data(userId: str, token : str = Depends(token_auth_scheme)):
+    result = VerifyToken(token.credentials).verify()
+    if result.get("status"):
+        return ErrorResponseModel("Bad request", 400, "You are unauthenticated!")
+
     try:
         deleted_user = delete_user(userId)
         print(deleted_user)

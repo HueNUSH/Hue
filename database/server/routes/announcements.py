@@ -4,7 +4,7 @@ from bson.errors import InvalidId
 import pprint
 from datetime import datetime
 pp = pprint.PrettyPrinter(indent=4)
-import auth
+from routes.auth import VerifyToken
 
 from database import (
     add_announcement,
@@ -27,7 +27,7 @@ token_auth_scheme = HTTPBearer()
 
 @router.post("/create_announcement", response_description="Added announcement to the database")
 def create_announcement(announcement: Announcement = Body(...), token : str = Depends(token_auth_scheme)):
-    result = auth.VerifyToken(token.credentials).verify()
+    result = VerifyToken(token.credentials).verify()
     if result.get("status"):
         return ErrorResponseModel("Bad request", 400, "You are unauthenticated!")
 
@@ -55,7 +55,12 @@ def get_announcement(announcement_id):
     return ErrorResponseModel("An error occured", 404, "No module found")
 
 @router.put("/update_announcement", response_description="Announcement updated")
-def update_announcement_data(announcement_id, req: Announcement = Body(...)):
+def update_announcement_data(announcement_id, req: Announcement = Body(...), token : str = Depends(token_auth_scheme)):
+
+    result = VerifyToken(token.credentials).verify()
+    if result.get("status"):
+        return ErrorResponseModel("Bad request", 400, "You are unauthenticated!")
+
     req = {k: v for k, v in req.dict().items() if v is not None}
 
     try:
@@ -77,7 +82,12 @@ def update_announcement_data(announcement_id, req: Announcement = Body(...)):
         return ErrorResponseModel("An error occured", 404, "Invalid ID")
 
 @router.delete("/delete_announcement", response_description="Announcement deleted from the database")
-def delete_announcement_data(announcement_id: str):
+def delete_announcement_data(announcement_id: str, token : str = Depends(token_auth_scheme)):
+
+    result = VerifyToken(token.credentials).verify()
+    if result.get("status"):
+        return ErrorResponseModel("Bad request", 400, "You are unauthenticated!")
+
     try:
         deleted_announcement = delete_announcement(announcement_id)
         if deleted_announcement:

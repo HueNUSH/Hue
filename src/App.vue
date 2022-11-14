@@ -40,7 +40,7 @@ import Vue from "vue";
 import NotFound from "@/views/NotFound.vue";
 import ComingSoon from "@/views/ComingSoon.vue";
 //Vue.prototype.$backendLink = "http://localhost:8000";
-Vue.prototype.$backendLink = "https://nushigh.school";
+Vue.prototype.$backendLink = "https://huelearning.space";
 
 Vue.prototype.$moduleExists = function (moduleId: string): Promise<boolean> {
   return new Promise<boolean>(resolve => {

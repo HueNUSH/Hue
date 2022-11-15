@@ -91,7 +91,11 @@ def get_units(module_id, unit_index, section_index):
 
 
 @router.put("/update_module", response_description="Module updated")
-def update_module_data(module_id, req: UpdateModules = Body(...)):
+def update_module_data(module_id, req: UpdateModules = Body(...), token : str = Depends(token_auth_scheme)):
+    result = VerifyToken(token.credentials).verify()
+    if result.get("status"):
+        return ErrorResponseModel("Bad request", 400, "You are unauthenticated!")
+
     req = {k: v for k, v in req.dict().items() if v is not None}
 
     try:

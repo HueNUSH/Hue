@@ -60,7 +60,11 @@ def create_user(user: Users = Body(...)):
     return ResponseModel(new_user, "User added successfully")
 
 @router.get("/get_users", response_description="Users retrieved")
-def get_users():
+def get_users(token : str = Depends(token_auth_scheme)):
+    result = VerifyToken(token.credentials).verify()
+    if result.get("status"):
+        return ErrorResponseModel("Bad request", 400, "You are unauthenticated!")
+
     users = retrieve_users()
     if users:
         return ResponseModel(users, "Users data retrieved successfully")

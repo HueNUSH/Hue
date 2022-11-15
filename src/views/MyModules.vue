@@ -1,12 +1,17 @@
 <template>
   <v-container fluid class="pb-6 pt-16" style="padding-left: 80px; padding-right: 100px">
-    <h1 v-if="isSignedIn">Welcome back, {{ user.username }}!</h1>
+    
+
+    <h1 v-if="msUser">Welcome back, {{ msUser.name }}!</h1>
     <h1 v-else>Please Sign In</h1>
 
     <p class="text-dark-tertiary text-font-size-16">Academic Week</p>
-    <div v-if="!isSignedIn" style="display: flex;" id="google-login-btn" v-google-identity-login-btn="{ clientId, locale: 'en' }">
-    </div>
-    <v-btn elevation="2" v-else @click="signOut"> Sign Out</v-btn>
+    
+    <v-btn elevation="2" @click="$msal.signOut()" v-if="msUser" > Sign Out</v-btn>
+    <v-btn @click="$msal.signIn()" v-else > Sign In Using Microsoft <v-icon right>mdi-microsoft</v-icon></v-btn>
+
+    
+
 
     <h2 class="text-dark-primary text-display-semibold text-font-size-16 pb-3" style="margin-top: 75px;">
       My modules
@@ -54,6 +59,19 @@
 <script lang="ts">
 import Vue from "vue";
 // @ts-ignore
+import { msalMixin } from 'vue-msal'; 
+// @ts-ignore
+import msal from 'vue-msal'
+
+Vue.use(msal, {
+    auth: {
+      clientId: 'a3f9eae8-f870-4197-bf20-3c759610892e',
+      postLogoutRedirectUri: 'http://huelearning.space/modules',
+      
+    }
+});
+
+// @ts-ignore
 import VueCookies from "vue-cookies"
 import { Modules } from "@/types/modules";
 import { User } from "@/types/user";
@@ -64,16 +82,16 @@ Vue.use(VueCookies, { expire: "1m", path: "/"});
 
 export default Vue.extend({
   name: "MyModules",
+  mixins: [msalMixin],
   directives: {
     GoogleSignInButton
   },
+  
   data: () => ({
     isSignedIn: false,
     user: {} as User,
-    modules: [] as Array<Modules>,
-    clientId: "766984185858-k7ln7n0dnh3sc8go96nulegdumo4fteq.apps.googleusercontent.com"
+    modules: [] as Array<Modules>
   }),
-
   methods: {
     getGeneralModules(): Promise<Array<Modules>>{
       return new Promise<Array<Modules>>(resolve => {
@@ -147,41 +165,47 @@ export default Vue.extend({
         )
       );
     },
-    onGoogleAuthSuccess(jwtCredentials: any) {
-      const profileData = JSON.parse(atob(jwtCredentials.split(".")[1]));
-      this.isSignedIn = true;
 
-      this.user = new User();
-      this.user.userId = profileData.sub;
-      this.user.username = profileData.name;
-      this.user.email = profileData.email;
-      this.user.createdAt = Date.now();
-      this.user.userModules = [];
 
-      fetch(Vue.prototype.$backendLink + "/chokola/users/user_exists?" + new URLSearchParams({
+    onMSALAuthSuccess(msalAuth : any){
+      if(this.$cookies.get("userId")){
+        console.log("Already Signed In!");
+      } else {
+        this.isSignedIn = true;
+        console.log("Signed in account!")
+
+        this.user = new User();
+        this.user.userId = msalAuth.accountIdentifier;
+        this.user.username = msalAuth.name;
+        this.user.email = msalAuth.userName;
+        this.user.createdAt = Date.now();
+        this.user.userModules = [];
+        fetch(Vue.prototype.$backendLink + "/chokola/users/user_exists?" + new URLSearchParams({
         "userId": this.user.userId,
-      }), {
-          headers: {
-            "accept": "application/json",
+        }), {
+            headers: {
+              "accept": "application/json",
+            }
           }
-        }
-      ).then(
-        response => response.json().then(
-          data => {
-            if (!data.data.exists) {
-              for (const moduleKey in this.modules) {
-                this.user.userModules.push(this.modules[parseInt(moduleKey)]._id);
+        ).then(
+          response => response.json().then(
+            data => {
+              if (!data.data.exists) {
+                for (const moduleKey in this.modules) {
+                  this.user.userModules.push(this.modules[parseInt(moduleKey)]._id);
+                }
+                this.createNewUser();
               }
-              this.createNewUser();
+              else {
+                this.populateUserModules(this.user.userId);
+                this.$cookies.set("userId", this.user.userId);
+              }
             }
-            else {
-              this.populateUserModules(this.user.userId);
-              this.$cookies.set("userId", this.user.userId);
-            }
-          }
-        )
-      );
+          ))
+        
+      }
     },
+
     createNewUser() {
       fetch(Vue.prototype.$backendLink + "/chokola/users/create_user", {
         method: "POST",
@@ -202,10 +226,31 @@ export default Vue.extend({
     },
     signOut() {
       //@ts-ignore
-      google.accounts.id.disableAutoSelect();
+      // google.accounts.id.disableAutoSelect();
+      console.log("Signed Out!")
       this.user = {} as User;
       this.isSignedIn = false;
       this.populateGeneralModules();
+      this.$cookies.set("userId", "");
+    }
+  },  
+  computed:{
+    msUser(){
+      let msUser = null;
+      if(this.msal.isAuthenticated){
+        msUser = {
+          ...this.msal.user,
+          profile: {}
+        }
+        if (this.msal.graph && this.msal.graph.profile){
+          msUser.profile = this.msal.graph.profile;
+        }
+        console.log(msUser);
+        this.onMSALAuthSuccess(msUser);
+      } else {
+        this.signOut();
+      }
+      return msUser;
     }
   },
   created() {

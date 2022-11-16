@@ -132,6 +132,7 @@ export default Vue.extend({
     } ,
     populateGeneralModules() {
       this.getGeneralModules().then(data => {
+          this.modules = [];
           for (const moduleKey in data) {
             const module: Modules = JSON.parse(JSON.stringify(data[parseInt(moduleKey)]));
             this.modules.push(module);

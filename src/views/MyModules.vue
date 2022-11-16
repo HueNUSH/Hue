@@ -5,8 +5,8 @@
     <h1 v-if="msUser">Welcome back, {{ msUser.name }}!</h1>
     <h1 v-else>Please Sign In</h1>
 
-    <p class="text-dark-tertiary text-font-size-16">Academic Week</p>
-    
+    <!-- <p class="text-dark-tertiary text-font-size-16">Academic Week</p> -->
+    <p></p>
     <v-btn elevation="2" @click="$msal.signOut()" v-if="msUser" > Sign Out</v-btn>
     <v-btn @click="$msal.signIn()" v-else > Sign In Using Microsoft <v-icon right>mdi-microsoft</v-icon></v-btn>
 

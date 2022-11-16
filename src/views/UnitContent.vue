@@ -6,13 +6,13 @@
     >
       &lt; Back to unit
     </router-link> -->
-    <h1>This section tests {{ $route.params.section }} rendering</h1>
+    <h1>{{sectionNameVal}}</h1>
     <p>
-      This is module {{ $route.params.module_id }} and unit {{ $route.params.unit_no }}, section {{ sectionDescVal }}
+      {{ sectionDescVal }}
     </p>
 
     <div v-if="mediaTypeVal === 'pdf'">
-      <embed :src="sectionMediaVal" style="width:100%;height: 100vh;">
+      <embed src="https://files.catbox.moe/fvjz8b.pdf" style="width:100%;height: 100vh;">
     </div>
 
     <div v-else-if="mediaTypeVal === 'embed'">
@@ -25,7 +25,7 @@
       <iframe
         
         :src="sectionMediaVal"
-        width="476px" height="288px" frameborder="0">This is an embedded <a target="_blank"
+        width="960px" height="569px" frameborder="0">This is an embedded <a target="_blank"
           href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank"
           href="https://office.com/webapps">Office</a>.</iframe>
     </div>
@@ -39,11 +39,12 @@ import { Sections } from "@/types/sections";
 import Vue from "vue";
 export default Vue.extend({
   name: "UnitAbout",
-  props: ["sectionDesc", "mediaType", "sectionMedia"],
+  props: ["sectionName","sectionDesc", "mediaType", "sectionMedia"],
   data: () => ({
     sectionDescVal: "",
     mediaTypeVal: "",
     sectionMediaVal: "",
+    sectionNameVal:"",
     section: {} as Sections
   }),
   watch: {
@@ -52,6 +53,7 @@ export default Vue.extend({
         this.sectionDescVal = this.$props.sectionDesc;
         this.mediaTypeVal = this.$props.mediaType;
         this.sectionMediaVal = this.$props.sectionMedia;
+        this.sectionNameVal = this.$props.sectionName;
       },
       deep: true,
       immediate: true
@@ -72,6 +74,7 @@ export default Vue.extend({
             this.sectionDescVal = this.section.sectionDesc;
             this.mediaTypeVal = this.section.mediaType;
             this.sectionMediaVal = this.section.sectionMedia;
+            this.sectionNameVal = this.section.sectionName;
             console.log(this.section.sectionMedia)
           }
         )

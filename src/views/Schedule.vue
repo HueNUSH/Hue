@@ -15,9 +15,9 @@
         </vc-calendar>
       </v-col>
       <v-col cols="3" class="pa-14">
-        <h1>Lectures Timings for Chemistry</h1>
+        <h1>HUE Onboarding!</h1>
         <p></p>
-        <h3>We will conduct lectures every XXX at XXX</h3>
+        <h3>Today we are conducting onboarding for HUE. We will update this page with lecture timings in the future.</h3>
       </v-col>
     </v-row>
   </v-container>
@@ -46,10 +46,10 @@ export default Vue.extend({
       {
         key: 1,
         customData: {
-          title: 'Lecture 1000-1200.',
+          title: 'Onboarding',
           class: 'bg-red-600 text-white',
         },
-        dates: new Date(year, month, 1),
+        dates: new Date(year, 10, 17),
       },
     ],
   }),

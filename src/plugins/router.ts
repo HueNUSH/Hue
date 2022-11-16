@@ -51,16 +51,19 @@ const routes: Array<RouteConfig> = [
   {
     path: "/modules/:module_id/:unit_no",
     component: UnitSections,
+    props: true,
     children: [
       {
         path: "/modules/:module_id/:unit_no/about",
         component: UnitAbout,
+        props: true
       },
 
       {
         name: "unitContent",
         path: "/modules/:module_id/:unit_no/:section",
         component: UnitContent,
+        props: true
       },
     ]
   },

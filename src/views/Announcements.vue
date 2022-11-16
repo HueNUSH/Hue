@@ -4,9 +4,9 @@
     <v-row>
       <v-col cols="12" style="max-width:75%" v-for="(announcement, index) in announcements" :key="index">
         <v-card class="mx-auto">
-          <div style="display:inline-block;vertical-align: top;width:10px">
+          <!-- <div style="display:inline-block;vertical-align: top;width:10px">
             <v-sheet color="#8C4F00" height="200px" width="10px"></v-sheet>
-          </div>
+          </div> -->
           <div style="display:inline-block;vertical-align: top;">
             <v-card-text class="pb-2 mt-2">
             <p class="text-dark-primary text-display-semibold text-font-size-22">

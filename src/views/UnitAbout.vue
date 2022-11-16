@@ -7,10 +7,12 @@
       < Back to unit
     </router-link> -->
     <h1>About this unit</h1>
+    <p></p>
     <p>
-      This is module {{$route.params.module_id}} and unit {{$route.params.unit_no}}
-      The about is as such: {{this.$props.unitAbout}}
+      This is a demo unit and each section of it will test a different form of multimedia. 
+      
     </p>
+    <p>Please make sure that everything works fine on your end!</p>
   </v-container>
 </template>
 

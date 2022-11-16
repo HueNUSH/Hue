@@ -69,7 +69,7 @@ export default Vue.extend({
   },
   data: ()=> ({
     notFound: false,
-    construction: true,
+    construction: false,
   }),
   computed: {
     routes(): Array<{

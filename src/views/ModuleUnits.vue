@@ -9,8 +9,9 @@
       <router-link to="/modules" class="links">
         &lt; My modules
       </router-link> <br/>
-
+      <p></p>
       <v-row>
+        
         <v-col cols="auto" class="d-flex align-center">
           <v-sheet
             class="rounded-circle d-flex align-center justify-center"
@@ -26,7 +27,7 @@
 
         <v-col class="pl-4 mt-3">
           <h1 class="card-title">{{ module.moduleName }}</h1>
-          <p class="text-dark-tertiary">Academic Week</p>
+          <p class="text-dark-tertiary"></p>
         </v-col>
       </v-row>
 
@@ -49,7 +50,10 @@
         >
           <router-link
             class="unit-card"
-            :to="'/modules/' + $route.params.module_id + '/' + index + '/about'"
+            :to="{
+              path: '/modules/' + $route.params.module_id + '/' + index + '/about',
+              params:{ unitAbout: unit.unitAbout },
+              }"
           >
             <v-card
               class="pa-4"
@@ -61,6 +65,7 @@
               <p class="card-subtitle">
                 <b>{{ unit.sectionsCompleted === undefined ? 0:unit.sectionsCompleted}}/{{ unit.sections.length }}</b> sections completed
               </p>
+              <p>{{unit.unitDesc}}</p>
               <br/>
               <b class="learn-arrow">Learn →</b>
             </v-card>

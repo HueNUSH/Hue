@@ -28,7 +28,7 @@
                   <v-list-item v-for="(section, index) in unit.sections"
                                :key="section.sectionName" 
                                :to="'/modules/' + $route.params.module_id + '/' + $route.params.unit_no + '/' + index"
-                               @click="carrySectionData(section.sectionDesc, section.mediaType, section.sectionMedia, index);"
+                               @click="carrySectionData(section.sectionName, section.sectionDesc, section.mediaType, section.sectionMedia, index);"
                                
                                
                   >
@@ -54,7 +54,7 @@
           </router-link>
 
           <v-main class="py-6" fluid full-width>
-            <router-view :sectionDesc="sectionDesc" :sectionMedia="sectionMedia" :mediaType="mediaType" :unitAbout="unitAbout"/>
+            <router-view :sectionDesc="sectionDesc" :sectionMedia="sectionMedia" :mediaType="mediaType" :unitAbout="unitAbout" :sectionName="sectionName"/>
           </v-main>
         </v-col>
         <v-col>
@@ -83,14 +83,16 @@ export default Vue.extend({
     unitAbout: "",
     sectionIndex: -1,
     userId: "",
+    sectionName: "",
     sectionProgress : [] as Array<number>
   }),
   methods: {
-    carrySectionData(sectionDesc:string, mediaType:string, sectionMedia:string, sectionIndex: number){
+    carrySectionData(sectionName:string, sectionDesc:string, mediaType:string, sectionMedia:string, sectionIndex: number){
       this.sectionDesc = sectionDesc;
       this.sectionMedia = sectionMedia;
       this.mediaType = mediaType;
       this.sectionIndex = sectionIndex;
+      this.sectionName = sectionName;
     },
     async completeSection(){
       console.log(this.sectionIndex)
@@ -122,7 +124,7 @@ export default Vue.extend({
           }}
         );
         const section = this.unit.sections[this.sectionIndex+1];
-        this.carrySectionData(section.sectionDesc, section.mediaType, section.sectionMedia, this.sectionIndex+1);
+        this.carrySectionData(section.sectionName, section.sectionDesc, section.mediaType, section.sectionMedia, this.sectionIndex+1);
       }
       else {
         await router.push({name: "moduleUnits", params:{module_id: this.$route.params.module_id}});

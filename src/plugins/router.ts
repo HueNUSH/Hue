@@ -14,14 +14,7 @@ import ComingSoon from "@/views/ComingSoon.vue"
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
-  {
-    path: "/",
-    redirect: "/comingsoon",
-  },
-  {
-    path: "/comingsoon",
-    component: ComingSoon,
-  },
+  
   {
     path: "/",
     redirect: "/modules",

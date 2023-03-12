@@ -1,0 +1,130 @@
+{
+  "moduleName": "Introduction to Python",
+  "moduleDesc": "",
+  "moduleAbout": "",
+  "moduleIcon": "mdi-laptop",
+  "moduleIconBackgroundColor": "string",
+  "units": [
+    {
+      "unitName": "Lesson 1: Python and IDLE",
+      "unitDesc": "string",
+      "unitAbout": "string",
+      "sections": [
+        {
+          "sectionName": "Introduction",
+          "sectionDesc": "string",
+          "mediaType": "slides",
+          "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21147&authkey=ACZyTON-yefdzNY&em=2",
+          "sectionIcon": "mdi-presentation",
+          "isComplete": false
+        },
+        {
+          "sectionName": "Operators: Slides",
+          "sectionDesc": "string",
+          "mediaType": "slides",
+          "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21148&authkey=AIGVz7NsEbeLBc4&em=2",
+          "sectionIcon": "mdi-presentation",
+          "isComplete": false
+        }
+      ],
+      "sectionsCompleted": 0,
+      "sectionProgress": [
+        0
+      ],
+      "isComplete": false
+    },
+    {
+      "unitName": "Lesson 2: Variables",
+      "unitDesc": "string",
+      "unitAbout": "string",
+      "sections": [
+        
+        {
+          "sectionName": "Variables: Slides",
+          "sectionDesc": "string",
+          "mediaType": "slides",
+          "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21146&authkey=AI9zH_Y3TA1zGAA&em=2",
+          "sectionIcon": "mdi-presentation",
+          "isComplete": false
+        },
+        {
+          "sectionName": "Exercises",
+          "sectionDesc": "string",
+          "mediaType": "slides",
+          "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21165&authkey=ANRgwiFVF02anDg&em=2",
+          "sectionIcon": "mdi-presentation",
+          "isComplete": false
+        }
+      ],
+      "sectionsCompleted": 0,
+      "sectionProgress": [
+        0
+      ],
+      "isComplete": false
+    },
+    {
+      "unitName": "Lesson 3: Types",
+      "unitDesc": "string",
+      "unitAbout": "string",
+      "sections": [
+        {
+          "sectionName": "Int, Float, Bool: Slides",
+          "sectionDesc": "string",
+          "mediaType": "slides",
+          "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21150&authkey=APas145eETBpxXQ&em=2",
+          "sectionIcon": "mdi-presentation",
+          "isComplete": false
+        },
+        {
+          "sectionName": "Strings: Slides",
+          "sectionDesc": "string",
+          "mediaType": "slides",
+          "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21149&authkey=AEPFhpPk0bFH7cE&em=2",
+          "sectionIcon": "mdi-presentation",
+          "isComplete": false
+        },
+        {
+          "sectionName": "Typecasting: Slides",
+          "sectionDesc": "string",
+          "mediaType": "slides",
+          "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21151&authkey=APZZkjrLloyoWa4&em=2",
+          "sectionIcon": "mdi-presentation",
+          "isComplete": false
+        }
+      ],
+      "sectionsCompleted": 0,
+      "sectionProgress": [
+        0
+      ],
+      "isComplete": false
+    },{
+      "unitName": "Lesson 4: Conditionals",
+      "unitDesc": "string",
+      "unitAbout": "string",
+      "sections": [
+        {
+          "sectionName": "Conditionals: Slides",
+          "sectionDesc": "string",
+          "mediaType": "slides",
+          "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21154&authkey=AGTW2kMC23g3FiU&em=2",
+          "sectionIcon": "mdi-presentation",
+          "isComplete": false
+        },
+        {
+          "sectionName": "Exercises",
+          "sectionDesc": "string",
+          "mediaType": "slides",
+          "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21166&authkey=AJn4MoJDRWKvIyg&em=2",
+          "sectionIcon": "mdi-presentation",
+          "isComplete": false
+        }
+      ],
+      "sectionsCompleted": 0,
+      "sectionProgress": [
+        0
+      ],
+      "isComplete": false
+    }
+  ],
+  "unitsCompleted": 0
+}

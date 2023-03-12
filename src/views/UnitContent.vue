@@ -22,7 +22,12 @@
 
     <div v-else-if="mediaTypeVal === 'slides'">
       <!-- <iframe :src="sectionMediaVal" width="476px" height="288px" frameborder="0">This is an embedded <a target="_blank" href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe> -->
-      <iframe src="https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21158&authkey=AJSeDFg7407Rg3k&em=2" width="402" height="327" frameborder="0" scrolling="no"></iframe>
+      <iframe
+        
+        :src="sectionMediaVal"
+        width="960px" height="569px" frameborder="0">This is an embedded <a target="_blank"
+          href="https://office.com">Microsoft Office</a> presentation, powered by <a target="_blank"
+          href="https://office.com/webapps">Office</a>.</iframe>
     </div>
 
 

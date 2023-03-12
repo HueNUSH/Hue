@@ -20,7 +20,7 @@ import Vue from "vue";
 export default Vue.extend({
   name: "ModuleAbout",
   data: () => ({
-    aboutText : "testest"
+    aboutText : ""
   }),
   methods: {
      async getModuleAbout(moduleId: string) {

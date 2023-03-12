@@ -1,19 +1,8 @@
 <template>
   <v-container fluid class="pb-6 pt-16" style="padding-left: 80px; padding-right: 100px">
-    
-
-    <h1 v-if="msUser">Welcome back, {{ msUser.name }}!</h1>
-    <h1 v-else>Please Sign In</h1>
-
-    <!-- <p class="text-dark-tertiary text-font-size-16">Academic Week</p> -->
-    <p></p>
-    <v-btn elevation="2" @click="$msal.signOut()" v-if="msUser" > Sign Out</v-btn>
-    <v-btn @click="$msal.signIn()" v-else > Sign In Using Microsoft <v-icon right>mdi-microsoft</v-icon></v-btn>
-
-    
-
-
-    <h2 class="text-dark-primary text-display-semibold text-font-size-16 pb-3" style="margin-top: 75px;">
+  
+  <h1>Welcome back!</h1>    
+    <h2 class="text-dark-primary text-display-semibold text-font-size-16 pb-3" style="margin-top: 35px;">
       My modules
     </h2>
     <div style="max-width: 80rem">
@@ -42,7 +31,7 @@
                     {{ module.moduleName }}
                   </h3>
                   <p class="text-dark-tertiary text-font-size-14">
-                    <b>{{ module.unitsCompleted }}/{{ module.units.length }}</b> units completed
+                    <b>{{module.units.length }}</b> units available
                   </p>
                 </v-col>
               </v-row>

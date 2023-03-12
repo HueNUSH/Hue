@@ -1,8 +1,8 @@
 import Vue from "vue";
-import VueRouter, {RouteConfig} from "vue-router";
+import VueRouter, { RouteConfig } from "vue-router";
 import MyModules from "@/views/MyModules.vue";
 import Announcements from "@/views/Announcements.vue";
-import Schedule from "@/views/Schedule.vue";
+import Schedule from "@/views/ScheduleView.vue";
 import ModuleAbout from "@/views/ModuleAbout.vue";
 import ModuleUnits from "@/views/ModuleUnits.vue";
 import UnitSections from "@/views/UnitSections.vue";
@@ -10,59 +10,65 @@ import UnitAbout from "@/views/UnitAbout.vue";
 import UnitContent from "@/views/UnitContent.vue";
 import NotFound from "@/views/NotFound.vue";
 import ComingSoon from "@/views/ComingSoon.vue"
-
+import AppMainView from '../AppMain.vue'
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
-    path: "/",
-    redirect: "/modules",
-  },
-  {
-    path: "/modules",
-    component: MyModules,
-  },
-  {
-    path: "/announcements",
-    component: Announcements,
-  },
-  {
-    path: "/schedule",
-    component: Schedule,
-  },
-  {
-    path: "/modules/:module_id/about",
-    component: ModuleAbout,
-  },
-  {
-    name: "moduleUnits",
-    path: "/modules/:module_id",
-    component: ModuleUnits,
-    props: true,
-  },
-  {
-    path: "/modules/:module_id/:unit_no",
-    component: UnitSections,
-    props: true,
+    path: '/',
+    name: 'home',
+    component: AppMainView,
     children: [
       {
-        path: "/modules/:module_id/:unit_no/about",
-        component: UnitAbout,
-        props: true
+        path: "/",
+        redirect: "/modules",
       },
-
       {
-        name: "unitContent",
-        path: "/modules/:module_id/:unit_no/:section",
-        component: UnitContent,
-        props: true
+        path: "/modules",
+        component: MyModules,
       },
-    ]
-  },
-  {
-    path: "/:pathMatch(.*)*",
-    name: "NotFound",
-    component: NotFound,
+      {
+        path: "/announcements",
+        component: Announcements,
+      },
+      {
+        path: "/schedule",
+        component: Schedule,
+      },
+      {
+        path: "/modules/:module_id/about",
+        component: ModuleAbout,
+      },
+      {
+        name: "moduleUnits",
+        path: "/modules/:module_id",
+        component: ModuleUnits,
+        props: true,
+      },
+      {
+        path: "/modules/:module_id/:unit_no",
+        component: UnitSections,
+        props: true,
+        children: [
+          {
+            path: "/modules/:module_id/:unit_no/about",
+            component: UnitAbout,
+            props: true
+          },
+
+          {
+            name: "unitContent",
+            path: "/modules/:module_id/:unit_no/:section",
+            component: UnitContent,
+            props: true
+          },
+        ]
+      },
+      {
+        path: "/:pathMatch(.*)*",
+        name: "NotFound",
+        component: NotFound,
+      },]
   },
 ];
 

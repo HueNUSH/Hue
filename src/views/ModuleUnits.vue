@@ -36,7 +36,7 @@
         <p></p>
       <!-- <b class="text-dark-primary text-font-size-16 pb-3"></b> -->
       <h2 class="text-dark-primary text-display-semibold text-font-size-16 pb-3" style="margin-top: 5px;">
-      Units • {{ module.unitsCompleted }}/{{ module.units.length }} completed
+      Units • {{ module.units.length }} units available
       </h2>
       <p></p>
 
@@ -63,7 +63,7 @@
                 {{ unit.unitName }}
               </h2>
               <p class="card-subtitle">
-                <b>{{ unit.sectionsCompleted === undefined ? 0:unit.sectionsCompleted}}/{{ unit.sections.length }}</b> sections completed
+                <b>{{ unit.sections.length }}</b> sections available
               </p>
               <p>{{unit.unitDesc}}</p>
               <br/>

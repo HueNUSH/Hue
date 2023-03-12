@@ -1,0 +1,78 @@
+{
+  "moduleName": "Introduction to Chemistry",
+  "moduleDesc": "",
+  "moduleAbout": "",
+  "moduleIcon": "mdi-flask",
+  "moduleIconBackgroundColor": "string",
+  "units": [
+    {
+      "unitName": "Lesson 1: The Elements",
+      "unitDesc": "string",
+      "unitAbout": "string",
+      "sections": [
+        {
+          "sectionName": "Introduction",
+          "sectionDesc": "string",
+          "mediaType": "slides",
+          "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21158&authkey=AJSeDFg7407Rg3k&em=2",
+          "sectionIcon": "mdi-presentation",
+          "isComplete": false
+        },
+        {
+          "sectionName": "The Elements: Slides",
+          "sectionDesc": "string",
+          "mediaType": "slides",
+          "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21164&authkey=AErm4_EIuLNdPJ0&em=2",
+          "sectionIcon": "mdi-presentation",
+          "isComplete": false
+        }
+      ],
+      "sectionsCompleted": 0,
+      "sectionProgress": [
+        0
+      ],
+      "isComplete": false
+    },
+    {
+      "unitName": "Lesson 2: Atoms",
+      "unitDesc": "string",
+      "unitAbout": "string",
+      "sections": [
+        {
+          "sectionName": "Atoms: Slides",
+          "sectionDesc": "string",
+          "mediaType": "slides",
+          "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21161&authkey=ANCADLG0fSTBhcw&em=2",
+          "sectionIcon": "mdi-presentation",
+          "isComplete": false
+        }
+      ],
+      "sectionsCompleted": 0,
+      "sectionProgress": [
+        0
+      ],
+      "isComplete": false
+    },
+    {
+      "unitName": "Lesson 3: Compounds",
+      "unitDesc": "string",
+      "unitAbout": "string",
+      "sections": [
+        {
+          "sectionName": "Compounds: Slides",
+          "sectionDesc": "string",
+          "mediaType": "slides",
+          "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21162&authkey=AJoXY3H3KozqSeU&em=2 ",
+          "sectionIcon": "mdi-presentation",
+          "isComplete": false
+        }
+      ],
+      "sectionsCompleted": 0,
+      "sectionProgress": [
+        0
+      ],
+      "isComplete": false
+    }
+  ],
+  "unitsCompleted": 0
+}

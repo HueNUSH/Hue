@@ -58,11 +58,11 @@
           </v-main>
         </v-col>
         <v-col>
-          <v-btn icon @click="completeSection">
+          <!-- <v-btn icon @click="completeSection">
             <v-icon size="50px">
               mdi-arrow-right-bold-circle-outline
             </v-icon>
-          </v-btn>
+          </v-btn> -->
         </v-col>
       </v-row>
     </v-container>

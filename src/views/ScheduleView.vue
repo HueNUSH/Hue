@@ -6,7 +6,7 @@
                 <v-col cols=10>
                     <h1>Schedule</h1>
                     <br />
-                    <div>
+                    <!-- <div>
                         <v-sheet class="hidden-xs-only" flex fluid height="600">
                             <v-calendar ref="calendar"></v-calendar>
                         </v-sheet>
@@ -14,7 +14,7 @@
                         <v-sheet class="hidden-sm-and-up" flex fluid>
                             <v-calendar ref="calendar"></v-calendar>
                         </v-sheet>
-                    </div>
+                    </div> -->
                 </v-col>
                 <v-col cols=10>
                     <v-card class="pa-6">

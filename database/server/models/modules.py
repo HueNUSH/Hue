@@ -1,4 +1,4 @@
-from typing import Literal, Optional
+from typing import Literal, Optional, List
 from pydantic import BaseModel, Field
 
 
@@ -15,9 +15,9 @@ class Units(BaseModel):
     unitName: str = Field(...)
     unitDesc: str = Field(...)
     unitAbout: str = Field(...)
-    sections: list[UnitSections] = Field(...)
+    sections: List[UnitSections] = Field(...)
     sectionsCompleted: int = 0
-    sectionProgress: list[int] = Field(...)
+    sectionProgress: List[int] = Field(...)
     isComplete: bool = False
 
 class Modules(BaseModel):
@@ -26,7 +26,7 @@ class Modules(BaseModel):
     moduleAbout: str = Field(...)
     moduleIcon: str = Field(...)
     moduleIconBackgroundColor: str = Field(...)
-    units: list[Units] = Field(...)
+    units: List[Units] = Field(...)
     unitsCompleted: int = 0
 
 class UpdateSections(BaseModel):
@@ -40,7 +40,7 @@ class UpdateUnits(BaseModel):
     unitName: Optional[str]
     unitDesc: Optional[str]
     unitAbout: Optional[str]
-    sections: Optional[list[UpdateSections]]
+    sections: Optional[List[UpdateSections]]
 
 class UpdateModules(BaseModel):
     moduleName: Optional[str]
@@ -48,7 +48,7 @@ class UpdateModules(BaseModel):
     moduleAbout: Optional[str]
     moduleIcon: Optional[str]
     moduleIconBackgroundColor: Optional[str]
-    units: Optional[list[UpdateUnits]]
+    units: Optional[List[UpdateUnits]]
 
 
 

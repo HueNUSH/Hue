@@ -1,4 +1,4 @@
-from typing import Literal, Optional
+from typing import Literal, Optional, List
 from pydantic import BaseModel, Field
 from models.modules import (
     ErrorResponseModel,
@@ -11,7 +11,7 @@ class Users(BaseModel):
     username: str = Field(...)
     createdAt: int = Field(...)
     email: str = Field(...)
-    userModules: list[str] = [] #Default no attempted modules
+    userModules: List[str] = [] #Default no attempted modules
 
 class UpdateUsers(BaseModel):
     username: Optional[str]

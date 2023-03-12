@@ -16,14 +16,6 @@ Vue.use(VueRouter);
 const routes: Array<RouteConfig> = [
   {
     path: "/",
-    redirect: "/comingsoon",
-  },
-  {
-    path: "/comingsoon",
-    component: ComingSoon,
-  },
-  {
-    path: "/",
     redirect: "/modules",
   },
   {

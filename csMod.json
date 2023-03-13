@@ -1,18 +1,18 @@
 {
   "moduleName": "Introduction to Python",
   "moduleDesc": "",
-  "moduleAbout": "",
+  "moduleAbout": "Through this course, you will experience writing code in Python and be introduced to basic principles of computational thinking! This course seeks to introduce you to the basic syntax of Python and allow you to familiarise yourself with text based coding languages.",
   "moduleIcon": "mdi-laptop",
   "moduleIconBackgroundColor": "string",
   "units": [
     {
       "unitName": "Lesson 1: Python and IDLE",
-      "unitDesc": "string",
-      "unitAbout": "string",
+      "unitDesc": "Introducing you to Python and the Python Shell",
+      "unitAbout": "Python is one of the most widely used programming languages, and for good reason. In this unit, we will get used to interacting with Python and IDLE.",
       "sections": [
         {
           "sectionName": "Introduction",
-          "sectionDesc": "string",
+          "sectionDesc": "To install python on your own device, head over to https://www.python.org/downloads/",
           "mediaType": "slides",
           "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21147&authkey=ACZyTON-yefdzNY&em=2",
           "sectionIcon": "mdi-presentation",
@@ -20,7 +20,7 @@
         },
         {
           "sectionName": "Operators: Slides",
-          "sectionDesc": "string",
+          "sectionDesc": "",
           "mediaType": "slides",
           "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21148&authkey=AIGVz7NsEbeLBc4&em=2",
           "sectionIcon": "mdi-presentation",
@@ -35,13 +35,13 @@
     },
     {
       "unitName": "Lesson 2: Variables",
-      "unitDesc": "string",
-      "unitAbout": "string",
+      "unitDesc": "A fundamental concept in all programming languages",
+      "unitAbout": "What are variables? How do we store values in code? And how do we interact with those values?",
       "sections": [
         
         {
           "sectionName": "Variables: Slides",
-          "sectionDesc": "string",
+          "sectionDesc": "",
           "mediaType": "slides",
           "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21146&authkey=AI9zH_Y3TA1zGAA&em=2",
           "sectionIcon": "mdi-presentation",
@@ -49,7 +49,7 @@
         },
         {
           "sectionName": "Exercises",
-          "sectionDesc": "string",
+          "sectionDesc": "",
           "mediaType": "slides",
           "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21165&authkey=ANRgwiFVF02anDg&em=2",
           "sectionIcon": "mdi-presentation",
@@ -64,12 +64,12 @@
     },
     {
       "unitName": "Lesson 3: Types",
-      "unitDesc": "string",
-      "unitAbout": "string",
+      "unitDesc": "The different types of data that can be stored.",
+      "unitAbout": "Python is often called a typeless language, but this is not to say that there aren't any types! These types are also present in other programming languages and are fundamental knowledge.",
       "sections": [
         {
           "sectionName": "Int, Float, Bool: Slides",
-          "sectionDesc": "string",
+          "sectionDesc": "",
           "mediaType": "slides",
           "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21150&authkey=APas145eETBpxXQ&em=2",
           "sectionIcon": "mdi-presentation",
@@ -77,7 +77,7 @@
         },
         {
           "sectionName": "Strings: Slides",
-          "sectionDesc": "string",
+          "sectionDesc": "",
           "mediaType": "slides",
           "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21149&authkey=AEPFhpPk0bFH7cE&em=2",
           "sectionIcon": "mdi-presentation",
@@ -85,7 +85,7 @@
         },
         {
           "sectionName": "Typecasting: Slides",
-          "sectionDesc": "string",
+          "sectionDesc": "",
           "mediaType": "slides",
           "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21151&authkey=APZZkjrLloyoWa4&em=2",
           "sectionIcon": "mdi-presentation",
@@ -99,12 +99,12 @@
       "isComplete": false
     },{
       "unitName": "Lesson 4: Conditionals",
-      "unitDesc": "string",
-      "unitAbout": "string",
+      "unitDesc": "Implementing logic and decision making",
+      "unitAbout": "Decision making processes must be able to be coded to make programs what they are! We will cover some of the most basic conditional statements that make up the core of computational thinking...",
       "sections": [
         {
           "sectionName": "Conditionals: Slides",
-          "sectionDesc": "string",
+          "sectionDesc": "",
           "mediaType": "slides",
           "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21154&authkey=AGTW2kMC23g3FiU&em=2",
           "sectionIcon": "mdi-presentation",
@@ -112,9 +112,101 @@
         },
         {
           "sectionName": "Exercises",
-          "sectionDesc": "string",
+          "sectionDesc": "",
           "mediaType": "slides",
           "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21166&authkey=AJn4MoJDRWKvIyg&em=2",
+          "sectionIcon": "mdi-presentation",
+          "isComplete": false
+        }
+      ],
+      "sectionsCompleted": 0,
+      "sectionProgress": [
+        0
+      ],
+      "isComplete": false
+    },
+    {
+      "unitName": "Lesson 6: Functions",
+      "unitDesc": "Create reusable and modular code",
+      "unitAbout": "Functions are fundamental to ensure code reusability and readability. No more copy pasting!",
+      "sections": [
+        
+        {
+          "sectionName": "Functions: Slides",
+          "sectionDesc": "",
+          "mediaType": "slides",
+          "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21146&authkey=AI9zH_Y3TA1zGAA&em=2",
+          "sectionIcon": "mdi-presentation",
+          "isComplete": false
+        }
+      ],
+      "sectionsCompleted": 0,
+      "sectionProgress": [
+        0
+      ],
+      "isComplete": false
+    },
+    {
+      "unitName": "Lesson 7: Loops",
+      "unitDesc": "Learn to meaningfully repeat code!",
+      "unitAbout": "What if you want to iterate? Or repeat a section of code? Maybe count up and down? You'll need loops!",
+      "sections": [
+        
+        {
+          "sectionName": "Loops: Slides",
+          "sectionDesc": "",
+          "mediaType": "slides",
+          "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21155&authkey=AHm7HsTjPxk2HTc&em=2",
+          "sectionIcon": "mdi-presentation",
+          "isComplete": false
+        }
+      ],
+      "sectionsCompleted": 0,
+      "sectionProgress": [
+        0
+      ],
+      "isComplete": false
+    },
+    {
+      "unitName": "Lesson 8: Lists",
+      "unitDesc": "Storing data in a accessible and indexable manner!",
+      "unitAbout": "What are lists? They are another fundamental concept when it comes to the topic of storing similar data together.",
+      "sections": [
+        
+        {
+          "sectionName": "Lists: Slides",
+          "sectionDesc": "",
+          "mediaType": "slides",
+          "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21156&authkey=ABq3zJvBanK6VF4&em=2",
+          "sectionIcon": "mdi-presentation",
+          "isComplete": false
+        }
+      ],
+      "sectionsCompleted": 0,
+      "sectionProgress": [
+        0
+      ],
+      "isComplete": false
+    },
+    {
+      "unitName": "Lesson 9: Modules and Packages",
+      "unitDesc": "Learn to use code other people have written!!",
+      "unitAbout": "Sometimes you don't need to reinvent the wheel, so we have modules and packages to let you import the wheel!",
+      "sections": [
+        
+        {
+          "sectionName": "Modules: Slides",
+          "sectionDesc": "",
+          "mediaType": "slides",
+          "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21157&authkey=AGoq669JfWddHBw&em=2",
+          "sectionIcon": "mdi-presentation",
+          "isComplete": false
+        },
+        {
+          "sectionName": "Exercises",
+          "sectionDesc": "",
+          "mediaType": "slides",
+          "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21167&authkey=ABXPfhf74VMbf7g&em=2",
           "sectionIcon": "mdi-presentation",
           "isComplete": false
         }

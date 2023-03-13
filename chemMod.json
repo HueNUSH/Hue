@@ -1,18 +1,18 @@
 {
   "moduleName": "Introduction to Chemistry",
-  "moduleDesc": "",
-  "moduleAbout": "",
+  "moduleDesc": "An introductory course to chemistry around us.",
+  "moduleAbout": "Through this course, you will begin to realise that chemistry is all around us! The wonders of chemistry lie far beyond and exploration awaits you. This course is only the beginning of understanding our world with chemistry, and there is more to learn beyond this module. In this course, you will learn about the elements in the periodic table and how they exist as atoms which come together to form compounds and molecules. You will also get to learn how the periodic table works and more about the characteristics of the different periods and groups.",
   "moduleIcon": "mdi-flask",
-  "moduleIconBackgroundColor": "string",
+  "moduleIconBackgroundColor": "orange",
   "units": [
     {
       "unitName": "Lesson 1: The Elements",
-      "unitDesc": "string",
-      "unitAbout": "string",
+      "unitDesc": "The Elements in our everyday life objects.",
+      "unitAbout": "In this unit, you will gain a better understanding about what elements are and a little history about how elements were discovered and how they exist in our daily lives.",
       "sections": [
         {
           "sectionName": "Introduction",
-          "sectionDesc": "string",
+          "sectionDesc": "",
           "mediaType": "slides",
           "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21158&authkey=AJSeDFg7407Rg3k&em=2",
           "sectionIcon": "mdi-presentation",
@@ -20,7 +20,7 @@
         },
         {
           "sectionName": "The Elements: Slides",
-          "sectionDesc": "string",
+          "sectionDesc": "",
           "mediaType": "slides",
           "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21164&authkey=AErm4_EIuLNdPJ0&em=2",
           "sectionIcon": "mdi-presentation",
@@ -35,12 +35,12 @@
     },
     {
       "unitName": "Lesson 2: Atoms",
-      "unitDesc": "string",
-      "unitAbout": "string",
+      "unitDesc": "Understanding the properties of atoms and how they differ.",
+      "unitAbout": "Atoms make up objects around us and this unit takes us on a journey back to the ancient world on how scientists discovered the smallest building blocks of matter.",
       "sections": [
         {
           "sectionName": "Atoms: Slides",
-          "sectionDesc": "string",
+          "sectionDesc": "",
           "mediaType": "slides",
           "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21161&authkey=ANCADLG0fSTBhcw&em=2",
           "sectionIcon": "mdi-presentation",
@@ -55,14 +55,50 @@
     },
     {
       "unitName": "Lesson 3: Compounds",
-      "unitDesc": "string",
-      "unitAbout": "string",
+      "unitDesc": "The beauty of composition and structure of different compounds.",
+      "unitAbout": "In this unit, you will discover different types of structures characteristic of different compounds and how their properties are affected by the structures.",
       "sections": [
         {
           "sectionName": "Compounds: Slides",
-          "sectionDesc": "string",
+          "sectionDesc": "",
           "mediaType": "slides",
           "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21162&authkey=AJoXY3H3KozqSeU&em=2 ",
+          "sectionIcon": "mdi-presentation",
+          "isComplete": false
+        }
+      ],
+      "sectionsCompleted": 0,
+      "sectionProgress": [
+        0
+      ],
+      "isComplete": false
+    },
+    {
+      "unitName": "Lesson 4: The Periodic Table",
+      "unitDesc": "The periodic table describes all the elements we know of to date and their placements are important in indicating their physical and chemical properties.",
+      "unitAbout": "In this unit, you will find out about the physical and chemical properties and some unique patterns found in the periodic table.",
+      "sections": [
+        {
+          "sectionName": "Introduction: Slides",
+          "sectionDesc": "",
+          "mediaType": "slides",
+          "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21163&authkey=AI-c5PDenhb9kmA&em=2",
+          "sectionIcon": "mdi-presentation",
+          "isComplete": false
+        },
+        {
+          "sectionName": "Metals: Slides",
+          "sectionDesc": "Metals form a great section in the periodic table and are distinctive from non-metals, with interesting properties and applications especially in our technology-driven world today.",
+          "mediaType": "slides",
+          "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21169&authkey=AGY-AebP4neaZtU&em=2",
+          "sectionIcon": "mdi-presentation",
+          "isComplete": false
+        },
+        {
+          "sectionName": "Non-metals: Slides",
+          "sectionDesc": "As far as metals are important, non-metals are equally relevant in today’s world and are essential to our survival.",
+          "mediaType": "slides",
+          "sectionMedia": "https://onedrive.live.com/embed?cid=116D2C0FE49F91D4&resid=116D2C0FE49F91D4%21171&authkey=AGEbVPtGt_CHcok&em=2",
           "sectionIcon": "mdi-presentation",
           "isComplete": false
         }
